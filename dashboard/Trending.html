@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trending Products - ProductNexus</title>
+    <meta name="description" content="Discover trending products that are selling well online with ProductNexus.">
+    
+    <!-- Base CSS -->
+    <link rel="stylesheet" href="assets/css/common.css">
+    
+    <!-- Icon library (using FontAwesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Trending page specific styles */
+        .view-toggle {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .filter-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .search-container {
+            position: relative;
+            flex: 1;
+        }
+        
+        .search-container i {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted-foreground);
+        }
+        
+        .search-input {
+            padding-left: 2.5rem;
+        }
+        
+        .trending-keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 0.5rem 0 1rem;
+        }
+        
+        .keyword-btn {
+            border-radius: 9999px;
+            font-size: 0.875rem;
+        }
+        
+        .product-card {
+            display: flex;
+            flex-direction: column;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            height: 100%;
+        }
+        
+        .product-card-image {
+            height: 12rem;
+            background-color: var(--muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .product-card-content {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        
+        .product-card-title {
+            font-size: 1.125rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            /* Limit to 2 lines */
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .product-card-price {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .product-card-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-top: auto;
+        }
+        
+        .product-list-item {
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            margin-bottom: 1rem;
+        }
+        
+        @media (min-width: 768px) {
+            .product-list-item {
+                flex-direction: row;
+                gap: 1rem;
+            }
+        }
+        
+        .product-list-image {
+            width: 6rem;
+            height: 6rem;
+            background-color: var(--muted);
+            border-radius: var(--radius);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .product-list-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-list-info {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 0.5rem;
+        }
+        
+        @media (min-width: 768px) {
+            .product-list-info {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: flex-start;
+            }
+        }
+        
+        .product-list-title {
+            font-size: 1.125rem;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+        
+        .product-list-store {
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-list-price {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+        
+        @media (min-width: 768px) {
+            .product-list-price {
+                margin-top: 0;
+            }
+        }
+        
+        .product-list-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: auto;
+        }
+        
+        @media (min-width: 768px) {
+            .product-list-actions {
+                justify-content: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <button class="btn btn-ghost btn-icon mobile-menu-button" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <h1 class="header-title">Trending</h1>
+            
+            <div class="header-actions">
+                <button class="btn btn-ghost btn-icon" aria-label="Notifications">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-indicator"></span>
+                </button>
+                
+                <label class="theme-switch">
+                    <input type="checkbox" id="theme-toggle">
+                    <span class="theme-slider"></span>
+                </label>
+                
+                <div class="dropdown">
+                    <button class="btn btn-ghost dropdown-trigger flex gap-2 items-center">
+                        <div class="avatar">
+                            <div class="avatar-fallback">JS</div>
+                        </div>
+                        <div class="hidden md:block text-left">
+                            <div class="text-sm font-medium">John Smith</div>
+                            <div class="text-xs text-muted">john@example.com</div>
+                        </div>
+                        <i class="fas fa-chevron-down text-sm hidden md:block"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <div class="dropdown-header">My Account</div>
+                        <div class="dropdown-divider"></div>
+                        <a href="Profile.html" class="dropdown-item">
+                            <i class="fas fa-user"></i> Profile
+                        </a>
+                        <a href="Settings.html" class="dropdown-item">
+                            <i class="fas fa-cog"></i> Settings
+                        </a>
+                        <a href="Billing.html" class="dropdown-item">
+                            <i class="fas fa-credit-card"></i> Billing
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-sign-out-alt"></i> Log out
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="main-container">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <a href="Index.html" class="sidebar-logo">
+                        <i class="fas fa-chart-line sidebar-logo-icon"></i>
+                        <span>ProductNexus</span>
+                    </a>
+                </div>
+                
+                <div class="sidebar-content">
+                    <div class="sidebar-section">
+                        <p class="sidebar-section-title">Overview</p>
+                        <ul class="sidebar-nav">
+                            <li class="sidebar-nav-item">
+                                <a href="Index.html" class="sidebar-nav-link">
+                                    <i class="fas fa-home"></i>
+                                    <span>Dashboard</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="sidebar-section">
+                        <p class="sidebar-section-title">Analysis</p>
+                        <ul class="sidebar-nav">
+                            <li class="sidebar-nav-item">
+                                <a href="SalesTracker.html" class="sidebar-nav-link">
+                                    <i class="fas fa-chart-bar"></i>
+                                    <span>Sales Tracker</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-nav-item">
+                                <a href="Trending.html" class="sidebar-nav-link">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>Trending</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-nav-item">
+                                <a href="Research.html" class="sidebar-nav-link">
+                                    <i class="fas fa-search"></i>
+                                    <span>Product Research</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-nav-item">
+                                <a href="RealTimeSearch.html" class="sidebar-nav-link">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>Real-Time Search</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-nav-item">
+                                <a href="ShopifyImporter.html" class="sidebar-nav-link">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <span>Shopify Importer</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="sidebar-section">
+                        <p class="sidebar-section-title">Support</p>
+                        <ul class="sidebar-nav">
+                            <li class="sidebar-nav-item">
+                                <a href="Tutorials.html" class="sidebar-nav-link">
+                                    <i class="fas fa-question-circle"></i>
+                                    <span>Tutorials</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-nav-item">
+                                <a href="SupportTickets.html" class="sidebar-nav-link">
+                                    <i class="fas fa-question-circle"></i>
+                                    <span>Support Tickets</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="sidebar-section">
+                        <p class="sidebar-section-title">Account</p>
+                        <ul class="sidebar-nav">
+                            <li class="sidebar-nav-item">
+                                <a href="Profile.html" class="sidebar-nav-link">
+                                    <i class="fas fa-user"></i>
+                                    <span>Profile</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-nav-item">
+                                <a href="Billing.html" class="sidebar-nav-link">
+                                    <i class="fas fa-credit-card"></i>
+                                    <span>Billing</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-nav-item">
+                                <a href="Settings.html" class="sidebar-nav-link">
+                                    <i class="fas fa-cog"></i>
+                                    <span>Settings</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="sidebar-footer">
+                    <label class="theme-switch">
+                        <input type="checkbox" id="theme-toggle-sidebar">
+                        <span class="theme-slider"></span>
+                    </label>
+                    <span class="pro-plan-badge">Pro Plan</span>
+                </div>
+            </aside>
+            
+            <!-- Mobile sidebar overlay -->
+            <div class="overlay"></div>
+            
+            <!-- Main content -->
+            <main class="main-content">
+                <div class="container">
+                    <div class="flex flex-col space-y-4 py-6">
+                        <div class="flex items-center justify-between">
+                            <h1 class="text-2xl font-bold">Trending Products</h1>
+                            <div class="view-toggle">
+                                <button id="grid-view-btn" class="btn btn-default btn-icon" onclick="setView('grid')">
+                                    <i class="fas fa-th-large"></i>
+                                </button>
+                                <button id="list-view-btn" class="btn btn-outline btn-icon" onclick="setView('list')">
+                                    <i class="fas fa-list"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Search and Filter Controls -->
+                        <div class="flex flex-col md:flex-row gap-4 items-center">
+                            <div class="search-container">
+                                <i class="fas fa-search"></i>
+                                <input type="text" class="form-input search-input" placeholder="Search products..." id="search-input">
+                            </div>
+                            <button class="btn btn-outline filter-btn">
+                                <i class="fas fa-filter"></i>
+                                <span>Filters</span>
+                            </button>
+                        </div>
+
+                        <!-- Trending Keywords -->
+                        <div class="trending-keywords">
+                            <button class="btn btn-outline keyword-btn">Summer Essentials</button>
+                            <button class="btn btn-primary keyword-btn">Tech Gadgets</button>
+                            <button class="btn btn-outline keyword-btn">Home Office</button>
+                            <button class="btn btn-outline keyword-btn">Fitness</button>
+                            <button class="btn btn-outline keyword-btn">Eco-Friendly</button>
+                            <button class="btn btn-outline keyword-btn">Kitchen Tools</button>
+                            <button class="btn btn-outline keyword-btn">Pet Accessories</button>
+                            <button class="btn btn-outline keyword-btn">Baby Products</button>
+                        </div>
+
+                        <!-- Product Grid/List View -->
+                        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- Product Card 1 -->
+                            <div class="product-card">
+                                <div class="product-card-image">
+                                    <img src="https://placehold.co/300x300" alt="Portable LED Camping Lantern" class="h-full w-full object-cover">
+                                </div>
+                                <div class="product-card-content">
+                                    <h3 class="product-card-title">Portable LED Camping Lantern</h3>
+                                    <div class="product-card-price">$24.99</div>
+                                    <div class="product-card-actions">
+                                        <button class="btn btn-outline btn-sm">AliExpress</button>
+                                        <button class="btn btn-outline btn-sm">Facebook</button>
+                                        <button class="btn btn-outline btn-sm">Shopify Import</button>
+                                        <button class="btn btn-outline btn-sm">Spy Sales</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product Card 2 -->
+                            <div class="product-card">
+                                <div class="product-card-image">
+                                    <img src="https://placehold.co/300x300" alt="Eco-Friendly Water Bottle" class="h-full w-full object-cover">
+                                </div>
+                                <div class="product-card-content">
+                                    <h3 class="product-card-title">Eco-Friendly Water Bottle with Temperature Display</h3>
+                                    <div class="product-card-price">$19.95</div>
+                                    <div class="product-card-actions">
+                                        <button class="btn btn-outline btn-sm">AliExpress</button>
+                                        <button class="btn btn-outline btn-sm">Facebook</button>
+                                        <button class="btn btn-outline btn-sm">Shopify Import</button>
+                                        <button class="btn btn-outline btn-sm">Spy Sales</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product Card 3 -->
+                            <div class="product-card">
+                                <div class="product-card-image">
+                                    <img src="https://placehold.co/300x300" alt="Wireless Earbuds Pro" class="h-full w-full object-cover">
+                                </div>
+                                <div class="product-card-content">
+                                    <h3 class="product-card-title">Wireless Earbuds Pro</h3>
+                                    <div class="product-card-price">$89.99</div>
+                                    <div class="product-card-actions">
+                                        <button class="btn btn-outline btn-sm">AliExpress</button>
+                                        <button class="btn btn-outline btn-sm">Facebook</button>
+                                        <button class="btn btn-outline btn-sm">Shopify Import</button>
+                                        <button class="btn btn-outline btn-sm">Spy Sales</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product Card 4 -->
+                            <div class="product-card">
+                                <div class="product-card-image">
+                                    <img src="https://placehold.co/300x300" alt="Smart Home Security Camera" class="h-full w-full object-cover">
+                                </div>
+                                <div class="product-card-content">
+                                    <h3 class="product-card-title">Smart Home Security Camera</h3>
+                                    <div class="product-card-price">$129.99</div>
+                                    <div class="product-card-actions">
+                                        <button class="btn btn-outline btn-sm">AliExpress</button>
+                                        <button class="btn btn-outline btn-sm">Facebook</button>
+                                        <button class="btn btn-outline btn-sm">Shopify Import</button>
+                                        <button class="btn btn-outline btn-sm">Spy Sales</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product Card 5 -->
+                            <div class="product-card">
+                                <div class="product-card-image">
+                                    <img src="https://placehold.co/300x300" alt="Organic Cotton Bedding Set" class="h-full w-full object-cover">
+                                </div>
+                                <div class="product-card-content">
+                                    <h3 class="product-card-title">Organic Cotton Bedding Set</h3>
+                                    <div class="product-card-price">$79.50</div>
+                                    <div class="product-card-actions">
+                                        <button class="btn btn-outline btn-sm">AliExpress</button>
+                                        <button class="btn btn-outline btn-sm">Facebook</button>
+                                        <button class="btn btn-outline btn-sm">Shopify Import</button>
+                                        <button class="btn btn-outline btn-sm">Spy Sales</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product Card 6 -->
+                            <div class="product-card">
+                                <div class="product-card-image">
+                                    <img src="https://placehold.co/300x300" alt="Fitness Activity Tracker" class="h-full w-full object-cover">
+                                </div>
+                                <div class="product-card-content">
+                                    <h3 class="product-card-title">Fitness Activity Tracker</h3>
+                                    <div class="product-card-price">$49.95</div>
+                                    <div class="product-card-actions">
+                                        <button class="btn btn-outline btn-sm">AliExpress</button>
+                                        <button class="btn btn-outline btn-sm">Facebook</button>
+                                        <button class="btn btn-outline btn-sm">Shopify Import</button>
+                                        <button class="btn btn-outline btn-sm">Spy Sales</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product List View (hidden by default) -->
+                        <div id="product-list" class="hidden">
+                            <!-- Product List Item 1 -->
+                            <div class="product-list-item">
+                                <div class="product-list-image">
+                                    <img src="https://placehold.co/300x300" alt="Portable LED Camping Lantern" class="h-full w-full object-cover">
+                                </div>
+                                <div class="product-list-content">
+                                    <div class="product-list-info">
+                                        <div>
+                                            <h3 class="product-list-title">Portable LED Camping Lantern</h3>
+                                            <p class="product-list-store">example-store.com</p>
+                                        </div>
+                                        <div class="product-list-price">$24.99</div>
+                                    </div>
+                                    <div class="product-list-actions">
+                                        <button class="btn btn-outline btn-sm">AliExpress</button>
+                                        <button class="btn btn-outline btn-sm">Facebook</button>
+                                        <button class="btn btn-outline btn-sm">Shopify Import</button>
+                                        <button class="btn btn-outline btn-sm">Spy Sales</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product List Item 2 -->
+                            <div class="product-list-item">
+                                <div class="product-list-image">
+                                    <img src="https://placehold.co/300x300" alt="Eco-Friendly Water Bottle" class="h-full w-full object-cover">
+                                </div>
+                                <div class="product-list-content">
+                                    <div class="product-list-info">
+                                        <div>
+                                            <h3 class="product-list-title">Eco-Friendly Water Bottle with Temperature Display</h3>
+                                            <p class="product-list-store">example-store.com</p>
+                                        </div>
+                                        <div class="product-list-price">$19.95</div>
+                                    </div>
+                                    <div class="product-list-actions">
+                                        <button class="btn btn-outline btn-sm">AliExpress</button>
+                                        <button class="btn btn-outline btn-sm">Facebook</button>
+                                        <button class="btn btn-outline btn-sm">Shopify Import</button>
+                                        <button class="btn btn-outline btn-sm">Spy Sales</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product List Item 3 -->
+                            <div class="product-list-item">
+                                <div class="product-list-image">
+                                    <img src="https://placehold.co/300x300" alt="Wireless Earbuds Pro" class="h-full w-full object-cover">
+                                </div>
+                                <div class="product-list-content">
+                                    <div class="product-list-info">
+                                        <div>
+                                            <h3 class="product-list-title">Wireless Earbuds Pro</h3>
+                                            <p class="product-list-store">example-store.com</p>
+                                        </div>
+                                        <div class="product-list-price">$89.99</div>
+                                    </div>
+                                    <div class="product-list-actions">
+                                        <button class="btn btn-outline btn-sm">AliExpress</button>
+                                        <button class="btn btn-outline btn-sm">Facebook</button>
+                                        <button class="btn btn-outline btn-sm">Shopify Import</button>
+                                        <button class="btn btn-outline btn-sm">Spy Sales</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product List Item 4 -->
+                            <div class="product-list-item">
+                                <div class="product-list-image">
+                                    <img src="https://placehold.co/300x300" alt="Smart Home Security Camera" class="h-full w-full object-cover">
+                                </div>
+                                <div class="product-list-content">
+                                    <div class="product-list-info">
+                                        <div>
+                                            <h3 class="product-list-title">Smart Home Security Camera</h3>
+                                            <p class="product-list-store">example-store.com</p>
+                                        </div>
+                                        <div class="product-list-price">$129.99</div>
+                                    </div>
+                                    <div class="product-list-actions">
+                                        <button class="btn btn-outline btn-sm">AliExpress</button>
+                                        <button class="btn btn-outline btn-sm">Facebook</button>
+                                        <button class="btn btn-outline btn-sm">Shopify Import</button>
+                                        <button class="btn btn-outline btn-sm">Spy Sales</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product List Item 5 -->
+                            <div class="product-list-item">
+                                <div class="product-list-image">
+                                    <img src="https://placehold.co/300x300" alt="Organic Cotton Bedding Set" class="h-full w-full object-cover">
+                                </div>
+                                <div class="product-list-content">
+                                    <div class="product-list-info">
+                                        <div>
+                                            <h3 class="product-list-title">Organic Cotton Bedding Set</h3>
+                                            <p class="product-list-store">example-store.com</p>
+                                        </div>
+                                        <div class="product-list-price">$79.50</div>
+                                    </div>
+                                    <div class="product-list-actions">
+                                        <button class="btn btn-outline btn-sm">AliExpress</button>
+                                        <button class="btn btn-outline btn-sm">Facebook</button>
+                                        <button class="btn btn-outline btn-sm">Shopify Import</button>
+                                        <button class="btn btn-outline btn-sm">Spy Sales</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product List Item 6 -->
+                            <div class="product-list-item">
+                                <div class="product-list-image">
+                                    <img src="https://placehold.co/300x300" alt="Fitness Activity Tracker" class="h-full w-full object-cover">
+                                </div>
+                                <div class="product-list-content">
+                                    <div class="product-list-info">
+                                        <div>
+                                            <h3 class="product-list-title">Fitness Activity Tracker</h3>
+                                            <p class="product-list-store">example-store.com</p>
+                                        </div>
+                                        <div class="product-list-price">$49.95</div>
+                                    </div>
+                                    <div class="product-list-actions">
+                                        <button class="btn btn-outline btn-sm">AliExpress</button>
+                                        <button class="btn btn-outline btn-sm">Facebook</button>
+                                        <button class="btn btn-outline btn-sm">Shopify Import</button>
+                                        <button class="btn btn-outline btn-sm">Spy Sales</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="flex justify-center mt-6">
+                            <div class="flex items-center space-x-1">
+                                <a href="#" class="btn btn-outline btn-sm flex items-center">
+                                    <i class="fas fa-chevron-left text-xs mr-1"></i>
+                                    Previous
+                                </a>
+                                <a href="#" class="btn btn-primary btn-sm px-3">1</a>
+                                <a href="#" class="btn btn-outline btn-sm px-3">2</a>
+                                <a href="#" class="btn btn-outline btn-sm px-3">3</a>
+                                <span class="px-2 text-sm text-muted">...</span>
+                                <a href="#" class="btn btn-outline btn-sm px-3">10</a>
+                                <a href="#" class="btn btn-outline btn-sm flex items-center">
+                                    Next
+                                    <i class="fas fa-chevron-right text-xs ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <!-- Base JS -->
+    <script src="assets/js/common.js"></script>
+    
+    <!-- Page specific scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize dropdowns
+            initializeDropdowns();
+            
+            // Handle theme toggle sync
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeToggleSidebar = document.getElementById('theme-toggle-sidebar');
+            
+            if (themeToggle && themeToggleSidebar) {
+                themeToggle.addEventListener('change', function() {
+                    themeToggleSidebar.checked = this.checked;
+                });
+                
+                themeToggleSidebar.addEventListener('change', function() {
+                    themeToggle.checked = this.checked;
+                });
+            }
+            
+            // Handle view toggle between grid and list
+            const gridViewBtn = document.getElementById('grid-view-btn');
+            const listViewBtn = document.getElementById('list-view-btn');
+            const productGrid = document.getElementById('product-grid');
+            const productList = document.getElementById('product-list');
+            
+            // Function to set the view
+            window.setView = function(view) {
+                if (view === 'grid') {
+                    gridViewBtn.classList.remove('btn-outline');
+                    gridViewBtn.classList.add('btn-default');
+                    listViewBtn.classList.remove('btn-default');
+                    listViewBtn.classList.add('btn-outline');
+                    
+                    productGrid.classList.remove('hidden');
+                    productList.classList.add('hidden');
+                } else {
+                    listViewBtn.classList.remove('btn-outline');
+                    listViewBtn.classList.add('btn-default');
+                    gridViewBtn.classList.remove('btn-default');
+                    gridViewBtn.classList.add('btn-outline');
+                    
+                    productList.classList.remove('hidden');
+                    productGrid.classList.add('hidden');
+                }
+                
+                // Save preference to local storage
+                localStorage.setItem('productView', view);
+            }
+            
+            // Check for saved preference
+            const savedView = localStorage.getItem('productView');
+            if (savedView) {
+                setView(savedView);
+            }
+            
+            // Handle keyword buttons
+            const keywordButtons = document.querySelectorAll('.keyword-btn');
+            keywordButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Toggle active state
+                    if (this.classList.contains('btn-primary')) {
+                        this.classList.remove('btn-primary');
+                        this.classList.add('btn-outline');
+                    } else {
+                        this.classList.remove('btn-outline');
+                        this.classList.add('btn-primary');
+                    }
+                    
+                    // Here you would typically filter the products based on the selected keywords
+                });
+            });
+            
+            // Handle search
+            const searchInput = document.getElementById('search-input');
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase().trim();
+                
+                // Here you would typically filter the products based on the search term
+                console.log('Searching for:', searchTerm);
+            });
+        });
+    </script>
+</body>
+</html>
