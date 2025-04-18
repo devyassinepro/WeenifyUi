@@ -12,244 +12,190 @@
     <!-- Icon library (using FontAwesome) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <style>
-        /* Research page specific styles */
-        .advanced-search-card {
-            margin-bottom: 1.5rem;
-        }
-        
-        .search-fields {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-        
-        @media (min-width: 768px) {
-            .search-fields {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            .search-fields {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-        
-        .search-actions {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 1.5rem;
-        }
-        
-        .price-range {
-            display: flex;
-            gap: 0.5rem;
-        }
-        
-        .price-range-input {
-            flex: 1;
-        }
-        
-        .table-toolbar {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-        }
-        
-        .pagination-controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 1rem;
-        }
-        
-        .checkbox-container {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 1.5rem;
-        }
-        
-        .checkbox-label {
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
-        
-        .dropdown-menu-trigger {
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
-    </style>
 </head>
 <body>
     <div class="app-container">
-        <!-- Header -->
-        <header class="header">
-            <button class="btn btn-ghost btn-icon mobile-menu-button" aria-label="Menu">
-                <i class="fas fa-bars"></i>
-            </button>
-            
-            <h1 class="header-title">Product Research</h1>
-            
-            <div class="header-actions">
-                <button class="btn btn-ghost btn-icon" aria-label="Notifications">
-                    <i class="fas fa-bell"></i>
-                    <span class="notification-indicator"></span>
-                </button>
-                
-                <label class="theme-switch">
-                    <input type="checkbox" id="theme-toggle">
-                    <span class="theme-slider"></span>
-                </label>
-                
-                <div class="dropdown">
-                    <button class="btn btn-ghost dropdown-trigger flex gap-2 items-center">
-                        <div class="avatar">
-                            <div class="avatar-fallback">JS</div>
-                        </div>
-                        <div class="hidden md:block text-left">
-                            <div class="text-sm font-medium">John Smith</div>
-                            <div class="text-xs text-muted">john@example.com</div>
-                        </div>
-                        <i class="fas fa-chevron-down text-sm hidden md:block"></i>
-                    </button>
-                    <div class="dropdown-content">
-                        <div class="dropdown-header">My Account</div>
-                        <div class="dropdown-divider"></div>
-                        <a href="Profile.html" class="dropdown-item">
-                            <i class="fas fa-user"></i> Profile
-                        </a>
-                        <a href="Settings.html" class="dropdown-item">
-                            <i class="fas fa-cog"></i> Settings
-                        </a>
-                        <a href="Billing.html" class="dropdown-item">
-                            <i class="fas fa-credit-card"></i> Billing
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-sign-out-alt"></i> Log out
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </header>
+     <!-- Overlay for mobile sidebar -->
+     <div class="overlay"></div>
+
+     <!-- Header -->
+     <header class="header">
+       <!-- Mobile menu button -->
+       <button class="btn btn-icon mobile-menu-button hidden-desktop">
+         <i class="fas fa-bars"></i>
+       </button>
+       
+       <!-- Brand logo and name (visible on desktop) -->
+       <div class="header-brand hidden-mobile">
+         <i class="fas fa-chart-line header-logo"></i>
+         <span>WEENIFY</span>
+       </div>
+       
+       <!-- Search box -->
+       <div class="header-search hidden-mobile">
+         <i class="fas fa-search"></i>
+         <input type="text" placeholder="Search..." />
+       </div>
+       
+       <!-- Header actions -->
+       <div class="header-actions">
+         <!-- Notifications -->
+         <button class="btn btn-icon notification-button">
+           <i class="fas fa-bell"></i>
+           <span class="notification-badge"></span>
+         </button>
+         
+         <!-- Theme toggle -->
+         <label class="theme-toggle">
+           <input type="checkbox" id="theme-toggle">
+           <span class="theme-toggle-track"></span>
+         </label>
+         
+         <!-- User menu -->
+         <div class="dropdown">
+           <button class="btn btn-ghost dropdown-trigger flex gap-2 items-center">
+               <div class="avatar">
+                   <div class="avatar-fallback">JS</div>
+               </div>
+               <div class="hidden md:block text-left">
+                   <div class="text-sm font-medium">John Smith</div>
+                   <div class="text-xs text-muted">john@example.com</div>
+               </div>
+               <i class="fas fa-chevron-down text-sm hidden md:block"></i>
+           </button>
+           <div class="dropdown-content">
+               <div class="dropdown-header">My Account</div>
+               <div class="dropdown-divider"></div>
+               <a href="Profile.html" class="dropdown-item">
+                   <i class="fas fa-user"></i> Profile
+               </a>
+               <a href="Settings.html" class="dropdown-item">
+                   <i class="fas fa-cog"></i> Settings
+               </a>
+               <a href="Billing.html" class="dropdown-item">
+                   <i class="fas fa-credit-card"></i> Billing
+               </a>
+               <div class="dropdown-divider"></div>
+               <a href="#" class="dropdown-item">
+                   <i class="fas fa-sign-out-alt"></i> Log out
+               </a>
+           </div>
+       </div>
+       </div>
+     </header>
+ 
+     <div class="main-container">
+       <!-- Sidebar -->
+       <aside class="sidebar">
+ 
+         <div class="sidebar-content">
+           <div class="sidebar-section">
+             <div class="sidebar-section-title">Overview</div>
+             <ul class="sidebar-nav">
+               <li class="sidebar-nav-item">
+                 <a href="index.html" class="sidebar-nav-link active">
+                   <i class="fas fa-home"></i>
+                   <span>Dashboard</span>
+                 </a>
+               </li>
+             </ul>
+           </div>
+ 
+           <div class="sidebar-section">
+             <div class="sidebar-section-title">Analysis</div>
+             <ul class="sidebar-nav">
+               <li class="sidebar-nav-item">
+                 <a href="salestracker.html" class="sidebar-nav-link">
+                   <i class="fas fa-chart-bar"></i>
+                   <span>Sales Tracker</span>
+                 </a>
+               </li>
+               <li class="sidebar-nav-item">
+                 <a href="trending.html" class="sidebar-nav-link">
+                   <i class="fas fa-chart-line"></i>
+                   <span>Trending</span>
+                 </a>
+               </li>
+               <li class="sidebar-nav-item">
+                 <a href="research.html" class="sidebar-nav-link">
+                   <i class="fas fa-search"></i>
+                   <span>Product Research</span>
+                 </a>
+               </li>
+               <li class="sidebar-nav-item">
+                 <a href="realtimesearch.html" class="sidebar-nav-link">
+                   <i class="fas fa-bolt"></i>
+                   <span>Real-Time Search</span>
+                 </a>
+               </li>
+               <li class="sidebar-nav-item">
+                 <a href="shopifyimporter.html" class="sidebar-nav-link">
+                   <i class="fas fa-shopping-cart"></i>
+                   <span>Shopify Importer</span>
+                 </a>
+               </li>
+             </ul>
+           </div>
+ 
+           <div class="sidebar-section">
+             <div class="sidebar-section-title">Support</div>
+             <ul class="sidebar-nav">
+               <li class="sidebar-nav-item">
+                 <a href="tutorials.html" class="sidebar-nav-link">
+                   <i class="fas fa-video"></i>
+                   <span>Tutorials</span>
+                 </a>
+               </li>
+               <li class="sidebar-nav-item">
+                 <a href="supporttickets.html" class="sidebar-nav-link">
+                   <i class="fas fa-ticket-alt"></i>
+                   <span>Support Tickets</span>
+                 </a>
+               </li>
+             </ul>
+           </div>
+ 
+           <div class="sidebar-section">
+             <div class="sidebar-section-title">Account</div>
+             <ul class="sidebar-nav">
+               <li class="sidebar-nav-item">
+                 <a href="profile.html" class="sidebar-nav-link">
+                   <i class="fas fa-user"></i>
+                   <span>Profile</span>
+                 </a>
+               </li>
+               <li class="sidebar-nav-item">
+                 <a href="billing.html" class="sidebar-nav-link">
+                   <i class="fas fa-credit-card"></i>
+                   <span>Billing</span>
+                 </a>
+               </li>
+               <li class="sidebar-nav-item">
+                 <a href="settings.html" class="sidebar-nav-link">
+                   <i class="fas fa-cog"></i>
+                   <span>Settings</span>
+                 </a>
+               </li>
+             </ul>
+           </div>
+         </div>
+ 
+         <!-- Sidebar footer -->
+         <div class="sidebar-footer">
+           <div class="user-status">
+             <span class="user-status-dot"></span>
+             <span class="pro-badge">Pro Plan</span>
+           </div>
+           
+           <label class="theme-toggle">
+             <input type="checkbox" id="sidebar-theme-toggle">
+             <span class="theme-toggle-track"></span>
+           </label>
+         </div>
+       </aside>
+ 
+        <div class="overlay"></div>
         
-        <div class="main-container">
-            <!-- Sidebar -->
-            <aside class="sidebar">
-                <div class="sidebar-header">
-                    <a href="Index.html" class="sidebar-logo">
-                        <i class="fas fa-chart-line sidebar-logo-icon"></i>
-                        <span>ProductNexus</span>
-                    </a>
-                </div>
-                
-                <div class="sidebar-content">
-                    <div class="sidebar-section">
-                        <p class="sidebar-section-title">Overview</p>
-                        <ul class="sidebar-nav">
-                            <li class="sidebar-nav-item">
-                                <a href="Index.html" class="sidebar-nav-link">
-                                    <i class="fas fa-home"></i>
-                                    <span>Dashboard</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    <div class="sidebar-section">
-                        <p class="sidebar-section-title">Analysis</p>
-                        <ul class="sidebar-nav">
-                            <li class="sidebar-nav-item">
-                                <a href="SalesTracker.html" class="sidebar-nav-link">
-                                    <i class="fas fa-chart-bar"></i>
-                                    <span>Sales Tracker</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="Trending.html" class="sidebar-nav-link">
-                                    <i class="fas fa-chart-line"></i>
-                                    <span>Trending</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="Research.html" class="sidebar-nav-link">
-                                    <i class="fas fa-search"></i>
-                                    <span>Product Research</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="RealTimeSearch.html" class="sidebar-nav-link">
-                                    <i class="fas fa-chart-line"></i>
-                                    <span>Real-Time Search</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="ShopifyImporter.html" class="sidebar-nav-link">
-                                    <i class="fas fa-shopping-cart"></i>
-                                    <span>Shopify Importer</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    <div class="sidebar-section">
-                        <p class="sidebar-section-title">Support</p>
-                        <ul class="sidebar-nav">
-                            <li class="sidebar-nav-item">
-                                <a href="Tutorials.html" class="sidebar-nav-link">
-                                    <i class="fas fa-question-circle"></i>
-                                    <span>Tutorials</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="SupportTickets.html" class="sidebar-nav-link">
-                                    <i class="fas fa-question-circle"></i>
-                                    <span>Support Tickets</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    <div class="sidebar-section">
-                        <p class="sidebar-section-title">Account</p>
-                        <ul class="sidebar-nav">
-                            <li class="sidebar-nav-item">
-                                <a href="Profile.html" class="sidebar-nav-link">
-                                    <i class="fas fa-user"></i>
-                                    <span>Profile</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="Billing.html" class="sidebar-nav-link">
-                                    <i class="fas fa-credit-card"></i>
-                                    <span>Billing</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="Settings.html" class="sidebar-nav-link">
-                                    <i class="fas fa-cog"></i>
-                                    <span>Settings</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="sidebar-footer">
-                    <label class="theme-switch">
-                        <input type="checkbox" id="theme-toggle-sidebar">
-                        <span class="theme-slider"></span>
-                    </label>
-                    <span class="pro-plan-badge">Pro Plan</span>
-                </div>
-            </aside>
-            
-            <!-- Mobile sidebar overlay -->
-            <div class="overlay"></div>
-            
             <!-- Main content -->
             <main class="main-content">
                 <div class="container py-6">

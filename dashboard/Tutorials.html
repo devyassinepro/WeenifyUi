@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tutorials - ProductNexus</title>
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="app-container">
+       <!-- Overlay for mobile sidebar -->
+       <div class="overlay"></div>
+
+       <!-- Header -->
+       <header class="header">
+         <!-- Mobile menu button -->
+         <button class="btn btn-icon mobile-menu-button hidden-desktop">
+           <i class="fas fa-bars"></i>
+         </button>
+         
+         <!-- Brand logo and name (visible on desktop) -->
+         <div class="header-brand hidden-mobile">
+           <i class="fas fa-chart-line header-logo"></i>
+           <span>WEENIFY</span>
+         </div>
+         
+         <!-- Search box -->
+         <div class="header-search hidden-mobile">
+           <i class="fas fa-search"></i>
+           <input type="text" placeholder="Search..." />
+         </div>
+         
+         <!-- Header actions -->
+         <div class="header-actions">
+           <!-- Notifications -->
+           <button class="btn btn-icon notification-button">
+             <i class="fas fa-bell"></i>
+             <span class="notification-badge"></span>
+           </button>
+           
+           <!-- Theme toggle -->
+           <label class="theme-toggle">
+             <input type="checkbox" id="theme-toggle">
+             <span class="theme-toggle-track"></span>
+           </label>
+           
+           <!-- User menu -->
+           <div class="dropdown">
+             <button class="btn btn-ghost dropdown-trigger flex gap-2 items-center">
+                 <div class="avatar">
+                     <div class="avatar-fallback">JS</div>
+                 </div>
+                 <div class="hidden md:block text-left">
+                     <div class="text-sm font-medium">John Smith</div>
+                     <div class="text-xs text-muted">john@example.com</div>
+                 </div>
+                 <i class="fas fa-chevron-down text-sm hidden md:block"></i>
+             </button>
+             <div class="dropdown-content">
+                 <div class="dropdown-header">My Account</div>
+                 <div class="dropdown-divider"></div>
+                 <a href="Profile.html" class="dropdown-item">
+                     <i class="fas fa-user"></i> Profile
+                 </a>
+                 <a href="Settings.html" class="dropdown-item">
+                     <i class="fas fa-cog"></i> Settings
+                 </a>
+                 <a href="Billing.html" class="dropdown-item">
+                     <i class="fas fa-credit-card"></i> Billing
+                 </a>
+                 <div class="dropdown-divider"></div>
+                 <a href="#" class="dropdown-item">
+                     <i class="fas fa-sign-out-alt"></i> Log out
+                 </a>
+             </div>
+         </div>
+         </div>
+       </header>
+   
+       <div class="main-container">
+         <!-- Sidebar -->
+         <aside class="sidebar">
+   
+           <div class="sidebar-content">
+             <div class="sidebar-section">
+               <div class="sidebar-section-title">Overview</div>
+               <ul class="sidebar-nav">
+                 <li class="sidebar-nav-item">
+                   <a href="index.html" class="sidebar-nav-link active">
+                     <i class="fas fa-home"></i>
+                     <span>Dashboard</span>
+                   </a>
+                 </li>
+               </ul>
+             </div>
+   
+             <div class="sidebar-section">
+               <div class="sidebar-section-title">Analysis</div>
+               <ul class="sidebar-nav">
+                 <li class="sidebar-nav-item">
+                   <a href="salestracker.html" class="sidebar-nav-link">
+                     <i class="fas fa-chart-bar"></i>
+                     <span>Sales Tracker</span>
+                   </a>
+                 </li>
+                 <li class="sidebar-nav-item">
+                   <a href="trending.html" class="sidebar-nav-link">
+                     <i class="fas fa-chart-line"></i>
+                     <span>Trending</span>
+                   </a>
+                 </li>
+                 <li class="sidebar-nav-item">
+                   <a href="research.html" class="sidebar-nav-link">
+                     <i class="fas fa-search"></i>
+                     <span>Product Research</span>
+                   </a>
+                 </li>
+                 <li class="sidebar-nav-item">
+                   <a href="realtimesearch.html" class="sidebar-nav-link">
+                     <i class="fas fa-bolt"></i>
+                     <span>Real-Time Search</span>
+                   </a>
+                 </li>
+                 <li class="sidebar-nav-item">
+                   <a href="shopifyimporter.html" class="sidebar-nav-link">
+                     <i class="fas fa-shopping-cart"></i>
+                     <span>Shopify Importer</span>
+                   </a>
+                 </li>
+               </ul>
+             </div>
+   
+             <div class="sidebar-section">
+               <div class="sidebar-section-title">Support</div>
+               <ul class="sidebar-nav">
+                 <li class="sidebar-nav-item">
+                   <a href="tutorials.html" class="sidebar-nav-link">
+                     <i class="fas fa-video"></i>
+                     <span>Tutorials</span>
+                   </a>
+                 </li>
+                 <li class="sidebar-nav-item">
+                   <a href="supporttickets.html" class="sidebar-nav-link">
+                     <i class="fas fa-ticket-alt"></i>
+                     <span>Support Tickets</span>
+                   </a>
+                 </li>
+               </ul>
+             </div>
+   
+             <div class="sidebar-section">
+               <div class="sidebar-section-title">Account</div>
+               <ul class="sidebar-nav">
+                 <li class="sidebar-nav-item">
+                   <a href="profile.html" class="sidebar-nav-link">
+                     <i class="fas fa-user"></i>
+                     <span>Profile</span>
+                   </a>
+                 </li>
+                 <li class="sidebar-nav-item">
+                   <a href="billing.html" class="sidebar-nav-link">
+                     <i class="fas fa-credit-card"></i>
+                     <span>Billing</span>
+                   </a>
+                 </li>
+                 <li class="sidebar-nav-item">
+                   <a href="settings.html" class="sidebar-nav-link">
+                     <i class="fas fa-cog"></i>
+                     <span>Settings</span>
+                   </a>
+                 </li>
+               </ul>
+             </div>
+           </div>
+   
+           <!-- Sidebar footer -->
+           <div class="sidebar-footer">
+             <div class="user-status">
+               <span class="user-status-dot"></span>
+               <span class="pro-badge">Pro Plan</span>
+             </div>
+             
+             <label class="theme-toggle">
+               <input type="checkbox" id="sidebar-theme-toggle">
+               <span class="theme-toggle-track"></span>
+             </label>
+           </div>
+         </aside>
+   
+
+      <!-- Main content -->
+      <main class="main-content">
+        <div class="page-header">
+          <h1 class="page-title">Tutorials</h1>
+        </div>
+
+        <div class="tab-container" id="tutorials-tabs">
+          <div class="tab-list">
+            <div class="tab-trigger active" data-tab="getting-started">Getting Started</div>
+            <div class="tab-trigger" data-tab="sales-tracker">Sales Tracker</div>
+            <div class="tab-trigger" data-tab="product-research">Product Research</div>
+            <div class="tab-trigger" data-tab="shopify">Shopify Integration</div>
+            <div class="tab-trigger" data-tab="advanced">Advanced Features</div>
+          </div>
+
+          <!-- Getting Started Tab -->
+          <div class="tab-content active" id="getting-started">
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">Welcome to ProductNexus</div>
+                <div class="card-description">Learn how to get started with our platform</div>
+              </div>
+              <div class="card-content">
+                <div class="tutorial-grid">
+                  <!-- Tutorial 1 -->
+                  <div class="tutorial-card">
+                    <div class="tutorial-thumbnail">
+                      <i class="fas fa-play-circle tutorial-thumbnail-icon"></i>
+                    </div>
+                    <div class="tutorial-details">
+                      <h3 class="tutorial-title">Getting Started Tutorial 1</h3>
+                      <p class="tutorial-description">Learn how to navigate the dashboard and use the basic features</p>
+                      <div class="tutorial-duration">Duration: 4:30</div>
+                    </div>
+                  </div>
+
+                  <!-- Tutorial 2 -->
+                  <div class="tutorial-card">
+                    <div class="tutorial-thumbnail">
+                      <i class="fas fa-play-circle tutorial-thumbnail-icon"></i>
+                    </div>
+                    <div class="tutorial-details">
+                      <h3 class="tutorial-title">Getting Started Tutorial 2</h3>
+                      <p class="tutorial-description">Learn how to navigate the dashboard and use the basic features</p>
+                      <div class="tutorial-duration">Duration: 5:30</div>
+                    </div>
+                  </div>
+
+                  <!-- Tutorial 3 -->
+                  <div class="tutorial-card">
+                    <div class="tutorial-thumbnail">
+                      <i class="fas fa-play-circle tutorial-thumbnail-icon"></i>
+                    </div>
+                    <div class="tutorial-details">
+                      <h3 class="tutorial-title">Getting Started Tutorial 3</h3>
+                      <p class="tutorial-description">Learn how to navigate the dashboard and use the basic features</p>
+                      <div class="tutorial-duration">Duration: 6:30</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sales Tracker Tab -->
+          <div class="tab-content" id="sales-tracker">
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">Sales Tracker Tutorials</div>
+                <div class="card-description">Learn how to track sales performance</div>
+              </div>
+              <div class="card-content">
+                <div class="tutorial-grid">
+                  <!-- Tutorial 1 -->
+                  <div class="tutorial-card">
+                    <div class="tutorial-thumbnail">
+                      <i class="fas fa-play-circle tutorial-thumbnail-icon"></i>
+                    </div>
+                    <div class="tutorial-details">
+                      <h3 class="tutorial-title">Sales Tracking Tutorial 1</h3>
+                      <p class="tutorial-description">Learn how to analyze store performance and track products</p>
+                      <div class="tutorial-duration">Duration: 6:45</div>
+                    </div>
+                  </div>
+
+                  <!-- Tutorial 2 -->
+                  <div class="tutorial-card">
+                    <div class="tutorial-thumbnail">
+                      <i class="fas fa-play-circle tutorial-thumbnail-icon"></i>
+                    </div>
+                    <div class="tutorial-details">
+                      <h3 class="tutorial-title">Sales Tracking Tutorial 2</h3>
+                      <p class="tutorial-description">Learn how to analyze store performance and track products</p>
+                      <div class="tutorial-duration">Duration: 7:45</div>
+                    </div>
+                  </div>
+
+                  <!-- Tutorial 3 -->
+                  <div class="tutorial-card">
+                    <div class="tutorial-thumbnail">
+                      <i class="fas fa-play-circle tutorial-thumbnail-icon"></i>
+                    </div>
+                    <div class="tutorial-details">
+                      <h3 class="tutorial-title">Sales Tracking Tutorial 3</h3>
+                      <p class="tutorial-description">Learn how to analyze store performance and track products</p>
+                      <div class="tutorial-duration">Duration: 8:45</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Research Tab -->
+          <div class="tab-content" id="product-research">
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">Product Research Tutorials</div>
+                <div class="card-description">Learn how to find winning products</div>
+              </div>
+              <div class="card-content">
+                <div class="tutorial-grid">
+                  <!-- Tutorial 1 -->
+                  <div class="tutorial-card">
+                    <div class="tutorial-thumbnail">
+                      <i class="fas fa-play-circle tutorial-thumbnail-icon"></i>
+                    </div>
+                    <div class="tutorial-details">
+                      <h3 class="tutorial-title">Product Research Tutorial 1</h3>
+                      <p class="tutorial-description">Learn how to use filters and trending data to find winning products</p>
+                      <div class="tutorial-duration">Duration: 5:15</div>
+                    </div>
+                  </div>
+
+                  <!-- Tutorial 2 -->
+                  <div class="tutorial-card">
+                    <div class="tutorial-thumbnail">
+                      <i class="fas fa-play-circle tutorial-thumbnail-icon"></i>
+                    </div>
+                    <div class="tutorial-details">
+                      <h3 class="tutorial-title">Product Research Tutorial 2</h3>
+                      <p class="tutorial-description">Learn how to use filters and trending data to find winning products</p>
+                      <div class="tutorial-duration">Duration: 6:15</div>
+                    </div>
+                  </div>
+
+                  <!-- Tutorial 3 -->
+                  <div class="tutorial-card">
+                    <div class="tutorial-thumbnail">
+                      <i class="fas fa-play-circle tutorial-thumbnail-icon"></i>
+                    </div>
+                    <div class="tutorial-details">
+                      <h3 class="tutorial-title">Product Research Tutorial 3</h3>
+                      <p class="tutorial-description">Learn how to use filters and trending data to find winning products</p>
+                      <div class="tutorial-duration">Duration: 7:15</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Shopify Integration Tab -->
+          <div class="tab-content" id="shopify">
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">Shopify Integration Tutorials</div>
+                <div class="card-description">Learn how to connect and import to Shopify</div>
+              </div>
+              <div class="card-content">
+                <div class="tutorial-grid">
+                  <!-- Tutorial 1 -->
+                  <div class="tutorial-card">
+                    <div class="tutorial-thumbnail">
+                      <i class="fas fa-play-circle tutorial-thumbnail-icon"></i>
+                    </div>
+                    <div class="tutorial-details">
+                      <h3 class="tutorial-title">Shopify Integration Tutorial 1</h3>
+                      <p class="tutorial-description">Learn how to connect your Shopify store and import products</p>
+                      <div class="tutorial-duration">Duration: 7:20</div>
+                    </div>
+                  </div>
+
+                  <!-- Tutorial 2 -->
+                  <div class="tutorial-card">
+                    <div class="tutorial-thumbnail">
+                      <i class="fas fa-play-circle tutorial-thumbnail-icon"></i>
+                    </div>
+                    <div class="tutorial-details">
+                      <h3 class="tutorial-title">Shopify Integration Tutorial 2</h3>
+                      <p class="tutorial-description">Learn how to connect your Shopify store and import products</p>
+                      <div class="tutorial-duration">Duration: 8:20</div>
+                    </div>
+                  </div>
+
+                  <!-- Tutorial 3 -->
+                  <div class="tutorial-card">
+                    <div class="tutorial-thumbnail">
+                      <i class="fas fa-play-circle tutorial-thumbnail-icon"></i>
+                    </div>
+                    <div class="tutorial-details">
+                      <h3 class="tutorial-title">Shopify Integration Tutorial 3</h3>
+                      <p class="tutorial-description">Learn how to connect your Shopify store and import products</p>
+                      <div class="tutorial-duration">Duration: 9:20</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Advanced Features Tab -->
+          <div class="tab-content" id="advanced">
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">Advanced Feature Tutorials</div>
+                <div class="card-description">Learn about advanced platform features</div>
+              </div>
+              <div class="card-content">
+                <div class="tutorial-grid">
+                  <!-- Tutorial 1 -->
+                  <div class="tutorial-card">
+                    <div class="tutorial-thumbnail">
+                      <i class="fas fa-play-circle tutorial-thumbnail-icon"></i>
+                    </div>
+                    <div class="tutorial-details">
+                      <h3 class="tutorial-title">Advanced Tutorial 1</h3>
+                      <p class="tutorial-description">Learn about advanced analytics and automation features</p>
+                      <div class="tutorial-duration">Duration: 8:55</div>
+                    </div>
+                  </div>
+
+                  <!-- Tutorial 2 -->
+                  <div class="tutorial-card">
+                    <div class="tutorial-thumbnail">
+                      <i class="fas fa-play-circle tutorial-thumbnail-icon"></i>
+                    </div>
+                    <div class="tutorial-details">
+                      <h3 class="tutorial-title">Advanced Tutorial 2</h3>
+                      <p class="tutorial-description">Learn about advanced analytics and automation features</p>
+                      <div class="tutorial-duration">Duration: 9:55</div>
+                    </div>
+                  </div>
+
+                  <!-- Tutorial 3 -->
+                  <div class="tutorial-card">
+                    <div class="tutorial-thumbnail">
+                      <i class="fas fa-play-circle tutorial-thumbnail-icon"></i>
+                    </div>
+                    <div class="tutorial-details">
+                      <h3 class="tutorial-title">Advanced Tutorial 3</h3>
+                      <p class="tutorial-description">Learn about advanced analytics and automation features</p>
+                      <div class="tutorial-duration">Duration: 10:55</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Latest Tutorials Section -->
+        <div class="card mt-6">
+          <div class="card-header">
+            <div class="card-title">Latest Tutorials</div>
+            <div class="card-description">Recently added tutorial videos</div>
+          </div>
+          <div class="card-content">
+            <div class="latest-tutorials-list">
+              <!-- Latest Tutorial 1 -->
+              <div class="latest-tutorial-item">
+                <div class="latest-tutorial-thumbnail">
+                  <i class="fas fa-play-circle latest-tutorial-icon"></i>
+                </div>
+                <div class="latest-tutorial-info">
+                  <h3 class="latest-tutorial-title">How to Use Advanced Filters</h3>
+                  <p class="latest-tutorial-description">
+                    Learn how to use our advanced features to find the best products and maximize sales.
+                  </p>
+                  <div class="latest-tutorial-meta">Added: April 10, 2023 • Duration: 7:30</div>
+                </div>
+              </div>
+
+              <!-- Latest Tutorial 2 -->
+              <div class="latest-tutorial-item">
+                <div class="latest-tutorial-thumbnail">
+                  <i class="fas fa-play-circle latest-tutorial-icon"></i>
+                </div>
+                <div class="latest-tutorial-info">
+                  <h3 class="latest-tutorial-title">Analyze Product Trends</h3>
+                  <p class="latest-tutorial-description">
+                    Learn how to use our advanced features to find the best products and maximize sales.
+                  </p>
+                  <div class="latest-tutorial-meta">Added: April 11, 2023 • Duration: 8:30</div>
+                </div>
+              </div>
+
+              <!-- Latest Tutorial 3 -->
+              <div class="latest-tutorial-item">
+                <div class="latest-tutorial-thumbnail">
+                  <i class="fas fa-play-circle latest-tutorial-icon"></i>
+                </div>
+                <div class="latest-tutorial-info">
+                  <h3 class="latest-tutorial-title">Optimize Your Store</h3>
+                  <p class="latest-tutorial-description">
+                    Learn how to use our advanced features to find the best products and maximize sales.
+                  </p>
+                  <div class="latest-tutorial-meta">Added: April 12, 2023 • Duration: 9:30</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Video Modal Template (Hidden by default) -->
+  <div class="video-modal" id="video-modal" style="display: none;">
+    <div class="video-modal-content">
+      <div class="video-player">
+        <i class="fas fa-play-circle video-play-icon"></i>
+      </div>
+      <div class="video-info">
+        <h3 class="video-title">Tutorial Title</h3>
+        <p class="video-description">
+          This is a demo video player for the tutorial. In a real application, an actual video would play here.
+        </p>
+      </div>
+      <button class="video-close-button">&times;</button>
+    </div>
+  </div>
+
+  <script src="assets/js/common.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize sidebar theme toggle to match the main theme toggle
+      const mainThemeToggle = document.getElementById('theme-toggle');
+      const sidebarThemeToggle = document.getElementById('sidebar-theme-toggle');
+      
+      if (mainThemeToggle && sidebarThemeToggle) {
+        // Sync the sidebar toggle with the main toggle
+        sidebarThemeToggle.checked = mainThemeToggle.checked;
+        
+        // Keep them in sync when either changes
+        mainThemeToggle.addEventListener('change', function() {
+          sidebarThemeToggle.checked = this.checked;
+        });
+        
+        sidebarThemeToggle.addEventListener('change', function() {
+          mainThemeToggle.checked = this.checked;
+          // Trigger the change event to update the theme
+          const event = new Event('change');
+          mainThemeToggle.dispatchEvent(event);
+        });
+      }
+
+      // Tabs functionality
+      const tabTriggers = document.querySelectorAll('.tab-trigger');
+      const tabContents = document.querySelectorAll('.tab-content');
+      
+      tabTriggers.forEach(trigger => {
+        trigger.addEventListener('click', () => {
+          // Remove active class from all tab triggers and contents
+          tabTriggers.forEach(t => t.classList.remove('active'));
+          tabContents.forEach(c => c.classList.remove('active'));
+          
+          // Add active class to clicked tab trigger and corresponding content
+          trigger.classList.add('active');
+          const tabId = trigger.getAttribute('data-tab');
+          document.getElementById(tabId).classList.add('active');
+        });
+      });
+
+      // Make tutorial cards clickable
+      const tutorialCards = document.querySelectorAll('.tutorial-card, .latest-tutorial-item');
+      const videoModal = document.getElementById('video-modal');
+      const videoTitle = document.querySelector('.video-title');
+      const videoCloseButton = document.querySelector('.video-close-button');
+      
+      tutorialCards.forEach(card => {
+        card.addEventListener('click', function() {
+          // Get the tutorial title
+          const titleElement = card.querySelector('.tutorial-title') || card.querySelector('.latest-tutorial-title');
+          const title = titleElement ? titleElement.textContent : 'Tutorial';
+          
+          // Update modal title
+          videoTitle.textContent = title;
+          
+          // Show modal
+          videoModal.style.display = 'flex';
+        });
+      });
+      
+      // Close modal
+      videoCloseButton.addEventListener('click', function() {
+        videoModal.style.display = 'none';
+      });
+      
+      // Close modal when clicking outside content
+      videoModal.addEventListener('click', function(e) {
+        if (e.target === videoModal) {
+          videoModal.style.display = 'none';
+        }
+      });
+      
+      // Close modal when ESC key is pressed
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && videoModal.style.display === 'flex') {
+          videoModal.style.display = 'none';
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

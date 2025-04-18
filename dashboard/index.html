@@ -1,606 +1,472 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - ProductNexus</title>
-    <meta name="description" content="Discover winning products to sell online with powerful tools for analysis, trends, and Shopify integration.">
-    
-    <!-- Base CSS -->
-    <link rel="stylesheet" href="assets/css/common.css">
-    
-    <!-- Icon library (using FontAwesome) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Chart.js for data visualization -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <style>
-        /* Dashboard specific styles */
-        .quick-action {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 0.5rem;
-            padding: 1rem;
-            border-radius: var(--radius);
-            border: 1px solid var(--border);
-            background-color: var(--background);
-            text-decoration: none;
-            color: var(--foreground);
-            transition: all 0.2s ease;
-        }
-        
-        .quick-action:hover {
-            background-color: var(--accent);
-        }
-        
-        .quick-action-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 2rem;
-            height: 2rem;
-            border-radius: 0.375rem;
-            background-color: rgba(59, 130, 246, 0.1);
-            color: var(--primary);
-        }
-        
-        .quick-action-title {
-            font-weight: 500;
-        }
-        
-        .quick-action-description {
-            font-size: 0.75rem;
-            color: var(--muted-foreground);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - ProductNexus</title>
+  <meta name="description" content="Discover winning products to sell online with powerful tools for analysis, trends, and Shopify integration.">
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div class="app-container">
-        <!-- Header -->
-        <header class="header">
-            <button class="btn btn-ghost btn-icon mobile-menu-button" aria-label="Menu">
-                <i class="fas fa-bars"></i>
-            </button>
-            
-            <h1 class="header-title">Dashboard</h1>
-            
-            <div class="header-actions">
-                <button class="btn btn-ghost btn-icon" aria-label="Notifications">
-                    <i class="fas fa-bell"></i>
-                    <span class="notification-indicator"></span>
-                </button>
-                
-                <label class="theme-switch">
-                    <input type="checkbox" id="theme-toggle">
-                    <span class="theme-slider"></span>
-                </label>
-                
-                <div class="dropdown">
-                    <button class="btn btn-ghost dropdown-trigger flex gap-2 items-center">
-                        <div class="avatar">
-                            <div class="avatar-fallback">JS</div>
-                        </div>
-                        <div class="hidden md:block text-left">
-                            <div class="text-sm font-medium">John Smith</div>
-                            <div class="text-xs text-muted">john@example.com</div>
-                        </div>
-                        <i class="fas fa-chevron-down text-sm hidden md:block"></i>
-                    </button>
-                    <div class="dropdown-content">
-                        <div class="dropdown-header">My Account</div>
-                        <div class="dropdown-divider"></div>
-                        <a href="Profile.html" class="dropdown-item">
-                            <i class="fas fa-user"></i> Profile
-                        </a>
-                        <a href="Settings.html" class="dropdown-item">
-                            <i class="fas fa-cog"></i> Settings
-                        </a>
-                        <a href="Billing.html" class="dropdown-item">
-                            <i class="fas fa-credit-card"></i> Billing
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-sign-out-alt"></i> Log out
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </header>
+  <div class="app-container">
+    <!-- Overlay for mobile sidebar -->
+    <div class="overlay"></div>
+
+    <!-- Header -->
+    <header class="header">
+      <!-- Mobile menu button -->
+      <button class="btn btn-icon mobile-menu-button hidden-desktop">
+        <i class="fas fa-bars"></i>
+      </button>
+      
+      <!-- Brand logo and name (visible on desktop) -->
+      <div class="header-brand hidden-mobile">
+        <i class="fas fa-chart-line header-logo"></i>
+        <span>WEENIFY</span>
+      </div>
+      
+      <!-- Search box -->
+      <div class="header-search hidden-mobile">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search..." />
+      </div>
+      
+      <!-- Header actions -->
+      <div class="header-actions">
+        <!-- Notifications -->
+        <button class="btn btn-icon notification-button">
+          <i class="fas fa-bell"></i>
+          <span class="notification-badge"></span>
+        </button>
         
-        <div class="main-container">
-            <!-- Sidebar -->
-            <aside class="sidebar">
-                <div class="sidebar-header">
-                    <a href="Index.html" class="sidebar-logo">
-                        <i class="fas fa-chart-line sidebar-logo-icon"></i>
-                        <span>ProductNexus</span>
-                    </a>
-                </div>
-                
-                <div class="sidebar-content">
-                    <div class="sidebar-section">
-                        <p class="sidebar-section-title">Overview</p>
-                        <ul class="sidebar-nav">
-                            <li class="sidebar-nav-item">
-                                <a href="Index.html" class="sidebar-nav-link">
-                                    <i class="fas fa-home"></i>
-                                    <span>Dashboard</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    <div class="sidebar-section">
-                        <p class="sidebar-section-title">Analysis</p>
-                        <ul class="sidebar-nav">
-                            <li class="sidebar-nav-item">
-                                <a href="SalesTracker.html" class="sidebar-nav-link">
-                                    <i class="fas fa-chart-bar"></i>
-                                    <span>Sales Tracker</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="Trending.html" class="sidebar-nav-link">
-                                    <i class="fas fa-chart-line"></i>
-                                    <span>Trending</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="Research.html" class="sidebar-nav-link">
-                                    <i class="fas fa-search"></i>
-                                    <span>Product Research</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="RealTimeSearch.html" class="sidebar-nav-link">
-                                    <i class="fas fa-chart-line"></i>
-                                    <span>Real-Time Search</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="ShopifyImporter.html" class="sidebar-nav-link">
-                                    <i class="fas fa-shopping-cart"></i>
-                                    <span>Shopify Importer</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    <div class="sidebar-section">
-                        <p class="sidebar-section-title">Support</p>
-                        <ul class="sidebar-nav">
-                            <li class="sidebar-nav-item">
-                                <a href="Tutorials.html" class="sidebar-nav-link">
-                                    <i class="fas fa-question-circle"></i>
-                                    <span>Tutorials</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="SupportTickets.html" class="sidebar-nav-link">
-                                    <i class="fas fa-question-circle"></i>
-                                    <span>Support Tickets</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    <div class="sidebar-section">
-                        <p class="sidebar-section-title">Account</p>
-                        <ul class="sidebar-nav">
-                            <li class="sidebar-nav-item">
-                                <a href="Profile.html" class="sidebar-nav-link">
-                                    <i class="fas fa-user"></i>
-                                    <span>Profile</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="Billing.html" class="sidebar-nav-link">
-                                    <i class="fas fa-credit-card"></i>
-                                    <span>Billing</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="Settings.html" class="sidebar-nav-link">
-                                    <i class="fas fa-cog"></i>
-                                    <span>Settings</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="sidebar-footer">
-                    <label class="theme-switch">
-                        <input type="checkbox" id="theme-toggle-sidebar">
-                        <span class="theme-slider"></span>
-                    </label>
-                    <span class="pro-plan-badge">Pro Plan</span>
-                </div>
-            </aside>
-            
-            <!-- Mobile sidebar overlay -->
-            <div class="overlay"></div>
-            
-            <!-- Main content -->
-            <main class="main-content">
-                <div class="space-y-6">
-                    <h1 class="text-3xl font-bold">Dashboard</h1>
-                    
-                    <!-- Stats Cards -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div class="card stats-card">
-                            <div class="stats-card-header">
-                                <span class="stats-card-title">Search Quota</span>
-                                <i class="fas fa-search text-muted"></i>
-                            </div>
-                            <div class="stats-card-value">750/1000</div>
-                            <div class="stats-card-description">Products</div>
-                        </div>
-                        
-                        <div class="card stats-card">
-                            <div class="stats-card-header">
-                                <span class="stats-card-title">Connected Stores</span>
-                                <i class="fas fa-store text-muted"></i>
-                            </div>
-                            <div class="stats-card-value">7</div>
-                            <div class="stats-card-description">Shopify stores</div>
-                        </div>
-                        
-                        <div class="card stats-card">
-                            <div class="stats-card-header">
-                                <span class="stats-card-title">Imported Products</span>
-                                <i class="fas fa-shopping-cart text-muted"></i>
-                            </div>
-                            <div class="stats-card-value">143</div>
-                            <div class="stats-card-description">
-                                <span style="color: #10b981; margin-right: 0.25rem;">+12%</span>
-                                increase
-                            </div>
-                        </div>
-                        
-                        <div class="card stats-card">
-                            <div class="stats-card-header">
-                                <span class="stats-card-title">Sales Tracked</span>
-                                <i class="fas fa-chart-line text-muted"></i>
-                            </div>
-                            <div class="stats-card-value">$41,253</div>
-                            <div class="stats-card-description">
-                                <span style="color: #10b981; margin-right: 0.25rem;">+7%</span>
-                                increase
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Main Content Grid -->
-                    <div class="grid grid-cols-1 lg:grid-cols-7 gap-6">
-                        <!-- Top Products Table -->
-                        <div class="lg:col-span-4">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h2 class="card-title">Top 5 Products of the Day</h2>
-                                </div>
-                                <div class="card-content">
-                                    <div class="table-container">
-                                        <table>
-                                            <thead>
-                                                <tr>
-                                                    <th>Product</th>
-                                                    <th>Price</th>
-                                                    <th>Sales</th>
-                                                    <th>Revenue</th>
-                                                    <th>Date</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <div class="flex items-center">
-                                                            <div style="width: 40px; height: 40px; border-radius: 4px; overflow: hidden; margin-right: 12px; background-color: #f1f5f9;">
-                                                                <img src="https://via.placeholder.com/40" alt="Product" style="width: 100%; height: 100%; object-fit: cover;">
-                                                            </div>
-                                                            <div>
-                                                                <div class="font-medium">Wireless Bluetooth Earbuds</div>
-                                                                <div class="text-sm text-muted">tech-gadgets.myshopify.com</div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>$59.99</td>
-                                                    <td>235</td>
-                                                    <td>$14,097.65</td>
-                                                    <td>Today</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="flex items-center">
-                                                            <div style="width: 40px; height: 40px; border-radius: 4px; overflow: hidden; margin-right: 12px; background-color: #f1f5f9;">
-                                                                <img src="https://via.placeholder.com/40" alt="Product" style="width: 100%; height: 100%; object-fit: cover;">
-                                                            </div>
-                                                            <div>
-                                                                <div class="font-medium">Portable Phone Charger</div>
-                                                                <div class="text-sm text-muted">mobilepro.myshopify.com</div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>$34.99</td>
-                                                    <td>187</td>
-                                                    <td>$6,543.13</td>
-                                                    <td>Today</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="flex items-center">
-                                                            <div style="width: 40px; height: 40px; border-radius: 4px; overflow: hidden; margin-right: 12px; background-color: #f1f5f9;">
-                                                                <img src="https://via.placeholder.com/40" alt="Product" style="width: 100%; height: 100%; object-fit: cover;">
-                                                            </div>
-                                                            <div>
-                                                                <div class="font-medium">Fitness Tracker Watch</div>
-                                                                <div class="text-sm text-muted">health-gear.myshopify.com</div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>$89.95</td>
-                                                    <td>162</td>
-                                                    <td>$14,571.90</td>
-                                                    <td>Today</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="flex items-center">
-                                                            <div style="width: 40px; height: 40px; border-radius: 4px; overflow: hidden; margin-right: 12px; background-color: #f1f5f9;">
-                                                                <img src="https://via.placeholder.com/40" alt="Product" style="width: 100%; height: 100%; object-fit: cover;">
-                                                            </div>
-                                                            <div>
-                                                                <div class="font-medium">Smart LED Light Strip</div>
-                                                                <div class="text-sm text-muted">homedecor.myshopify.com</div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>$29.99</td>
-                                                    <td>142</td>
-                                                    <td>$4,258.58</td>
-                                                    <td>Today</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="flex items-center">
-                                                            <div style="width: 40px; height: 40px; border-radius: 4px; overflow: hidden; margin-right: 12px; background-color: #f1f5f9;">
-                                                                <img src="https://via.placeholder.com/40" alt="Product" style="width: 100%; height: 100%; object-fit: cover;">
-                                                            </div>
-                                                            <div>
-                                                                <div class="font-medium">Collapsible Water Bottle</div>
-                                                                <div class="text-sm text-muted">eco-products.myshopify.com</div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>$24.95</td>
-                                                    <td>139</td>
-                                                    <td>$3,468.05</td>
-                                                    <td>Today</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Quick Actions -->
-                        <div class="lg:col-span-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h2 class="card-title">Quick Actions</h2>
-                                </div>
-                                <div class="card-content">
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                        <a href="SalesTracker.html" class="quick-action">
-                                            <div class="quick-action-icon">
-                                                <i class="fas fa-chart-bar"></i>
-                                            </div>
-                                            <div>
-                                                <div class="quick-action-title">Track Sales</div>
-                                                <div class="quick-action-description">Monitor store performance</div>
-                                            </div>
-                                        </a>
-                                        
-                                        <a href="Research.html" class="quick-action">
-                                            <div class="quick-action-icon">
-                                                <i class="fas fa-search"></i>
-                                            </div>
-                                            <div>
-                                                <div class="quick-action-title">Research Products</div>
-                                                <div class="quick-action-description">Find winning products</div>
-                                            </div>
-                                        </a>
-                                        
-                                        <a href="Trending.html" class="quick-action">
-                                            <div class="quick-action-icon">
-                                                <i class="fas fa-chart-line"></i>
-                                            </div>
-                                            <div>
-                                                <div class="quick-action-title">View Trends</div>
-                                                <div class="quick-action-description">See what's trending</div>
-                                            </div>
-                                        </a>
-                                        
-                                        <a href="ShopifyImporter.html" class="quick-action">
-                                            <div class="quick-action-icon">
-                                                <i class="fas fa-shopping-cart"></i>
-                                            </div>
-                                            <div>
-                                                <div class="quick-action-title">Import to Shopify</div>
-                                                <div class="quick-action-description">Add products to your store</div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Usage and Subscription -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="space-y-4">
-                            <h2 class="text-xl font-semibold">Package Usage</h2>
-                            
-                            <!-- Search quota -->
-                            <div class="space-y-2">
-                                <div class="flex items-center justify-between text-sm">
-                                    <div class="font-medium">Search quota</div>
-                                    <div class="text-muted">750/1000</div>
-                                </div>
-                                <div class="progress">
-                                    <div class="progress-bar" style="width: 75%"></div>
-                                </div>
-                            </div>
-                            
-                            <!-- Store tracking -->
-                            <div class="space-y-2">
-                                <div class="flex items-center justify-between text-sm">
-                                    <div class="font-medium">Store tracking</div>
-                                    <div class="text-muted">7/10</div>
-                                </div>
-                                <div class="progress">
-                                    <div class="progress-bar" style="width: 70%"></div>
-                                </div>
-                            </div>
-                            
-                            <!-- Product imports -->
-                            <div class="space-y-2">
-                                <div class="flex items-center justify-between text-sm">
-                                    <div class="font-medium">Product imports</div>
-                                    <div class="text-muted">143/250</div>
-                                </div>
-                                <div class="progress">
-                                    <div class="progress-bar" style="width: 57%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="card">
-                            <div class="card-content" style="padding: 1.5rem;">
-                                <div class="space-y-2 mb-4">
-                                    <h2 class="text-xl font-semibold">Current Subscription</h2>
-                                    <p class="text-muted">You're currently on the <strong>Pro Plan</strong> with premium features.</p>
-                                </div>
-                                
-                                <div class="space-y-3 mb-4">
-                                    <div class="flex items-center gap-2">
-                                        <i class="fas fa-chart-bar text-primary"></i>
-                                        <span>Advanced analytics</span>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <i class="fas fa-store text-primary"></i>
-                                        <span>10 store connections</span>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <i class="fas fa-shopping-cart text-primary"></i>
-                                        <span>250 product imports</span>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <i class="fas fa-chart-line text-primary"></i>
-                                        <span>Trending product suggestions</span>
-                                    </div>
-                                </div>
-                                
-                                <a href="Billing.html" class="btn btn-primary" style="width: 100%;">Upgrade Plan</a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Charts section -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h2 class="card-title">Sales Overview</h2>
-                            <p class="card-description">Weekly sales performance</p>
-                        </div>
-                        <div class="card-content">
-                            <div class="chart-container">
-                                <canvas id="salesChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
+        <!-- Theme toggle -->
+        <label class="theme-toggle">
+          <input type="checkbox" id="theme-toggle">
+          <span class="theme-toggle-track"></span>
+        </label>
+        
+        <!-- User menu -->
+        <div class="dropdown">
+          <button class="btn btn-ghost dropdown-trigger flex gap-2 items-center">
+              <div class="avatar">
+                  <div class="avatar-fallback">JS</div>
+              </div>
+              <div class="hidden md:block text-left">
+                  <div class="text-sm font-medium">John Smith</div>
+                  <div class="text-xs text-muted">john@example.com</div>
+              </div>
+              <i class="fas fa-chevron-down text-sm hidden md:block"></i>
+          </button>
+          <div class="dropdown-content">
+              <div class="dropdown-header">My Account</div>
+              <div class="dropdown-divider"></div>
+              <a href="Profile.html" class="dropdown-item">
+                  <i class="fas fa-user"></i> Profile
+              </a>
+              <a href="Settings.html" class="dropdown-item">
+                  <i class="fas fa-cog"></i> Settings
+              </a>
+              <a href="Billing.html" class="dropdown-item">
+                  <i class="fas fa-credit-card"></i> Billing
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item">
+                  <i class="fas fa-sign-out-alt"></i> Log out
+              </a>
+          </div>
+      </div>
+      </div>
+    </header>
+
+    <div class="main-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+
+        <div class="sidebar-content">
+          <div class="sidebar-section">
+            <div class="sidebar-section-title">Overview</div>
+            <ul class="sidebar-nav">
+              <li class="sidebar-nav-item">
+                <a href="index.html" class="sidebar-nav-link active">
+                  <i class="fas fa-home"></i>
+                  <span>Dashboard</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="sidebar-section-title">Analysis</div>
+            <ul class="sidebar-nav">
+              <li class="sidebar-nav-item">
+                <a href="salestracker.html" class="sidebar-nav-link">
+                  <i class="fas fa-chart-bar"></i>
+                  <span>Sales Tracker</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="trending.html" class="sidebar-nav-link">
+                  <i class="fas fa-chart-line"></i>
+                  <span>Trending</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="research.html" class="sidebar-nav-link">
+                  <i class="fas fa-search"></i>
+                  <span>Product Research</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="realtimesearch.html" class="sidebar-nav-link">
+                  <i class="fas fa-bolt"></i>
+                  <span>Real-Time Search</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="shopifyimporter.html" class="sidebar-nav-link">
+                  <i class="fas fa-shopping-cart"></i>
+                  <span>Shopify Importer</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="sidebar-section-title">Support</div>
+            <ul class="sidebar-nav">
+              <li class="sidebar-nav-item">
+                <a href="tutorials.html" class="sidebar-nav-link">
+                  <i class="fas fa-video"></i>
+                  <span>Tutorials</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="supporttickets.html" class="sidebar-nav-link">
+                  <i class="fas fa-ticket-alt"></i>
+                  <span>Support Tickets</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="sidebar-section-title">Account</div>
+            <ul class="sidebar-nav">
+              <li class="sidebar-nav-item">
+                <a href="profile.html" class="sidebar-nav-link">
+                  <i class="fas fa-user"></i>
+                  <span>Profile</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="billing.html" class="sidebar-nav-link">
+                  <i class="fas fa-credit-card"></i>
+                  <span>Billing</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="settings.html" class="sidebar-nav-link">
+                  <i class="fas fa-cog"></i>
+                  <span>Settings</span>
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
-    </div>
-    
-    <!-- Base JS -->
-    <script src="assets/js/common.js"></script>
-    
-    <!-- Page specific scripts -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Sales Chart
-            const ctx = document.getElementById('salesChart').getContext('2d');
-            
-            const salesChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-                    datasets: [
-                        {
-                            label: 'Revenue',
-                            data: [6500, 5900, 8000, 8100, 9600, 8800, 9000],
-                            borderColor: '#3b82f6',
-                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                            borderWidth: 2,
-                            tension: 0.3,
-                            fill: true
-                        },
-                        {
-                            label: 'Units Sold',
-                            data: [120, 115, 160, 165, 180, 170, 175],
-                            borderColor: '#10b981',
-                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                            borderWidth: 2,
-                            tension: 0.3,
-                            fill: true
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'top'
-                        }
-                    }
-                }
-            });
-            
-            // Initialize UI functionality
-            initializeDropdowns();
-            
-            // Sync the theme toggle in the sidebar with the main toggle
-            const themeToggle = document.getElementById('theme-toggle');
-            const themeToggleSidebar = document.getElementById('theme-toggle-sidebar');
-            
-            if (themeToggle && themeToggleSidebar) {
-                themeToggle.addEventListener('change', function() {
-                    themeToggleSidebar.checked = this.checked;
-                });
+
+        <!-- Sidebar footer -->
+        <div class="sidebar-footer">
+          <div class="user-status">
+            <span class="user-status-dot"></span>
+            <span class="pro-badge">Pro Plan</span>
+          </div>
+          
+          <label class="theme-toggle">
+            <input type="checkbox" id="sidebar-theme-toggle">
+            <span class="theme-toggle-track"></span>
+          </label>
+        </div>
+      </aside>
+
+      <!-- Main content -->
+      <main class="main-content">
+        <div class="page-header">
+          <h1 class="page-title">Dashboard</h1>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+          <div class="card stats-card">
+            <div class="stats-card-header">
+              <div class="stats-card-title">Search Quota</div>
+              <i class="fas fa-search text-muted"></i>
+            </div>
+            <div class="stats-card-value">750/1000</div>
+            <div class="stats-card-description">Products</div>
+          </div>
+
+          <div class="card stats-card">
+            <div class="stats-card-header">
+              <div class="stats-card-title">Connected Stores</div>
+              <i class="fas fa-store text-muted"></i>
+            </div>
+            <div class="stats-card-value">7</div>
+            <div class="stats-card-description">Shopify stores</div>
+          </div>
+
+          <div class="card stats-card">
+            <div class="stats-card-header">
+              <div class="stats-card-title">Imported Products</div>
+              <i class="fas fa-shopping-cart text-muted"></i>
+            </div>
+            <div class="stats-card-value">143</div>
+            <div class="stats-card-description">
+              <span class="badge-trend positive">+12%</span> from last month
+            </div>
+          </div>
+
+          <div class="card stats-card">
+            <div class="stats-card-header">
+              <div class="stats-card-title">Sales Tracked</div>
+              <i class="fas fa-chart-line text-muted"></i>
+            </div>
+            <div class="stats-card-value">$41,253</div>
+            <div class="stats-card-description">
+              <span class="badge-trend positive">+7%</span> from last month
+            </div>
+          </div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+          <!-- Top Products Table -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Top 5 Products of the Day</div>
+            </div>
+            <div class="card-content">
+              <div class="table-container">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Product</th>
+                      <th>Price</th>
+                      <th>Sales</th>
+                      <th>Revenue</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="product-cell">
+                          <img src="https://images.unsplash.com/photo-1581287053822-fd7bf4f4bfec?auto=format&fit=crop&q=80&w=60&h=60" alt="Wireless Bluetooth Earbuds" class="product-img">
+                          <div class="product-details">
+                            <div class="font-medium">Wireless Bluetooth Earbuds</div>
+                            <div class="product-store">tech-gadgets.myshopify.com</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>$59.99</td>
+                      <td>235</td>
+                      <td>$14,097.65</td>
+                      <td>Today</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="product-cell">
+                          <img src="https://images.unsplash.com/photo-1600861194942-f883de0dfe96?auto=format&fit=crop&q=80&w=60&h=60" alt="Portable Phone Charger" class="product-img">
+                          <div class="product-details">
+                            <div class="font-medium">Portable Phone Charger</div>
+                            <div class="product-store">mobilepro.myshopify.com</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>$34.99</td>
+                      <td>187</td>
+                      <td>$6,543.13</td>
+                      <td>Today</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="product-cell">
+                          <img src="https://images.unsplash.com/photo-1593998066526-65fcab3021a2?auto=format&fit=crop&q=80&w=60&h=60" alt="Fitness Tracker Watch" class="product-img">
+                          <div class="product-details">
+                            <div class="font-medium">Fitness Tracker Watch</div>
+                            <div class="product-store">health-gear.myshopify.com</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>$89.95</td>
+                      <td>162</td>
+                      <td>$14,571.90</td>
+                      <td>Today</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="product-cell">
+                          <img src="https://images.unsplash.com/photo-1560343776-97e7d202ff0e?auto=format&fit=crop&q=80&w=60&h=60" alt="Smart LED Light Strip" class="product-img">
+                          <div class="product-details">
+                            <div class="font-medium">Smart LED Light Strip</div>
+                            <div class="product-store">homedecor.myshopify.com</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>$29.99</td>
+                      <td>142</td>
+                      <td>$4,258.58</td>
+                      <td>Today</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="product-cell">
+                          <img src="https://images.unsplash.com/photo-1603816245457-fe9c80b740ff?auto=format&fit=crop&q=80&w=60&h=60" alt="Collapsible Water Bottle" class="product-img">
+                          <div class="product-details">
+                            <div class="font-medium">Collapsible Water Bottle</div>
+                            <div class="product-store">eco-products.myshopify.com</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>$24.95</td>
+                      <td>139</td>
+                      <td>$3,468.05</td>
+                      <td>Today</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Quick Actions</div>
+            </div>
+            <div class="card-content">
+              <div class="quick-actions-grid">
+                <a href="salestracker.html" class="quick-action-button">
+                  <div class="quick-action-icon">
+                    <i class="fas fa-chart-bar"></i>
+                  </div>
+                  <div>
+                    <div class="quick-action-title">Track Sales</div>
+                    <div class="quick-action-description">Monitor store performance</div>
+                  </div>
+                </a>
+                <a href="research.html" class="quick-action-button">
+                  <div class="quick-action-icon">
+                    <i class="fas fa-search"></i>
+                  </div>
+                  <div>
+                    <div class="quick-action-title">Research Products</div>
+                    <div class="quick-action-description">Find winning products</div>
+                  </div>
+                </a>
+                <a href="trending.html" class="quick-action-button">
+                  <div class="quick-action-icon">
+                    <i class="fas fa-chart-line"></i>
+                  </div>
+                  <div>
+                    <div class="quick-action-title">View Trends</div>
+                    <div class="quick-action-description">See what's trending</div>
+                  </div>
+                </a>
+                <a href="shopifyimporter.html" class="quick-action-button">
+                  <div class="quick-action-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                  </div>
+                  <div>
+                    <div class="quick-action-title">Import to Shopify</div>
+                    <div class="quick-action-description">Add products to your store</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+
+        <!-- Usage and Subscription Section -->
+          <!-- Package Usage -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Package Usage</div>
+            </div>
+            <div class="card-content">
+              <div class="usage-container">
+                <div class="usage-header">
+                  <div class="usage-label">Search quota</div>
+                  <div class="usage-value">750/1000</div>
+                </div>
+                <div class="progress">
+                  <div class="progress-bar" style="width: 75%"></div>
+                </div>
+              </div>
+
+              <div class="usage-container mt-4">
+                <div class="usage-header">
+                  <div class="usage-label">Store tracking</div>
+                  <div class="usage-value">7/10</div>
+                </div>
+                <div class="progress">
+                  <div class="progress-bar" style="width: 70%"></div>
+                </div>
+              </div>
+
+              <div class="usage-container mt-4">
+                <div class="usage-header">
+                  <div class="usage-label">Product imports</div>
+                  <div class="usage-value">143/250</div>
+                </div>
+                <div class="progress">
+                  <div class="progress-bar" style="width: 57%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Subscription Card -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Current Subscription</div>
+            </div>
+            <div class="card-content">
+              <div class="subscription-container">
+                <div>
+                  <h2 class="text-xl font-semibold">Pro Plan</h2>
+                  <p class="text-muted">You're currently on the <strong>Pro Plan</strong> with premium features.</p>
                 
-                themeToggleSidebar.addEventListener('change', function() {
-                    themeToggle.checked = this.checked;
-                });
-            }
-        });
-    </script>
+                  <div class="subscription-features">
+                    <div class="subscription-feature">
+                      <i class="fas fa-chart-bar"></i>
+                      <span>Advanced analytics</span>
+                    </div>
+                    <div class="subscription-feature">
+                      <i class="fas fa-store"></i>
+                      <span>10 store connections</span>
+                    </div>
+                    <div class="subscription-feature">
+                      <i class="fas fa-shopping-cart"></i>
+                      <span>250 product imports</span>
+                    </div>
+                    <div class="subscription-feature">
+                      <i class="fas fa-chart-line"></i>
+                      <span>Trending product suggestions</span>
+                    </div>
+                  </div>
+                </div>
+                <a href="billing.html" class="btn btn-primary w-100">Upgrade Plan</a>
+              </div>
+            </div>
+          </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="assets/js/common.js"></script>
+
 </body>
 </html>
