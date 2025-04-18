@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Billing - ProductNexus</title>
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Billing specific styles */
+    .billing-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 1024px) {
+      .billing-grid {
+        grid-template-columns: 2fr 1fr;
+      }
+    }
+
+    .plan-card {
+      padding: 1rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 1rem;
+    }
+
+    .plan-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .plan-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .plan-price {
+      font-size: 0.875rem;
+      color: var(--muted-foreground);
+    }
+
+    .plan-features {
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 0.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .plan-features {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .plan-feature {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+    }
+
+    .plan-feature i {
+      color: var(--primary);
+      font-size: 0.75rem;
+    }
+
+    .payment-method {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 1rem;
+    }
+
+    .payment-method-icon {
+      width: 3rem;
+      height: 2rem;
+      background-color: var(--muted);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .payment-method-details {
+      flex: 1;
+      margin-left: 1rem;
+    }
+
+    .payment-method-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge-default {
+      background-color: var(--border);
+      color: var(--foreground);
+    }
+
+    .usage-meter {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1rem;
+    }
+
+    .usage-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+
+    .usage-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .usage-value {
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    /* Dialog/Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      overflow: auto;
+      padding: 1rem;
+    }
+
+    .modal.open {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background-color: var(--card);
+      border-radius: var(--radius);
+      max-width: 500px;
+      width: 100%;
+      position: relative;
+      animation: modalFadeIn 0.3s;
+    }
+
+    @keyframes modalFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .modal-description {
+      font-size: 0.875rem;
+      color: var(--muted-foreground);
+      margin-top: 0.25rem;
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+    }
+
+    .modal-footer {
+      padding: 1.5rem;
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.25rem;
+      color: var(--muted-foreground);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .form-row-2 {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Overlay for mobile sidebar -->
+    <div class="overlay"></div>
+
+    <!-- Header -->
+    <header class="header">
+      <button class="btn btn-ghost btn-icon mobile-menu-button">
+        <i class="fas fa-bars"></i>
+      </button>
+      <h1 class="header-title">Billing</h1>
+
+      <div class="header-actions">
+        <button class="btn btn-ghost btn-icon" aria-label="Notifications">
+          <i class="fas fa-bell"></i>
+          <span class="notification-indicator"></span>
+        </button>
+
+        <label class="theme-switch">
+          <input type="checkbox" id="theme-toggle">
+          <span class="theme-slider"></span>
+        </label>
+
+        <div class="user-menu">
+          <button class="btn btn-ghost gap-2">
+            <div class="avatar">
+              <div class="avatar-fallback">JS</div>
+            </div>
+            <div class="hidden md:flex flex-col items-start">
+              <span class="text-sm font-medium">John Smith</span>
+              <span class="text-xs text-muted">john@example.com</span>
+            </div>
+            <i class="fas fa-chevron-down hidden md:block"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="main-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <a href="index.html" class="sidebar-logo">
+            <i class="fas fa-chart-line sidebar-logo-icon"></i>
+            <span>ProductNexus</span>
+          </a>
+        </div>
+
+        <div class="sidebar-content">
+          <div class="sidebar-section">
+            <div class="sidebar-section-title">Overview</div>
+            <ul class="sidebar-nav">
+              <li class="sidebar-nav-item">
+                <a href="dashboard.html" class="sidebar-nav-link">
+                  <i class="fas fa-home"></i>
+                  <span>Dashboard</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="sidebar-section-title">Analysis</div>
+            <ul class="sidebar-nav">
+              <li class="sidebar-nav-item">
+                <a href="salestracker.html" class="sidebar-nav-link">
+                  <i class="fas fa-chart-bar"></i>
+                  <span>Sales Tracker</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="trending.html" class="sidebar-nav-link">
+                  <i class="fas fa-chart-line"></i>
+                  <span>Trending</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="research.html" class="sidebar-nav-link">
+                  <i class="fas fa-search"></i>
+                  <span>Product Research</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="realtimesearch.html" class="sidebar-nav-link">
+                  <i class="fas fa-chart-line"></i>
+                  <span>Real-Time Search</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="shopifyimporter.html" class="sidebar-nav-link">
+                  <i class="fas fa-shopping-cart"></i>
+                  <span>Shopify Importer</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="sidebar-section-title">Support</div>
+            <ul class="sidebar-nav">
+              <li class="sidebar-nav-item">
+                <a href="tutorials.html" class="sidebar-nav-link">
+                  <i class="fas fa-question-circle"></i>
+                  <span>Tutorials</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="supporttickets.html" class="sidebar-nav-link">
+                  <i class="fas fa-question-circle"></i>
+                  <span>Support Tickets</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="sidebar-section-title">Account</div>
+            <ul class="sidebar-nav">
+              <li class="sidebar-nav-item">
+                <a href="profile.html" class="sidebar-nav-link">
+                  <i class="fas fa-user"></i>
+                  <span>Profile</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="billing.html" class="sidebar-nav-link active">
+                  <i class="fas fa-credit-card"></i>
+                  <span>Billing</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="settings.html" class="sidebar-nav-link">
+                  <i class="fas fa-cog"></i>
+                  <span>Settings</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="sidebar-footer">
+          <label class="theme-switch">
+            <input type="checkbox" id="sidebar-theme-toggle">
+            <span class="theme-slider"></span>
+          </label>
+          <span class="pro-plan-badge">Pro Plan</span>
+        </div>
+      </aside>
+
+      <!-- Main content -->
+      <main class="main-content">
+        <div class="page-header">
+          <h1 class="page-title">Billing</h1>
+        </div>
+        
+        <div class="billing-grid">
+          <div class="space-y-6">
+            <!-- Current Subscription -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">Current Subscription</div>
+                <div class="card-description">Manage your subscription plan</div>
+              </div>
+              <div class="card-content">
+                <div class="plan-card">
+                  <div class="plan-header">
+                    <div>
+                      <div class="flex items-center gap-2">
+                        <h3 class="plan-title">Pro Plan</h3>
+                        <span class="badge badge-success">Active</span>
+                      </div>
+                      <p class="plan-price">$49.99 billed monthly</p>
+                    </div>
+                    
+                    <div class="text-right">
+                      <p class="text-sm">Next billing date: <span class="font-medium">May 15, 2025</span></p>
+                      <div class="flex flex-col space-y-2 mt-4">
+                        <button class="btn btn-primary">Change Plan</button>
+                        <button class="btn btn-outline">Cancel Subscription</button>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h4 class="text-sm font-medium mb-2">Plan Features</h4>
+                    <div class="plan-features">
+                      <div class="plan-feature">
+                        <i class="fas fa-star"></i>
+                        <span>500 product searches per month</span>
+                      </div>
+                      <div class="plan-feature">
+                        <i class="fas fa-star"></i>
+                        <span>50 stores tracking</span>
+                      </div>
+                      <div class="plan-feature">
+                        <i class="fas fa-star"></i>
+                        <span>Unlimited product imports</span>
+                      </div>
+                      <div class="plan-feature">
+                        <i class="fas fa-star"></i>
+                        <span>Priority support</span>
+                      </div>
+                      <div class="plan-feature">
+                        <i class="fas fa-star"></i>
+                        <span>Real-time search</span>
+                      </div>
+                      <div class="plan-feature">
+                        <i class="fas fa-star"></i>
+                        <span>Trending algorithm access</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Payment Methods -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">Payment Methods</div>
+                <div class="card-description">Manage your payment methods</div>
+              </div>
+              <div class="card-content">
+                <div class="payment-method">
+                  <div class="flex items-center gap-4">
+                    <div class="payment-method-icon">
+                      <i class="fas fa-credit-card"></i>
+                    </div>
+                    <div class="payment-method-details">
+                      <p class="font-medium">Visa ending in 4242</p>
+                      <p class="text-sm text-muted">Expires 12/2025</p>
+                    </div>
+                  </div>
+                  <div class="payment-method-actions">
+                    <span class="badge badge-default">Default</span>
+                    <button class="btn btn-ghost btn-sm">Edit</button>
+                    <button class="btn btn-ghost btn-sm">Remove</button>
+                  </div>
+                </div>
+                
+                <button class="btn btn-outline w-100" id="add-payment-method">
+                  <i class="fas fa-plus-circle mr-2"></i>
+                  Add New Payment Method
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Usage Overview -->
+          <div>
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">Usage Overview</div>
+                <div class="card-description">Current plan usage summary</div>
+              </div>
+              <div class="card-content">
+                <div class="space-y-4">
+                  <div class="usage-meter">
+                    <div class="usage-header">
+                      <div class="usage-label">Product Searches</div>
+                      <div class="usage-value">320 / 500</div>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar" style="width: 64%"></div>
+                    </div>
+                    <p class="text-xs text-muted mt-1">64% of monthly limit used</p>
+                  </div>
+                  
+                  <div class="usage-meter">
+                    <div class="usage-header">
+                      <div class="usage-label">Store Tracking</div>
+                      <div class="usage-value">18 / 50</div>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar" style="width: 36%"></div>
+                    </div>
+                    <p class="text-xs text-muted mt-1">36% of tracking limit used</p>
+                  </div>
+                  
+                  <div class="usage-meter">
+                    <div class="usage-header">
+                      <div class="usage-label">API Requests</div>
+                      <div class="usage-value">1,240 / 5,000</div>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar" style="width: 25%"></div>
+                    </div>
+                    <p class="text-xs text-muted mt-1">25% of monthly limit used</p>
+                  </div>
+                  
+                  <div class="pt-4 border-t">
+                    <h4 class="text-sm font-medium mb-2">Upgrade Options</h4>
+                    <select class="form-select mb-2">
+                      <option value="starter">Starter - $19.99/mo</option>
+                      <option value="pro" selected>Pro - $49.99/mo (Current)</option>
+                      <option value="business">Business - $99.99/mo</option>
+                      <option value="enterprise">Enterprise - Contact us</option>
+                    </select>
+                    <button class="btn btn-primary w-100">Upgrade Plan</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Billing History -->
+        <div class="card mt-6">
+          <div class="card-header">
+            <div class="card-title">Billing History</div>
+            <div class="card-description">View and download your past invoices</div>
+          </div>
+          <div class="card-content">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Invoice</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Payment Method</th>
+                    <th>Status</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="font-medium">INV-2023</td>
+                    <td>April 1, 2023</td>
+                    <td>$49.99</td>
+                    <td>Visa •••• 4242</td>
+                    <td><span class="badge badge-success">Paid</span></td>
+                    <td>
+                      <button class="btn btn-ghost btn-sm">
+                        <i class="fas fa-download mr-2"></i>
+                        PDF
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="font-medium">INV-2022</td>
+                    <td>March 1, 2023</td>
+                    <td>$49.99</td>
+                    <td>Visa •••• 4242</td>
+                    <td><span class="badge badge-success">Paid</span></td>
+                    <td>
+                      <button class="btn btn-ghost btn-sm">
+                        <i class="fas fa-download mr-2"></i>
+                        PDF
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="font-medium">INV-2021</td>
+                    <td>February 1, 2023</td>
+                    <td>$49.99</td>
+                    <td>Visa •••• 4242</td>
+                    <td><span class="badge badge-success">Paid</span></td>
+                    <td>
+                      <button class="btn btn-ghost btn-sm">
+                        <i class="fas fa-download mr-2"></i>
+                        PDF
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="font-medium">INV-2020</td>
+                    <td>January 1, 2023</td>
+                    <td>$49.99</td>
+                    <td>Visa •••• 4242</td>
+                    <td><span class="badge badge-success">Paid</span></td>
+                    <td>
+                      <button class="btn btn-ghost btn-sm">
+                        <i class="fas fa-download mr-2"></i>
+                        PDF
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="font-medium">INV-2019</td>
+                    <td>December 1, 2022</td>
+                    <td>$49.99</td>
+                    <td>Visa •••• 4242</td>
+                    <td><span class="badge badge-success">Paid</span></td>
+                    <td>
+                      <button class="btn btn-ghost btn-sm">
+                        <i class="fas fa-download mr-2"></i>
+                        PDF
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Add Payment Method Modal -->
+  <div class="modal" id="payment-method-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Add Payment Method</h2>
+        <p class="modal-description">Enter your card details to add a new payment method</p>
+        <button class="modal-close" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="payment-form">
+          <div class="form-group">
+            <label for="card-name" class="form-label">Cardholder Name</label>
+            <input type="text" id="card-name" class="form-input" placeholder="Name on card">
+          </div>
+          
+          <div class="form-group">
+            <label for="card-number" class="form-label">Card Number</label>
+            <input type="text" id="card-number" class="form-input" placeholder="1234 5678 9012 3456">
+          </div>
+          
+          <div class="form-row form-row-2">
+            <div class="form-group">
+              <label for="expiry" class="form-label">Expiration Date</label>
+              <input type="text" id="expiry" class="form-input" placeholder="MM/YY">
+            </div>
+            <div class="form-group">
+              <label for="cvc" class="form-label">CVC</label>
+              <input type="text" id="cvc" class="form-input" placeholder="123">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline modal-close">Cancel</button>
+        <button class="btn btn-primary" id="add-card-btn">Add Card</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/common.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize sidebar theme toggle to match the main theme toggle
+      const mainThemeToggle = document.getElementById('theme-toggle');
+      const sidebarThemeToggle = document.getElementById('sidebar-theme-toggle');
+      
+      if (mainThemeToggle && sidebarThemeToggle) {
+        // Sync the sidebar toggle with the main toggle
+        sidebarThemeToggle.checked = mainThemeToggle.checked;
+        
+        // Keep them in sync when either changes
+        mainThemeToggle.addEventListener('change', function() {
+          sidebarThemeToggle.checked = this.checked;
+        });
+        
+        sidebarThemeToggle.addEventListener('change', function() {
+          mainThemeToggle.checked = this.checked;
+          // Trigger the change event to update the theme
+          const event = new Event('change');
+          mainThemeToggle.dispatchEvent(event);
+        });
+      }
+      
+      // Modal functionality for adding payment method
+      const modal = document.getElementById('payment-method-modal');
+      const addPaymentBtn = document.getElementById('add-payment-method');
+      const closeButtons = document.querySelectorAll('.modal-close');
+      const addCardBtn = document.getElementById('add-card-btn');
+      
+      if (addPaymentBtn && modal) {
+        addPaymentBtn.addEventListener('click', function() {
+          modal.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        });
+        
+        closeButtons.forEach(button => {
+          button.addEventListener('click', function() {
+            modal.classList.remove('open');
+            document.body.style.overflow = '';
+          });
+        });
+        
+        // Close modal when clicking outside content
+        modal.addEventListener('click', function(e) {
+          if (e.target === modal) {
+            modal.classList.remove('open');
+            document.body.style.overflow = '';
+          }
+        });
+        
+        // Add card button functionality (demo only)
+        if (addCardBtn) {
+          addCardBtn.addEventListener('click', function() {
+            // In a real app, this would handle form validation and submission
+            showToast('Payment method added successfully!', 'success');
+            modal.classList.remove('open');
+            document.body.style.overflow = '';
+          });
+        }
+      }
+      
+      // Toast notification functionality 
+      function showToast(message, type = 'info', duration = 3000) {
+        // Create toast container if it doesn't exist
+        let toastContainer = document.querySelector('.toast-container');
+        if (!toastContainer) {
+          toastContainer = document.createElement('div');
+          toastContainer.className = 'toast-container';
+          toastContainer.style.position = 'fixed';
+          toastContainer.style.bottom = '1rem';
+          toastContainer.style.right = '1rem';
+          toastContainer.style.zIndex = '9999';
+          document.body.appendChild(toastContainer);
+        }
+        
+        // Create toast element
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        toast.style.padding = '0.75rem 1rem';
+        toast.style.backgroundColor = 'var(--card)';
+        toast.style.color = 'var(--card-foreground)';
+        toast.style.borderRadius = 'var(--radius)';
+        toast.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+        toast.style.marginTop = '0.5rem';
+        toast.style.display = 'flex';
+        toast.style.alignItems = 'center';
+        toast.style.animation = 'fadeIn 0.3s';
+        toast.style.border = '1px solid var(--border)';
+        
+        // Add icon based on type
+        const iconElement = document.createElement('i');
+        iconElement.style.marginRight = '0.5rem';
+        
+        if (type === 'success') {
+          iconElement.className = 'fas fa-check-circle';
+          iconElement.style.color = '#10b981';
+        } else if (type === 'error') {
+          iconElement.className = 'fas fa-exclamation-circle';
+          iconElement.style.color = '#ef4444';
+        } else {
+          iconElement.className = 'fas fa-info-circle';
+          iconElement.style.color = '#3b82f6';
+        }
+        
+        toast.appendChild(iconElement);
+        
+        // Add message
+        const textElement = document.createElement('span');
+        textElement.textContent = message;
+        toast.appendChild(textElement);
+        
+        // Add toast to container
+        toastContainer.appendChild(toast);
+        
+        // Remove toast after duration
+        setTimeout(() => {
+          toast.style.opacity = '0';
+          toast.style.transition = 'opacity 0.3s';
+          
+          setTimeout(() => {
+            toast.remove();
+          }, 300);
+        }, duration);
+      }
+    });
+  </script>
+</body>
+</html>

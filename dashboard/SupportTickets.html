@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support Tickets - ProductNexus</title>
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Support Tickets specific styles */
+    .badge-yellow {
+      background-color: #f59e0b;
+      color: white;
+    }
+    
+    .badge-blue {
+      background-color: #3b82f6;
+      color: white;
+    }
+    
+    .badge-green {
+      background-color: #10b981;
+      color: white;
+    }
+    
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background-color: var(--background);
+      margin: auto;
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      width: 90%;
+      max-width: 600px;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 1.5rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .modal-header {
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-body {
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+    }
+    
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    @media (min-width: 640px) {
+      .form-row-2 {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Overlay for mobile sidebar -->
+    <div class="overlay"></div>
+
+    <!-- Header -->
+    <header class="header">
+      <button class="btn btn-ghost btn-icon mobile-menu-button">
+        <i class="fas fa-bars"></i>
+      </button>
+      <h1 class="header-title">Support Tickets</h1>
+
+      <div class="header-actions">
+        <button class="btn btn-ghost btn-icon" aria-label="Notifications">
+          <i class="fas fa-bell"></i>
+          <span class="notification-indicator"></span>
+        </button>
+
+        <label class="theme-switch">
+          <input type="checkbox" id="theme-toggle">
+          <span class="theme-slider"></span>
+        </label>
+
+        <div class="user-menu">
+          <button class="btn btn-ghost gap-2">
+            <div class="avatar">
+              <div class="avatar-fallback">JS</div>
+            </div>
+            <div class="hidden md:flex flex-col items-start">
+              <span class="text-sm font-medium">John Smith</span>
+              <span class="text-xs text-muted">john@example.com</span>
+            </div>
+            <i class="fas fa-chevron-down hidden md:block"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="main-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <a href="index.html" class="sidebar-logo">
+            <i class="fas fa-chart-line sidebar-logo-icon"></i>
+            <span>ProductNexus</span>
+          </a>
+        </div>
+
+        <div class="sidebar-content">
+          <div class="sidebar-section">
+            <div class="sidebar-section-title">Overview</div>
+            <ul class="sidebar-nav">
+              <li class="sidebar-nav-item">
+                <a href="dashboard.html" class="sidebar-nav-link">
+                  <i class="fas fa-home"></i>
+                  <span>Dashboard</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="sidebar-section-title">Analysis</div>
+            <ul class="sidebar-nav">
+              <li class="sidebar-nav-item">
+                <a href="salestracker.html" class="sidebar-nav-link">
+                  <i class="fas fa-chart-bar"></i>
+                  <span>Sales Tracker</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="trending.html" class="sidebar-nav-link">
+                  <i class="fas fa-chart-line"></i>
+                  <span>Trending</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="research.html" class="sidebar-nav-link">
+                  <i class="fas fa-search"></i>
+                  <span>Product Research</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="realtimesearch.html" class="sidebar-nav-link">
+                  <i class="fas fa-chart-line"></i>
+                  <span>Real-Time Search</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="shopifyimporter.html" class="sidebar-nav-link">
+                  <i class="fas fa-shopping-cart"></i>
+                  <span>Shopify Importer</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="sidebar-section-title">Support</div>
+            <ul class="sidebar-nav">
+              <li class="sidebar-nav-item">
+                <a href="tutorials.html" class="sidebar-nav-link">
+                  <i class="fas fa-question-circle"></i>
+                  <span>Tutorials</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="supporttickets.html" class="sidebar-nav-link active">
+                  <i class="fas fa-question-circle"></i>
+                  <span>Support Tickets</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="sidebar-section-title">Account</div>
+            <ul class="sidebar-nav">
+              <li class="sidebar-nav-item">
+                <a href="profile.html" class="sidebar-nav-link">
+                  <i class="fas fa-user"></i>
+                  <span>Profile</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="billing.html" class="sidebar-nav-link">
+                  <i class="fas fa-credit-card"></i>
+                  <span>Billing</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="settings.html" class="sidebar-nav-link">
+                  <i class="fas fa-cog"></i>
+                  <span>Settings</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="sidebar-footer">
+          <label class="theme-switch">
+            <input type="checkbox" id="sidebar-theme-toggle">
+            <span class="theme-slider"></span>
+          </label>
+          <span class="pro-plan-badge">Pro Plan</span>
+        </div>
+      </aside>
+
+      <!-- Main content -->
+      <main class="main-content">
+        <div class="page-header flex items-center justify-between">
+          <h1 class="page-title">Support Tickets</h1>
+          <button class="btn btn-primary" id="open-ticket-btn">
+            <i class="fas fa-plus-circle mr-2"></i>
+            Open New Ticket
+          </button>
+        </div>
+        
+        <!-- Open Tickets -->
+        <div class="card mb-6">
+          <div class="card-header">
+            <div class="card-title">Open Tickets</div>
+            <div class="card-description">View and manage your current support tickets</div>
+          </div>
+          <div class="card-content">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th>Last Update</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="font-medium">TKT-1000</td>
+                    <td>Issue with product import</td>
+                    <td>Technical</td>
+                    <td><span class="badge badge-yellow">In Progress</span></td>
+                    <td>April 10, 2023</td>
+                    <td>April 12, 2023</td>
+                    <td>
+                      <button class="btn btn-outline btn-sm view-ticket-btn" data-ticket-id="1000">
+                        <i class="fas fa-comment-alt mr-2"></i>
+                        View
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="font-medium">TKT-1001</td>
+                    <td>Billing question</td>
+                    <td>Billing</td>
+                    <td><span class="badge badge-green">Completed</span></td>
+                    <td>April 11, 2023</td>
+                    <td>April 13, 2023</td>
+                    <td>
+                      <button class="btn btn-outline btn-sm view-ticket-btn" data-ticket-id="1001">
+                        <i class="fas fa-comment-alt mr-2"></i>
+                        View
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="font-medium">TKT-1002</td>
+                    <td>Feature suggestion</td>
+                    <td>Feature</td>
+                    <td><span class="badge badge-blue">New</span></td>
+                    <td>April 12, 2023</td>
+                    <td>April 12, 2023</td>
+                    <td>
+                      <button class="btn btn-outline btn-sm view-ticket-btn" data-ticket-id="1002">
+                        <i class="fas fa-comment-alt mr-2"></i>
+                        View
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Resolved Tickets -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Resolved Tickets</div>
+            <div class="card-description">View your previously resolved support tickets</div>
+          </div>
+          <div class="card-content">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Resolved</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="font-medium">TKT-900</td>
+                    <td>Login issue</td>
+                    <td>Account</td>
+                    <td>April 1, 2023</td>
+                    <td>
+                      <button class="btn btn-outline btn-sm view-ticket-btn" data-ticket-id="900">
+                        <i class="fas fa-comment-alt mr-2"></i>
+                        View
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="font-medium">TKT-901</td>
+                    <td>API connection problem</td>
+                    <td>Technical</td>
+                    <td>April 2, 2023</td>
+                    <td>
+                      <button class="btn btn-outline btn-sm view-ticket-btn" data-ticket-id="901">
+                        <i class="fas fa-comment-alt mr-2"></i>
+                        View
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  
+  <!-- New Ticket Modal -->
+  <div class="modal" id="new-ticket-modal">
+    <div class="modal-content">
+      <span class="modal-close">&times;</span>
+      <div class="modal-header">
+        <h2 class="text-xl font-semibold">Open Support Ticket</h2>
+        <p class="text-sm text-muted mt-1">
+          Describe your issue and our support team will assist you as soon as possible.
+        </p>
+      </div>
+      <div class="modal-body">
+        <form id="new-ticket-form">
+          <div class="form-group mb-4">
+            <label for="ticket-title" class="form-label">Title</label>
+            <input type="text" id="ticket-title" class="form-input" placeholder="Brief description of your issue">
+          </div>
+          
+          <div class="form-row form-row-2">
+            <div class="form-group">
+              <label for="ticket-category" class="form-label">Category</label>
+              <select id="ticket-category" class="form-select">
+                <option value="" disabled selected>Select category</option>
+                <option value="account">Account</option>
+                <option value="billing">Billing</option>
+                <option value="technical">Technical Issue</option>
+                <option value="feature">Feature Request</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="ticket-priority" class="form-label">Priority</label>
+              <select id="ticket-priority" class="form-select">
+                <option value="" disabled selected>Select priority</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="ticket-message" class="form-label">Message</label>
+            <textarea id="ticket-message" class="form-textarea" rows="5" placeholder="Please provide details about your issue..."></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" id="cancel-ticket-btn">Cancel</button>
+        <button class="btn btn-primary" id="submit-ticket-btn">Open Ticket</button>
+      </div

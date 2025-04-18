@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - ProductNexus</title>
+    <meta name="description" content="Manage your account settings and preferences for ProductNexus.">
+    
+    <!-- Icon library (using FontAwesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #3b82f6;
+            --primary-light: #dbeafe;
+            --primary-foreground: #ffffff;
+            --secondary: #f1f5f9;
+            --secondary-foreground: #334155;
+            --background: #ffffff;
+            --foreground: #0f172a;
+            --muted: #f8fafc;
+            --muted-foreground: #64748b;
+            --border: #e2e8f0;
+            --sidebar-width: 213px;
+            --radius: 4px;
+        }
+        
+        .dark {
+            --primary: #3b82f6;
+            --primary-light: #1e3a8a;
+            --primary-foreground: #ffffff;
+            --secondary: #1e293b;
+            --secondary-foreground: #f8fafc;
+            --background: #0f172a;
+            --foreground: #f8fafc;
+            --muted: #1e293b;
+            --muted-foreground: #94a3b8;
+            --border: #334155;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--muted);
+            color: var(--foreground);
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Top Navigation */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 1rem;
+            background-color: var(--background);
+            border-bottom: 1px solid var(--border);
+            height: 48px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+        
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--foreground);
+        }
+        
+        .nav-link {
+            text-decoration: none;
+            color: var(--foreground);
+            padding: 0 0.5rem;
+        }
+        
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: var(--background);
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            z-index: 1;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .dropdown-item {
+            padding: 0.5rem 1rem;
+            display: block;
+            color: var(--foreground);
+            text-decoration: none;
+        }
+        
+        .dropdown-item:hover {
+            background-color: var(--secondary);
+        }
+        
+        /* Main Layout */
+        .main-container {
+            display: flex;
+            flex: 1;
+            margin-top: 48px; /* Top nav height */
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--background);
+            border-right: 1px solid var(--border);
+            height: calc(100vh - 48px);
+            position: fixed;
+            top: 48px;
+            left: 0;
+            overflow-y: auto;
+        }
+        
+        .sidebar-section {
+            margin-bottom: 1rem;
+            padding: 0.5rem 0;
+        }
+        
+        .sidebar-heading {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--muted-foreground);
+            padding: 0.5rem 1rem;
+            text-transform: uppercase;
+        }
+        
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            color: var(--foreground);
+            text-decoration: none;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .sidebar-link:hover {
+            background-color: var(--secondary);
+        }
+        
+        .sidebar-link.active {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .sidebar-link i {
+            width: 1.25rem;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 1.5rem;
+            margin-left: var(--sidebar-width);
+        }
+        
+        /* Card Styles */
+        .page-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card {
+            background: var(--background);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+        
+        .card-header {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .card-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+        
+        .card-description {
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+            margin-top: 0.25rem;
+        }
+        
+        .card-content {
+            padding: 1rem;
+        }
+        
+        .card-footer {
+            padding: 1rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        /* Tabs */
+        .tabs-container {
+            width: 100%;
+        }
+        
+        .tabs-list {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+        }
+        
+        .tab-trigger {
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--muted-foreground);
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        
+        .tab-trigger.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--background);
+            font-size: 0.875rem;
+        }
+        
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+        }
+        
+        .form-textarea {
+            min-height: 6rem;
+            resize: vertical;
+        }
+        
+        /* Button */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--primary-foreground);
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary);
+            opacity: 0.9;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--border);
+            color: var(--foreground);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--secondary);
+        }
+        
+        .btn-danger {
+            background-color: #ef4444;
+            color: white;
+            border: none;
+        }
+        
+        .btn-danger:hover {
+            background-color: #dc2626;
+        }
+        
+        /* Grid Layout */
+        .grid {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .grid-2 {
+            grid-template-columns: repeat(1, 1fr);
+        }
+        
+        @media (min-width: 768px) {
+            .grid-2 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* Other Components */
+        .avatar {
+            width: 5rem;
+            height: 5rem;
+            border-radius: 50%;
+            background-color: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .avatar-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 36px;
+            height: 20px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--muted);
+            transition: .4s;
+            border-radius: 20px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: var(--primary);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(16px);
+        }
+        
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+        
+        .setting-label {
+            font-weight: 500;
+        }
+        
+        .setting-description {
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+            margin-top: 0.25rem;
+        }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 9999px;
+            background-color: var(--secondary);
+            color: var(--secondary-foreground);
+        }
+        
+        .badge-success {
+            background-color: #10b981;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <a href="Dashboard.html" class="nav-link">Dashboard</a>
+        
+        <div class="nav-right">
+            <a href="#" class="nav-link"><i class="fas fa-bell"></i></a>
+            
+            <div class="dropdown">
+                <a href="#" class="nav-link">My Account</a>
+                <div class="dropdown-content">
+                    <a href="Profile.html" class="dropdown-item"><i class="fas fa-user"></i> Profile</a>
+                    <a href="Settings.html" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+                    <a href="Billing.html" class="dropdown-item"><i class="fas fa-credit-card"></i> Billing</a>
+                    <a href="#" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Log out</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <a href="Dashboard.html" class="sidebar-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>ProductNexus</span>
+                </a>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-heading">Overview</div>
+                <a href="Dashboard.html" class="sidebar-link">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-heading">Analysis</div>
+                <a href="SalesTracker.html" class="sidebar-link">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Sales Tracker</span>
+                </a>
+                <a href="Trending.html" class="sidebar-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Trending</span>
+                </a>
+                <a href="Research.html" class="sidebar-link">
+                    <i class="fas fa-search"></i>
+                    <span>Product Research</span>
+                </a>
+                <a href="RealTimeSearch.html" class="sidebar-link">
+                    <i class="fas fa-clock"></i>
+                    <span>Real-Time Search</span>
+                </a>
+                <a href="ShopifyImporter.html" class="sidebar-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Shopify Importer</span>
+                </a>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-heading">Support</div>
+                <a href="Tutorials.html" class="sidebar-link">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Tutorials</span>
+                </a>
+                <a href="SupportTickets.html" class="sidebar-link">
+                    <i class="fas fa-ticket-alt"></i>
+                    <span>Support Tickets</span>
+                </a>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-heading">Account</div>
+                <a href="Profile.html" class="sidebar-link">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+                <a href="Billing.html" class="sidebar-link">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Billing</span>
+                </a>
+                <a href="Settings.html" class="sidebar-link active">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <h1 class="page-title">Settings</h1>
+            
+            <!-- Tabs -->
+            <div class="tabs-container" id="settings-tabs">
+                <div class="tabs-list">
+                    <div class="tab-trigger active" data-target="profile-tab">Profile</div>
+                    <div class="tab-trigger" data-target="account-tab">Account</div>
+                    <div class="tab-trigger" data-target="billing-tab">Billing</div>
+                    <div class="tab-trigger" data-target="notifications-tab">Notifications</div>
+                    <div class="tab-trigger" data-target="api-tab">API</div>
+                </div>
+                
+                <!-- Profile Tab -->
+                <div id="profile-tab" class="tab-content active">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Profile Information</h2>
+                            <p class="card-description">Update your personal information</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="avatar-group">
+                                <div class="avatar">JD</div>
+                                <div>
+                                    <button class="btn btn-outline">Change Avatar</button>
+                                    <p class="setting-description">Recommended: Square JPG, PNG, or GIF, at least 300x300px.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-2">
+                                <div class="form-group">
+                                    <label for="first-name" class="form-label">First Name</label>
+                                    <input id="first-name" class="form-input" value="John">
+                                </div>
+                                <div class="form-group">
+                                    <label for="last-name" class="form-label">Last Name</label>
+                                    <input id="last-name" class="form-input" value="Doe">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email Address</label>
+                                <input id="email" type="email" class="form-input" value="john.doe@example.com">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="company" class="form-label">Company Name</label>
+                                <input id="company" class="form-input" value="Acme Inc">
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Password</h2>
+                            <p class="card-description">Change your password</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="form-group">
+                                <label for="current-password" class="form-label">Current Password</label>
+                                <input id="current-password" type="password" class="form-input">
+                            </div>
+                            
+                            <div class="grid grid-2">
+                                <div class="form-group">
+                                    <label for="new-password" class="form-label">New Password</label>
+                                    <input id="new-password" type="password" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirm-password" class="form-label">Confirm New Password</label>
+                                    <input id="confirm-password" type="password" class="form-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary">Update Password</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Account Tab -->
+                <div id="account-tab" class="tab-content">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Account Settings</h2>
+                            <p class="card-description">Manage your account preferences</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="setting-item">
+                                <div>
+                                    <h3 class="setting-label">Time Zone</h3>
+                                    <p class="setting-description">Set your preferred time zone</p>
+                                </div>
+                                <div style="width: 200px;">
+                                    <select class="form-select">
+                                        <option value="utc">UTC (Coordinated Universal Time)</option>
+                                        <option value="est">EST (Eastern Standard Time)</option>
+                                        <option value="pst" selected>PST (Pacific Standard Time)</option>
+                                        <option value="gmt">GMT (Greenwich Mean Time)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div>
+                                    <h3 class="setting-label">Two-Factor Authentication</h3>
+                                    <p class="setting-description">Add an extra layer of security to your account</p>
+                                </div>
+                                <div>
+                                    <button class="btn btn-outline">Enable 2FA</button>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div>
+                                    <h3 class="setting-label">Dark Mode</h3>
+                                    <p class="setting-description">Switch between light and dark themes</p>
+                                </div>
+                                <div>
+                                    <label class="switch">
+                                        <input type="checkbox" id="dark-mode-switch">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div>
+                                    <h3 class="setting-label">Language</h3>
+                                    <p class="setting-description">Select your preferred language</p>
+                                </div>
+                                <div style="width: 200px;">
+                                    <select class="form-select">
+                                        <option value="en" selected>English</option>
+                                        <option value="fr">French</option>
+                                        <option value="es">Spanish</option>
+                                        <option value="de">German</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary">Save Preferences</button>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Danger Zone</h2>
+                            <p class="card-description">Destructive actions for your account</p>
+                        </div>
+                        <div class="card-content">
+                            <div style="padding: 1rem; border: 1px solid #ef4444; border-radius: var(--radius);">
+                                <div class="setting-item" style="border-bottom: none;">
+                                    <div>
+                                        <h3 class="setting-label">Delete Account</h3>
+                                        <p class="setting-description">Permanently delete your account and all data</p>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-danger">Delete Account</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Billing Tab -->
+                <div id="billing-tab" class="tab-content">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Subscription Overview</h2>
+                            <p class="card-description">Manage your subscription plan</p>
+                        </div>
+                        <div class="card-content">
+                            <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem;">
+                                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                        <div>
+                                            <h3 style="font-weight: 600; font-size: 1.125rem;">Pro Plan</h3>
+                                            <p style="font-size: 0.875rem; color: var(--muted-foreground);">$49.99 per month</p>
+                                        </div>
+                                        <div style="text-align: right;">
+                                            <span class="badge badge-success">Active</span>
+                                            <p style="font-size: 0.75rem; color: var(--muted-foreground);">Renews on May 15, 2023</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div style="margin-top: 0.5rem;">
+                                        <h4 style="font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem;">Plan Features</h4>
+                                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                                            <div style="display: flex; align-items: center; font-size: 0.875rem;">
+                                                <i class="fas fa-check text-primary" style="margin-right: 0.5rem; font-size: 0.75rem;"></i>
+                                                500 product searches per month
+                                            </div>
+                                            <div style="display: flex; align-items: center; font-size: 0.875rem;">
+                                                <i class="fas fa-check text-primary" style="margin-right: 0.5rem; font-size: 0.75rem;"></i>
+                                                50 stores tracking
+                                            </div>
+                                            <div style="display: flex; align-items: center; font-size: 0.875rem;">
+                                                <i class="fas fa-check text-primary" style="margin-right: 0.5rem; font-size: 0.75rem;"></i>
+                                                Unlimited product imports
+                                            </div>
+                                            <div style="display: flex; align-items: center; font-size: 0.875rem;">
+                                                <i class="fas fa-check text-primary" style="margin-right: 0.5rem; font-size: 0.75rem;"></i>
+                                                Priority support
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div style="margin-top: 1rem;">
+                                        <button class="btn btn-outline">Change Plan</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Additional billing sections would go here -->
+                </div>
+                
+                <!-- Notifications Tab -->
+                <div id="notifications-tab" class="tab-content">
+                    <!-- Notifications content -->
+                </div>
+                
+                <!-- API Tab -->
+                <div id="api-tab" class="tab-content">
+                    <!-- API content -->
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle tabs
+            const tabs = document.querySelectorAll('.tab-trigger');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const target = tab.getAttribute('data-target');
+                    
+                    // Hide all tab contents
+                    tabContents.forEach(content => {
+                        content.style.display = 'none';
+                    });
+                    
+                    // Remove active class from all tabs
+                    tabs.forEach(t => {
+                        t.classList.remove('active');
+                    });
+                    
+                    // Show the selected tab content
+                    document.getElementById(target).style.display = 'block';
+                    
+                    // Add active class to clicked tab
+                    tab.classList.add('active');
+                });
+            });
+            
+            // Dark mode toggle
+            const darkModeSwitch = document.getElementById('dark-mode-switch');
+            
+            // Check for saved theme preference
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                darkModeSwitch.checked = true;
+            }
+            
+            // Handle dark mode toggle
+            darkModeSwitch.addEventListener('change', () => {
+                if (darkModeSwitch.checked) {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
