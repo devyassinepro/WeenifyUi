@@ -1,4 +1,4 @@
-// common.js - Shared functionality for ProductNexus
+// reactjs.js - Shared functionality for ProductNexus
 
 document.addEventListener('DOMContentLoaded', function() {
     initializeSidebar();
