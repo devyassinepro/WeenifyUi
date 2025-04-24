@@ -1,652 +1,611 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Store Details - ProductNexus</title>
-    <meta name="description" content="View detailed store information and statistics in ProductNexus.">
-    
-    <!-- Base CSS -->
-    <link rel="stylesheet" href="assets/css/reactcss.css">
-    
-    <!-- Icon library (using FontAwesome) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Chart.js for data visualization -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Store Details - ProductNexus</title>
+  <meta name="description" content="Detailed store analytics and performance tracking">
+  <link rel="stylesheet" href="assets/css/reactcss.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div class="app-container">
-     <!-- Overlay for mobile sidebar -->
-     <div class="overlay"></div>
+  <div class="app-container">
+    <!-- Overlay for mobile sidebar -->
+    <div class="overlay"></div>
 
-     <!-- Header -->
-     <header class="header">
-       <!-- Mobile menu button -->
-       <button class="btn btn-icon mobile-menu-button hidden-desktop">
-         <i class="fas fa-bars"></i>
-       </button>
-       
-       <!-- Brand logo and name (visible on desktop) -->
-       <div class="header-brand hidden-mobile">
-         <i class="fas fa-chart-line header-logo"></i>
-         <span>WEENIFY</span>
-       </div>
-       
-       <!-- Search box -->
-       <div class="header-search hidden-mobile">
-         <i class="fas fa-search"></i>
-         <input type="text" placeholder="Search..." />
-       </div>
-       
-       <!-- Header actions -->
-       <div class="header-actions">
-         <!-- Notifications -->
-         <button class="btn btn-icon notification-button">
-           <i class="fas fa-bell"></i>
-           <span class="notification-badge"></span>
-         </button>
-         
-         <!-- Theme toggle -->
-         <label class="theme-toggle">
-           <input type="checkbox" id="theme-toggle">
-           <span class="theme-toggle-track"></span>
-         </label>
-         
-         <!-- User menu -->
-         <div class="dropdown">
-           <button class="btn btn-ghost dropdown-trigger flex gap-2 items-center">
-               <div class="avatar">
-                   <div class="avatar-fallback">JS</div>
-               </div>
-               <div class="hidden md:block text-left">
-                   <div class="text-sm font-medium">John Smith</div>
-                   <div class="text-xs text-muted">john@example.com</div>
-               </div>
-               <i class="fas fa-chevron-down text-sm hidden md:block"></i>
-           </button>
-           <div class="dropdown-content">
-               <div class="dropdown-header">My Account</div>
-               <div class="dropdown-divider"></div>
-               <a href="Profile.html" class="dropdown-item">
-                   <i class="fas fa-user"></i> Profile
-               </a>
-               <a href="Settings.html" class="dropdown-item">
-                   <i class="fas fa-cog"></i> Settings
-               </a>
-               <a href="Billing.html" class="dropdown-item">
-                   <i class="fas fa-credit-card"></i> Billing
-               </a>
-               <div class="dropdown-divider"></div>
-               <a href="#" class="dropdown-item">
-                   <i class="fas fa-sign-out-alt"></i> Log out
-               </a>
-           </div>
-       </div>
-       </div>
-     </header>
- 
-     <div class="main-container">
-       <!-- Sidebar -->
-       <aside class="sidebar">
- 
-         <div class="sidebar-content">
-           <div class="sidebar-section">
-             <div class="sidebar-section-title">Overview</div>
-             <ul class="sidebar-nav">
-               <li class="sidebar-nav-item">
-                 <a href="index.html" class="sidebar-nav-link active">
-                   <i class="fas fa-home"></i>
-                   <span>Dashboard</span>
-                 </a>
-               </li>
-             </ul>
-           </div>
- 
-           <div class="sidebar-section">
-             <div class="sidebar-section-title">Analysis</div>
-             <ul class="sidebar-nav">
-               <li class="sidebar-nav-item">
-                 <a href="salestracker.html" class="sidebar-nav-link">
-                   <i class="fas fa-chart-bar"></i>
-                   <span>Sales Tracker</span>
-                 </a>
-               </li>
-               <li class="sidebar-nav-item">
-                 <a href="trending.html" class="sidebar-nav-link">
-                   <i class="fas fa-chart-line"></i>
-                   <span>Trending</span>
-                 </a>
-               </li>
-               <li class="sidebar-nav-item">
-                 <a href="research.html" class="sidebar-nav-link">
-                   <i class="fas fa-search"></i>
-                   <span>Product Research</span>
-                 </a>
-               </li>
-               <li class="sidebar-nav-item">
-                 <a href="realtimesearch.html" class="sidebar-nav-link">
-                   <i class="fas fa-bolt"></i>
-                   <span>Real-Time Search</span>
-                 </a>
-               </li>
-               <li class="sidebar-nav-item">
-                 <a href="shopifyimporter.html" class="sidebar-nav-link">
-                   <i class="fas fa-shopping-cart"></i>
-                   <span>Shopify Importer</span>
-                 </a>
-               </li>
-             </ul>
-           </div>
- 
-           <div class="sidebar-section">
-             <div class="sidebar-section-title">Support</div>
-             <ul class="sidebar-nav">
-               <li class="sidebar-nav-item">
-                 <a href="tutorials.html" class="sidebar-nav-link">
-                   <i class="fas fa-video"></i>
-                   <span>Tutorials</span>
-                 </a>
-               </li>
-               <li class="sidebar-nav-item">
-                 <a href="supporttickets.html" class="sidebar-nav-link">
-                   <i class="fas fa-ticket-alt"></i>
-                   <span>Support Tickets</span>
-                 </a>
-               </li>
-             </ul>
-           </div>
- 
-           <div class="sidebar-section">
-             <div class="sidebar-section-title">Account</div>
-             <ul class="sidebar-nav">
-               <li class="sidebar-nav-item">
-                 <a href="profile.html" class="sidebar-nav-link">
-                   <i class="fas fa-user"></i>
-                   <span>Profile</span>
-                 </a>
-               </li>
-               <li class="sidebar-nav-item">
-                 <a href="billing.html" class="sidebar-nav-link">
-                   <i class="fas fa-credit-card"></i>
-                   <span>Billing</span>
-                 </a>
-               </li>
-               <li class="sidebar-nav-item">
-                 <a href="settings.html" class="sidebar-nav-link">
-                   <i class="fas fa-cog"></i>
-                   <span>Settings</span>
-                 </a>
-               </li>
-             </ul>
-           </div>
-         </div>
- 
-         <!-- Sidebar footer -->
-         <div class="sidebar-footer">
-           <div class="user-status">
-             <span class="user-status-dot"></span>
-             <span class="pro-badge">Pro Plan</span>
-           </div>
-           
-           <label class="theme-toggle">
-             <input type="checkbox" id="sidebar-theme-toggle">
-             <span class="theme-toggle-track"></span>
-           </label>
-         </div>
-       </aside>
- 
- 
-            <!-- Mobile sidebar overlay -->
-            <div class="overlay"></div>
-            
-            <!-- Main content -->
-            <main class="main-content">
-                <div class="space-y-6">
-                    <div class="flex items-center gap-4">
-                        <a href="SalesTracker.html" class="btn btn-outline btn-icon">
-                            <i class="fas fa-arrow-left"></i>
-                        </a>
-                        <h1 class="text-3xl font-bold">Store Details</h1>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="card md:col-span-2">
-                            <div class="card-header">
-                                <h2 class="card-title">Store Information</h2>
-                                <p class="card-description">Details and statistics for Store 1</p>
-                            </div>
-                            <div class="card-content">
-                                <div class="flex flex-col md:flex-row gap-4">
-                                    <div class="store-icon">
-                                        <i class="fas fa-store"></i>
-                                    </div>
-                                    <div class="flex-1 space-y-1">
-                                        <h2 class="text-2xl font-semibold">Store 1</h2>
-                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                            <div>
-                                                <p class="text-sm text-muted">Shopify URL</p>
-                                                <p class="store-url">
-                                                    store1.myshopify.com
-                                                    <a href="#" class="store-url-link">
-                                                        <i class="fas fa-external-link-alt store-url-icon"></i>
-                                                    </a>
-                                                </p>
-                                            </div>
-                                            <div>
-                                                <p class="text-sm text-muted">Main URL</p>
-                                                <p class="store-url">
-                                                    www.store1.com
-                                                    <a href="#" class="store-url-link">
-                                                        <i class="fas fa-external-link-alt store-url-icon"></i>
-                                                    </a>
-                                                </p>
-                                            </div>
-                                            <div>
-                                                <p class="text-sm text-muted">Location</p>
-                                                <p>New York, United States</p>
-                                            </div>
-                                            <div>
-                                                <p class="text-sm text-muted">Currency</p>
-                                                <p>USD</p>
-                                            </div>
-                                            <div>
-                                                <p class="text-sm text-muted">Date Tracked</p>
-                                                <p>April 11, 2023</p>
-                                            </div>
-                                            <div>
-                                                <p class="text-sm text-muted">Social Media</p>
-                                                <div class="social-buttons">
-                                                    <a href="#" class="btn btn-outline btn-icon" style="height: 2rem; width: 2rem;">
-                                                        <i class="fab fa-facebook-f"></i>
-                                                    </a>
-                                                    <a href="#" class="btn btn-outline btn-icon" style="height: 2rem; width: 2rem;">
-                                                        <i class="fab fa-instagram"></i>
-                                                    </a>
-                                                    <a href="#" class="btn btn-outline btn-icon" style="height: 2rem; width: 2rem;">
-                                                        <i class="fab fa-snapchat"></i>
-                                                    </a>   <a href="#" class="btn btn-outline btn-icon" style="height: 2rem; width: 2rem;">
-                                                        <i class="fab fa-tiktok"></i>
-                                                    </a>
-                                                      </a>   <a href="#" class="btn btn-outline btn-icon" style="height: 2rem; width: 2rem;">
-                                                        <i class="fab fa-pinterest"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="mt-6 flex flex-wrap gap-3">
-                                    <button class="btn btn-primary">Import to Shopify</button>
-                                    <button class="btn btn-outline text-destructive">Untrack Store</button>
-                                </div>
-                            </div>
+    <!-- Header -->
+    <header class="header">
+      <!-- Mobile menu button -->
+      <button class="btn btn-icon mobile-menu-button hidden-desktop">
+        <i class="fas fa-bars"></i>
+      </button>
+      
+      <!-- Brand logo and name (visible on desktop) -->
+      <div class="header-brand hidden-mobile">
+        <i class="fas fa-chart-line header-logo"></i>
+        <span>WEENIFY</span>
+      </div>
+      
+      <!-- Search box -->
+      <div class="header-search hidden-mobile">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search..." />
+      </div>
+      
+      <!-- Header actions -->
+      <div class="header-actions">
+        <!-- Notifications -->
+        <button class="btn btn-icon notification-button">
+          <i class="fas fa-bell"></i>
+          <span class="notification-badge"></span>
+        </button>
+        
+        <!-- Theme toggle -->
+        <label class="theme-toggle">
+          <input type="checkbox" id="theme-toggle">
+          <span class="theme-toggle-track"></span>
+        </label>
+        
+        <!-- User menu -->
+        <div class="dropdown">
+          <button class="btn btn-ghost dropdown-trigger flex gap-2 items-center">
+              <div class="avatar">
+                  <div class="avatar-fallback">JS</div>
+              </div>
+              <div class="hidden md:block text-left">
+                  <div class="text-sm font-medium">John Smith</div>
+                  <div class="text-xs text-muted">john@example.com</div>
+              </div>
+              <i class="fas fa-chevron-down text-sm hidden md:block"></i>
+          </button>
+          <div class="dropdown-content">
+              <div class="dropdown-header">My Account</div>
+              <div class="dropdown-divider"></div>
+              <a href="Profile.html" class="dropdown-item">
+                  <i class="fas fa-user"></i> Profile
+              </a>
+              <a href="Settings.html" class="dropdown-item">
+                  <i class="fas fa-cog"></i> Settings
+              </a>
+              <a href="Billing.html" class="dropdown-item">
+                  <i class="fas fa-credit-card"></i> Billing
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item">
+                  <i class="fas fa-sign-out-alt"></i> Log out
+              </a>
+          </div>
+      </div>
+      </div>
+    </header>
 
-                            
-                        </div>
-                        
-                        <div class="card md:col-span-2">
-                            <div class="card-header">
-                                <h2 class="card-title">Store Metrics</h2>
-                                <p class="card-description">Key performance indicators</p>
-                            </div>
-                            <div class="card-content space-y-6">
-                                <div>
-                                    <p class="text-sm font-medium mb-2">Products</p>
-                                    <p class="text-3xl font-bold">12</p>
-                                </div>
-                                
-                                <div>
-                                    <p class="text-sm font-medium mb-2">Total Sales</p>
-                                    <p class="text-3xl font-bold">28</p>
-                                    <p class="text-sm text-muted">Last 7 days: 23</p>
-                                </div>
-                                
-                                <div>
-                                    <p class="text-sm font-medium mb-2">Total Revenue</p>
-                                    <p class="text-3xl font-bold">$420</p>
-                                    <p class="text-sm text-muted">Last 7 days: $370</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="card-header">
-                            <h2 class="card-title">Store Performance</h2>
-                            <p class="card-description">Revenue and sales over time</p>
-                        </div>
-                        <div class="card-content">
-                            <div class="chart-container">
-                                <canvas id="storePerformanceChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="card-header">
-                            <h2 class="card-title">Top Products</h2>
-                            <p class="card-description">Best-selling products from this store</p>
-                        </div>
-                        <div class="card-content">
-                            <div class="table-container">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 3rem;">Image</th>
-                                            <th>Product</th>
-                                            <th>Today</th>
-                                            <th>Yesterday</th>
-                                            <th>Total</th>
-                                            <th style="width: 3rem;"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- Product 1 -->
-                                        <tr>
-                                            <td>
-                                                <div style="width: 40px; height: 40px; border-radius: 4px; background-color: var(--secondary);"></div>
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    <div class="font-medium">Product 1</div>
-                                                    <div class="text-sm flex gap-2">
-                                                        <a href="#" class="text-primary" style="font-size: 0.75rem;">
-                                                            <i class="fas fa-external-link-alt fa-xs"></i> Shopify
-                                                        </a>
-                                                        <a href="#" class="text-primary" style="font-size: 0.75rem;">
-                                                            <i class="fas fa-external-link-alt fa-xs"></i> AliExpress
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div>$20</div>
-                                                <div class="text-sm text-muted">2 sales</div>
-                                            </td>
-                                            <td>
-                                                <div>$18</div>
-                                                <div class="text-sm text-muted">1 sale</div>
-                                            </td>
-                                            <td>
-                                                <div>$120</div>
-                                                <div class="text-sm text-muted">12 sales</div>
-                                            </td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-ghost btn-icon dropdown-trigger">
-                                                        <i class="fas fa-ellipsis-h"></i>
-                                                    </button>
-                                                    <div class="dropdown-content dropdown-content-end">
-                                                        <a href="ProductDetails.html" class="dropdown-item">View Details</a>
-                                                        <a href="#" class="dropdown-item">Import to Shopify</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        
-                                        <!-- Product 2 -->
-                                        <tr>
-                                            <td>
-                                                <div style="width: 40px; height: 40px; border-radius: 4px; background-color: var(--secondary);"></div>
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    <div class="font-medium">Product 2</div>
-                                                    <div class="text-sm flex gap-2">
-                                                        <a href="#" class="text-primary" style="font-size: 0.75rem;">
-                                                            <i class="fas fa-external-link-alt fa-xs"></i> Shopify
-                                                        </a>
-                                                        <a href="#" class="text-primary" style="font-size: 0.75rem;">
-                                                            <i class="fas fa-external-link-alt fa-xs"></i> AliExpress
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div>$40</div>
-                                                <div class="text-sm text-muted">4 sales</div>
-                                            </td>
-                                            <td>
-                                                <div>$36</div>
-                                                <div class="text-sm text-muted">3 sales</div>
-                                            </td>
-                                            <td>
-                                                <div>$240</div>
-                                                <div class="text-sm text-muted">24 sales</div>
-                                            </td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-ghost btn-icon dropdown-trigger">
-                                                        <i class="fas fa-ellipsis-h"></i>
-                                                    </button>
-                                                    <div class="dropdown-content dropdown-content-end">
-                                                        <a href="ProductDetails.html" class="dropdown-item">View Details</a>
-                                                        <a href="#" class="dropdown-item">Import to Shopify</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        
-                                        <!-- Product 3 -->
-                                        <tr>
-                                            <td>
-                                                <div style="width: 40px; height: 40px; border-radius: 4px; background-color: var(--secondary);"></div>
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    <div class="font-medium">Product 3</div>
-                                                    <div class="text-sm flex gap-2">
-                                                        <a href="#" class="text-primary" style="font-size: 0.75rem;">
-                                                            <i class="fas fa-external-link-alt fa-xs"></i> Shopify
-                                                        </a>
-                                                        <a href="#" class="text-primary" style="font-size: 0.75rem;">
-                                                            <i class="fas fa-external-link-alt fa-xs"></i> AliExpress
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div>$60</div>
-                                                <div class="text-sm text-muted">6 sales</div>
-                                            </td>
-                                            <td>
-                                                <div>$54</div>
-                                                <div class="text-sm text-muted">5 sales</div>
-                                            </td>
-                                            <td>
-                                                <div>$360</div>
-                                                <div class="text-sm text-muted">36 sales</div>
-                                            </td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-ghost btn-icon dropdown-trigger">
-                                                        <i class="fas fa-ellipsis-h"></i>
-                                                    </button>
-                                                    <div class="dropdown-content dropdown-content-end">
-                                                        <a href="ProductDetails.html" class="dropdown-item">View Details</a>
-                                                        <a href="#" class="dropdown-item">Import to Shopify</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        
-                                        <!-- Product 4 -->
-                                        <tr>
-                                            <td>
-                                                <div style="width: 40px; height: 40px; border-radius: 4px; background-color: var(--secondary);"></div>
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    <div class="font-medium">Product 4</div>
-                                                    <div class="text-sm flex gap-2">
-                                                        <a href="#" class="text-primary" style="font-size: 0.75rem;">
-                                                            <i class="fas fa-external-link-alt fa-xs"></i> Shopify
-                                                        </a>
-                                                        <a href="#" class="text-primary" style="font-size: 0.75rem;">
-                                                            <i class="fas fa-external-link-alt fa-xs"></i> AliExpress
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div>$80</div>
-                                                <div class="text-sm text-muted">8 sales</div>
-                                            </td>
-                                            <td>
-                                                <div>$72</div>
-                                                <div class="text-sm text-muted">7 sales</div>
-                                            </td>
-                                            <td>
-                                                <div>$480</div>
-                                                <div class="text-sm text-muted">48 sales</div>
-                                            </td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-ghost btn-icon dropdown-trigger">
-                                                        <i class="fas fa-ellipsis-h"></i>
-                                                    </button>
-                                                    <div class="dropdown-content dropdown-content-end">
-                                                        <a href="ProductDetails.html" class="dropdown-item">View Details</a>
-                                                        <a href="#" class="dropdown-item">Import to Shopify</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        
-                                        <!-- Product 5 -->
-                                        <tr>
-                                            <td>
-                                                <div style="width: 40px; height: 40px; border-radius: 4px; background-color: var(--secondary);"></div>
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    <div class="font-medium">Product 5</div>
-                                                    <div class="text-sm flex gap-2">
-                                                        <a href="#" class="text-primary" style="font-size: 0.75rem;">
-                                                            <i class="fas fa-external-link-alt fa-xs"></i> Shopify
-                                                        </a>
-                                                        <a href="#" class="text-primary" style="font-size: 0.75rem;">
-                                                            <i class="fas fa-external-link-alt fa-xs"></i> AliExpress
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div>$100</div>
-                                                <div class="text-sm text-muted">10 sales</div>
-                                            </td>
-                                            <td>
-                                                <div>$90</div>
-                                                <div class="text-sm text-muted">9 sales</div>
-                                            </td>
-                                            <td>
-                                                <div>$600</div>
-                                                <div class="text-sm text-muted">60 sales</div>
-                                            </td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-ghost btn-icon dropdown-trigger">
-                                                        <i class="fas fa-ellipsis-h"></i>
-                                                    </button>
-                                                    <div class="dropdown-content dropdown-content-end">
-                                                        <a href="ProductDetails.html" class="dropdown-item">View Details</a>
-                                                        <a href="#" class="dropdown-item">Import to Shopify</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            
-                            <div class="mt-4 flex justify-center">
-                                <button class="btn btn-outline">View All Products</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
+    <div class="main-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-content">
+          <div class="sidebar-section">
+            <div class="sidebar-section-title">Overview</div>
+            <ul class="sidebar-nav">
+              <li class="sidebar-nav-item">
+                <a href="index.html" class="sidebar-nav-link">
+                  <i class="fas fa-home"></i>
+                  <span>Dashboard</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="sidebar-section-title">Analysis</div>
+            <ul class="sidebar-nav">
+              <li class="sidebar-nav-item">
+                <a href="salestracker.html" class="sidebar-nav-link active">
+                  <i class="fas fa-chart-bar"></i>
+                  <span>Sales Tracker</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="trending.html" class="sidebar-nav-link">
+                  <i class="fas fa-chart-line"></i>
+                  <span>Trending</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="research.html" class="sidebar-nav-link">
+                  <i class="fas fa-search"></i>
+                  <span>Product Research</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="realtimesearch.html" class="sidebar-nav-link">
+                  <i class="fas fa-bolt"></i>
+                  <span>Real-Time Search</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="shopifyimporter.html" class="sidebar-nav-link">
+                  <i class="fas fa-shopping-cart"></i>
+                  <span>Shopify Importer</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="sidebar-section-title">Support</div>
+            <ul class="sidebar-nav">
+              <li class="sidebar-nav-item">
+                <a href="tutorials.html" class="sidebar-nav-link">
+                  <i class="fas fa-video"></i>
+                  <span>Tutorials</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="supporttickets.html" class="sidebar-nav-link">
+                  <i class="fas fa-ticket-alt"></i>
+                  <span>Support Tickets</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="sidebar-section-title">Account</div>
+            <ul class="sidebar-nav">
+              <li class="sidebar-nav-item">
+                <a href="profile.html" class="sidebar-nav-link">
+                  <i class="fas fa-user"></i>
+                  <span>Profile</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="billing.html" class="sidebar-nav-link">
+                  <i class="fas fa-credit-card"></i>
+                  <span>Billing</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="settings.html" class="sidebar-nav-link">
+                  <i class="fas fa-cog"></i>
+                  <span>Settings</span>
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
+
+        <!-- Sidebar footer -->
+        <div class="sidebar-footer">
+          <div class="user-status">
+            <span class="user-status-dot"></span>
+            <span class="pro-badge">Pro Plan</span>
+          </div>
+          
+          <label class="theme-toggle">
+            <input type="checkbox" id="sidebar-theme-toggle">
+            <span class="theme-toggle-track"></span>
+          </label>
+        </div>
+      </aside>
+
+      <!-- Main content -->
+      <main class="main-content">
+        <!-- Page header with back button -->
+        <div class="flex items-center gap-4 mb-6">
+          <a href="salestracker.html" class="btn btn-outline btn-icon">
+            <i class="fas fa-arrow-left"></i>
+          </a>
+          <h1 class="page-title">Store Details</h1>
+        </div>
+
+        <!-- Store info and metrics -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <!-- Store Information Card -->
+          <div class="card md:col-span-2">
+            <div class="card-header">
+              <div class="card-title">Store Information</div>
+              <div class="card-description">Details and statistics for Tech Gadgets Store</div>
+            </div>
+            <div class="card-content">
+              <div class="flex items-start gap-4">
+                <div class="store-icon">
+                  <i class="fas fa-store"></i>
+                </div>
+                <div class="flex-1 space-y-1">
+                  <h2 class="text-2xl font-semibold">Tech Gadgets Store</h2>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                    <div>
+                      <p class="text-sm text-muted">Shopify URL</p>
+                      <p class="flex items-center gap-1">
+                        techgadgets.myshopify.com
+                        <a href="#" class="btn btn-ghost" style="padding: 0; height: auto;">
+                          <i class="fas fa-external-link-alt text-xs"></i>
+                        </a>
+                      </p>
+                    </div>
+                    <div>
+                      <p class="text-sm text-muted">Main URL</p>
+                      <p class="flex items-center gap-1">
+                        www.techgadgetsstore.com
+                        <a href="#" class="btn btn-ghost" style="padding: 0; height: auto;">
+                          <i class="fas fa-external-link-alt text-xs"></i>
+                        </a>
+                      </p>
+                    </div>
+                    <div>
+                      <p class="text-sm text-muted">Location</p>
+                      <p>New York, United States</p>
+                    </div>
+                    <div>
+                      <p class="text-sm text-muted">Currency</p>
+                      <p>USD</p>
+                    </div>
+                    <div>
+                      <p class="text-sm text-muted">Date Tracked</p>
+                      <p>April 15, 2023</p>
+                    </div>
+                    <div>
+                      <p class="text-sm text-muted">Social Media</p>
+                      <div class="flex gap-2 mt-1">
+                        <a href="#" class="btn btn-outline btn-icon" style="height: 2rem; width: 2rem; padding: 0;">
+                          <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline btn-icon" style="height: 2rem; width: 2rem; padding: 0;">
+                          <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline btn-icon" style="height: 2rem; width: 2rem; padding: 0;">
+                          <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline btn-icon" style="height: 2rem; width: 2rem; padding: 0;">
+                          <i class="fab fa-pinterest-p"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="mt-6 flex flex-wrap gap-3">
+                <button class="btn btn-primary">
+                  <i class="fas fa-file-import mr-2"></i>
+                  Import to Shopify
+                </button>
+                <button class="btn btn-outline text-destructive">
+                  <i class="fas fa-times mr-2"></i>
+                  Untrack Store
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Store Metrics Card -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Store Metrics</div>
+              <div class="card-description">Key performance indicators</div>
+            </div>
+            <div class="card-content space-y-6">
+              <div>
+                <p class="text-sm font-medium mb-2">Products</p>
+                <p class="text-3xl font-bold">48</p>
+              </div>
+              
+              <div>
+                <p class="text-sm font-medium mb-2">Total Sales</p>
+                <p class="text-3xl font-bold">896</p>
+                <p class="text-sm text-muted">Last 7 days: 125</p>
+              </div>
+              
+              <div>
+                <p class="text-sm font-medium mb-2">Total Revenue</p>
+                <p class="text-3xl font-bold">$54,720</p>
+                <p class="text-sm text-muted">Last 7 days: $7,850</p>
+              </div>
+              
+              <!-- Store Performance Chart -->
+              <!-- <div>
+                <p class="text-sm font-medium mb-2">7-Day Performance</p>
+                <div class="chart-container" style="height: 150px;">
+                  <canvas id="storePerformanceChart"></canvas>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+        
+    
+        <!-- Top Products Table -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Top Products</div>
+            <div class="card-description">Best-selling products from this store</div>
+          </div>
+          <div class="card-content">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Product</th>
+                    <th>Today</th>
+                    <th>Yesterday</th>
+                    <th>Total</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Product 1 -->
+
+                  <tr>
+                    <td>
+                      <div class="w-10 h-10 rounded bg-secondary flex items-center justify-center">
+                        <i class="fas fa-headphones text-muted-foreground"></i>
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        <div class="font-medium">Wireless Earbuds Pro</div>
+                        <div class="text-sm text-muted flex gap-2">
+                          <a href="#" class="text-primary text-xs flex items-center">
+                            <i class="fas fa-external-link-alt mr-1"></i>
+                            Shopify
+                          </a>
+                          <a href="#" class="text-primary text-xs flex items-center">
+                            <i class="fas fa-external-link-alt mr-1"></i>
+                            AliExpress
+                          </a>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div>$260</div>
+                      <div class="text-sm text-muted">13 sales</div>
+                    </td>
+                    <td>
+                      <div>$240</div>
+                      <div class="text-sm text-muted">12 sales</div>
+                    </td>
+                    <td>
+                      <div>$3,200</div>
+                      <div class="text-sm text-muted">160 sales</div>
+                    </td>
+                    <td>
+                      <div class="dropdown">
+                        <button class="btn btn-ghost btn-icon dropdown-trigger">
+                          <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                        <div class="dropdown-content">
+                          <a href="productdetails.html" class="dropdown-item">
+                            <i class="fas fa-chart-line mr-2"></i>
+                            View Details
+                          </a>
+                          <a href="#" class="dropdown-item">
+                            <i class="fas fa-file-import mr-2"></i>
+                            Import to Shopify
+                          </a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+            </div>
+            
+            <div class="mt-4 flex justify-center">
+              <button class="btn btn-outline">View All Products</button>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
-    
-    <!-- Base JS -->
-    <script src="assets/js/reactjs.js"></script>
-    
-    <!-- Page specific scripts -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize dropdowns
-            initializeDropdowns();
-            
-            // Chart
-            const ctx = document.getElementById('storePerformanceChart').getContext('2d');
-            
-            const storePerformanceChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
-                    datasets: [
-                        {
-                            label: 'Revenue',
-                            data: [60, 55, 70, 65, 80, 75, 85],
-                            borderColor: '#3b82f6',
-                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                            borderWidth: 2,
-                            tension: 0.3,
-                            fill: true
-                        },
-                        {
-                            label: 'Sales',
-                            data: [4, 3, 5, 4, 6, 5, 6],
-                            borderColor: '#10b981',
-                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                            borderWidth: 2,
-                            tension: 0.3,
-                            fill: true
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'top'
-                        }
-                    }
-                }
-            });
-            
-            // Handle theme toggle sync
-            const themeToggle = document.getElementById('theme-toggle');
-            const themeToggleSidebar = document.getElementById('theme-toggle-sidebar');
-            
-            if (themeToggle && themeToggleSidebar) {
-                themeToggle.addEventListener('change', function() {
-                    themeToggleSidebar.checked = this.checked;
-                });
-                
-                themeToggleSidebar.addEventListener('change', function() {
-                    themeToggle.checked = this.checked;
-                });
+  </div>
+
+  <script src="assets/js/reactjs.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize store performance chart (small card chart)
+      const performanceCtx = document.getElementById('storePerformanceChart');
+      
+      if (performanceCtx) {
+        const performanceChart = new Chart(performanceCtx, {
+          type: 'line',
+          data: {
+            labels: ['7 Days Ago', '6 Days Ago', '5 Days Ago', '4 Days Ago', '3 Days Ago', 'Yesterday', 'Today'],
+            datasets: [{
+              label: 'Sales',
+              data: [15, 18, 22, 14, 20, 18, 20],
+              borderColor: '#3b82f6',
+              backgroundColor: 'rgba(59, 130, 246, 0.1)',
+              fill: true,
+              tension: 0.4,
+              borderWidth: 2,
+              pointRadius: 0
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: false
+              },
+              tooltip: {
+                enabled: true
+              }
+            },
+            scales: {
+              x: {
+                display: false
+              },
+              y: {
+                display: false,
+                beginAtZero: true
+              }
+            },
+            elements: {
+              line: {
+                tension: 0.4
+              }
             }
+          }
         });
+      }
+      
+      // Initialize store revenue chart (main chart)
+      const revenueCtx = document.getElementById('storeRevenueChart');
+      
+      if (revenueCtx) {
+        const revenueChart = new Chart(revenueCtx, {
+          type: 'bar',
+          data: {
+            labels: ['7 Days Ago', '6 Days Ago', '5 Days Ago', '4 Days Ago', '3 Days Ago', 'Yesterday', 'Today'],
+            datasets: [
+              {
+                label: 'Revenue ($)',
+                data: [950, 1100, 1350, 850, 1200, 1100, 1300],
+                backgroundColor: 'rgba(59, 130, 246, 0.7)',
+                borderRadius: 4,
+                order: 2,
+                yAxisID: 'y'
+              },
+              {
+                label: 'Sales',
+                data: [15, 18, 22, 14, 20, 18, 20],
+                borderColor: '#10b981',
+                backgroundColor: 'rgba(16, 185, 129, 0)',
+                borderWidth: 2,
+                type: 'line',
+                tension: 0.4,
+                order: 1,
+                yAxisID: 'y1'
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+              mode: 'index',
+              intersect: false
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                position: 'left',
+                grid: {
+                  display: true,
+                  color: 'rgba(0, 0, 0, 0.05)'
+                },
+                ticks: {
+                  callback: function(value) {
+                    return '$' + value;
+                  }
+                }
+              },
+              y1: {
+                beginAtZero: true,
+                position: 'right',
+                grid: {
+                  display: false
+                }
+              },
+              x: {
+                grid: {
+                  display: false
+                }
+              }
+            },
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                    let label = context.dataset.label || '';
+                    if (label) {
+                      label += ': ';
+                    }
+                    if (label.includes('Revenue')) {
+                      label += '$' + context.raw;
+                    } else {
+                      label += context.raw;
+                    }
+                    return label;
+                  }
+                }
+              }
+            }
+          }
+        });
+      }
+      
+      // Update charts on theme change
+      function updateChartsTheme(isDark) {
+        const textColor = isDark ? '#f8fafc' : '#0f172a';
+        const gridColor = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)';
+        
+        Chart.instances.forEach(chart => {
+          if (chart) {
+            const scales = chart.options.scales;
+            if (scales.y) {
+              scales.y.grid.color = gridColor;
+              scales.y.ticks.color = textColor;
+            }
+            if (scales.y1) {
+              scales.y1.ticks.color = textColor;
+            }
+            if (scales.x) {
+              scales.x.ticks.color = textColor;
+            }
+            
+            if (chart.options.plugins && chart.options.plugins.legend) {
+              chart.options.plugins.legend.labels.color = textColor;
+            }
+            
+            chart.update();
+          }
+        });
+      }
+      
+      // Check current theme on load
+      const isDarkMode = document.documentElement.classList.contains('dark');
+      updateChartsTheme(isDarkMode);
+      
+      // Update charts on theme toggle
+      const themeToggle = document.getElementById('theme-toggle');
+      if (themeToggle) {
+        themeToggle.addEventListener('change', function() {
+          updateChartsTheme(this.checked);
+        });
+      }
+      
+      // Toggle dropdowns
+      const dropdownTriggers = document.querySelectorAll('.dropdown-trigger');
+      
+      dropdownTriggers.forEach(trigger => {
+        trigger.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const dropdown = this.nextElementSibling;
+          
+          // Close all other dropdowns
+          document.querySelectorAll('.dropdown-content').forEach(content => {
+            if (content !== dropdown && content.classList.contains('show')) {
+              content.classList.remove('show');
+            }
+          });
+          
+          // Toggle this dropdown
+          dropdown.classList.toggle('show');
+        });
+      });
+      
+      // Close dropdowns when clicking outside
+      document.addEventListener('click', function() {
+        document.querySelectorAll('.dropdown-content.show').forEach(dropdown => {
+          dropdown.classList.remove('show');
+        });
+      });
+    });
     </script>
 </body>
 </html>
