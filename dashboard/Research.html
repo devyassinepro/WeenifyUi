@@ -690,6 +690,41 @@
                     // Here you would typically reload the table with the new limit
                 });
             });
+
+            function initializeDropdowns() {
+  const dropdownTriggers = document.querySelectorAll('.dropdown-menu-trigger');
+  
+  dropdownTriggers.forEach(trigger => {
+    const dropdown = trigger.closest('.dropdown');
+    const dropdownContent = dropdown.querySelector('.dropdown-content');
+    
+    trigger.addEventListener('click', function(e) {
+      e.stopPropagation();
+      
+      // Close all other open dropdowns
+      document.querySelectorAll('.dropdown-content.show').forEach(content => {
+        if (content !== dropdownContent) {
+          content.classList.remove('show');
+        }
+      });
+      
+      // Toggle this dropdown
+      dropdownContent.classList.toggle('show');
+    });
+    
+    // Prevent closing when clicking inside dropdown content
+    dropdownContent.addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+  });
+  
+  // Close dropdowns when clicking elsewhere
+  document.addEventListener('click', function() {
+    document.querySelectorAll('.dropdown-content.show').forEach(dropdown => {
+      dropdown.classList.remove('show');
+    });
+  });
+}
         });
     </script>
 </body>

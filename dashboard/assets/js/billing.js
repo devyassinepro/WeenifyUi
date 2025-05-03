@@ -58,6 +58,35 @@
      });
    }
  }
+
+
+  // Modal functionality for adding payment method
+  const modalcancel = document.getElementById('cancel-method-modal');
+  const cancelPaymentBtn = document.getElementById('add-cancel-method');
+  const closeButtonscancel = document.querySelectorAll('.modal-close');
+  
+  if (cancelPaymentBtn && modalcancel) {
+    cancelPaymentBtn.addEventListener('click', function() {
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+    
+    closeButtonscancel.forEach(button => {
+      button.addEventListener('click', function() {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+    
+    // Close modal when clicking outside content
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+    
+  }
  
  // Toast notification functionality 
  function showToast(message, type = 'info', duration = 3000) {
