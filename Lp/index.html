@@ -21,12 +21,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- CSS -->
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/weenifynormalize.css.css">
+    <link rel="stylesheet" href="css/weenifystyles.css">
+    <link rel="stylesheet" href="css/mobile-responsive.css">
+    <link rel="stylesheet" href="css/responsive-overridescss">
+
+
 </head>
 <body>
     <!-- Navbar -->
-    <header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+    <!-- <header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex-shrink-0 flex items-center">
@@ -54,7 +58,62 @@
                 </div>
             </div>
         </div>
-    </header>
+    </header> -->
+
+    <!-- Updated Navbar with Mobile Menu -->
+        <header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="index.html" class="flex items-center gap-2">
+                            <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-weenify-purple to-weenify-blue flex items-center justify-center">
+                                <span class="text-white font-bold text-lg">W</span>
+                            </div>
+                            <span class="text-xl font-display font-bold">Weenify</span>
+                        </a>
+                    </div>
+                    
+                    <nav class="hidden md:flex space-x-10 desktop-nav">
+                        <a href="#features" class="text-gray-500 hover:text-gray-900 transition-colors">Features</a>
+                        <a href="#winners" class="text-gray-500 hover:text-gray-900 transition-colors">Winning Products</a>
+                        <a href="#testimonials" class="text-gray-500 hover:text-gray-900 transition-colors">Testimonials</a>
+                        <a href="#faq" class="text-gray-500 hover:text-gray-900 transition-colors">FAQ</a>
+                        <a href="affiliate.html" class="text-gray-500 hover:text-gray-900 transition-colors">Affiliate</a>
+                    </nav>
+                    
+                    <div class="flex items-center gap-3">
+                        <a href="login.html" class="hidden sm:inline-block text-gray-700 py-2 px-4 rounded-md hover:bg-gray-100 transition-colors">Login</a>
+                        <a href="register.html" class="btn bg-gradient rounded-full shadow-lg shadow-weenify-purple/20 hover:shadow-weenify-purple/40 text-white text-base">
+                            Try Free Trial
+                        </a>
+                        <!-- Mobile menu button -->
+                        <button id="mobile-menu-toggle" class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-weenify-purple" aria-controls="mobile-menu" aria-expanded="false">
+                            <span class="sr-only">Open main menu</span>
+                            <!-- Icon when menu is closed -->
+                            <svg id="menu-closed-icon" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                            <!-- Icon when menu is open -->
+                            <svg id="menu-open-icon" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="mobile-menu">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="#features" class="text-gray-700 hover:text-weenify-purple hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium">Features</a>
+                    <a href="#winners" class="text-gray-700 hover:text-weenify-purple hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium">Winning Products</a>
+                    <a href="#testimonials" class="text-gray-700 hover:text-weenify-purple hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium">Testimonials</a>
+                    <a href="#faq" class="text-gray-700 hover:text-weenify-purple hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium">FAQ</a>
+                    <a href="affiliate.html" class="text-gray-700 hover:text-weenify-purple hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium">Affiliate</a>
+                    <a href="login.html" class="text-gray-700 hover:text-weenify-purple hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium sm:hidden">Login</a>
+                </div>
+            </div>
+        </header>
 
     <main>
         <!-- Hero Section -->
@@ -487,21 +546,21 @@
 <section id="pricing" class="py-16 md:py-24 bg-white">
     <div class="container px-4 md:px-6">
         <div class="text-center max-w-3xl mx-auto mb-12">
-            <h2 class="text-3xl md:text-4xl font-display font-bold mb-4">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-4">
                 Choose Your <span class="text-gradient">Plan</span>
             </h2>
-            <p class="text-gray-600 text-lg">
+            <p class="text-gray-600 text-base sm:text-lg">
                 Select the perfect plan for your dropshipping business needs
             </p>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="pricing-grid grid md:grid-cols-3 gap-6 md:gap-8">
             <!-- Basic Plan -->
-            <div class="rounded-xl border border-gray-200 bg-white p-6 md:p-8 flex flex-col h-full transition-all duration-300 hover:shadow-xl relative">
+            <div class="rounded-xl border border-gray-200 bg-white p-4 sm:p-6 md:p-8 flex flex-col h-full transition-all duration-300 hover:shadow-xl relative">
                 <div class="mb-6">
                     <h3 class="text-xl font-bold mb-2">Basic</h3>
                     <div class="flex items-end gap-1 mb-2">
-                        <span class="text-3xl md:text-4xl font-bold">$19</span>
+                        <span class="text-2xl sm:text-3xl md:text-4xl font-bold">$19</span>
                         <span class="text-gray-500 mb-1">per month</span>
                     </div>
                     <p class="text-gray-600 text-sm">Perfect for beginners just starting with dropshipping</p>
@@ -509,31 +568,31 @@
                 
                 <div class="space-y-4 mb-8 flex-grow">
                     <div class="flex items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500"><polyline points="20 6 9 17 4 12"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500 flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
                         <span class="text-gray-700">Product Research Database</span>
                     </div>
                     <div class="flex items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500"><polyline points="20 6 9 17 4 12"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500 flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
                         <span class="text-gray-700">Market Trend Analysis</span>
                     </div>
                     <div class="flex items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500"><polyline points="20 6 9 17 4 12"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500 flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
                         <span class="text-gray-700">5 Products Import per Day</span>
                     </div>
                     <div class="flex items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500"><polyline points="20 6 9 17 4 12"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500 flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
                         <span class="text-gray-700">Basic Competitor Tracking</span>
                     </div>
                     <div class="flex items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500"><polyline points="20 6 9 17 4 12"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500 flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
                         <span class="text-gray-700">Email Support</span>
                     </div>
                     <div class="flex items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-300"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-300 flex-shrink-0"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                         <span class="text-gray-400">Advanced Analytics</span>
                     </div>
                     <div class="flex items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-300"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-300 flex-shrink-0"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                         <span class="text-gray-400">Unlimited Product Imports</span>
                     </div>
                 </div>
@@ -544,14 +603,14 @@
             </div>
 
             <!-- Pro Plan (Popular) -->
-            <div class="rounded-xl border border-weenify-purple shadow-lg shadow-weenify-purple/20 scale-105 bg-white p-6 md:p-8 flex flex-col h-full transition-all duration-300 hover:shadow-xl relative z-10">
+            <div class="rounded-xl border border-weenify-purple shadow-lg shadow-weenify-purple/20 md:scale-105 bg-white p-4 sm:p-6 md:p-8 flex flex-col h-full transition-all duration-300 hover:shadow-xl relative z-10 my-4 md:my-0">
                 <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-weenify-purple text-white text-xs py-1 px-3 rounded-full">
                     Most Popular
                 </span>
                 <div class="mb-6">
                     <h3 class="text-xl font-bold mb-2">Pro</h3>
                     <div class="flex items-end gap-1 mb-2">
-                        <span class="text-3xl md:text-4xl font-bold">$49</span>
+                        <span class="text-2xl sm:text-3xl md:text-4xl font-bold">$49</span>
                         <span class="text-gray-500 mb-1">per month</span>
                     </div>
                     <p class="text-gray-600 text-sm">For serious dropshippers ready to scale</p>
@@ -559,31 +618,31 @@
                 
                 <div class="space-y-4 mb-8 flex-grow">
                     <div class="flex items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500"><polyline points="20 6 9 17 4 12"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500 flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
                         <span class="text-gray-700">Product Research Database</span>
                     </div>
                     <div class="flex items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500"><polyline points="20 6 9 17 4 12"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500 flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
                         <span class="text-gray-700">Market Trend Analysis</span>
                     </div>
                     <div class="flex items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500"><polyline points="20 6 9 17 4 12"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500 flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
                         <span class="text-gray-700">50 Products Import per Day</span>
                     </div>
                     <div class="flex items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500"><polyline points="20 6 9 17 4 12"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500 flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
                         <span class="text-gray-700">Advanced Competitor Tracking</span>
                     </div>
                     <div class="flex items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500"><polyline points="20 6 9 17 4 12"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500 flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
                         <span class="text-gray-700">Priority Email Support</span>
                     </div>
                     <div class="flex items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500"><polyline points="20 6 9 17 4 12"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500 flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
                         <span class="text-gray-700">Advanced Analytics</span>
                     </div>
                     <div class="flex items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-300"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-300 flex-shrink-0"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                         <span class="text-gray-400">Unlimited Product Imports</span>
                     </div>
                 </div>
@@ -594,11 +653,11 @@
             </div>
 
             <!-- Enterprise Plan -->
-            <div class="rounded-xl border border-gray-200 bg-white p-6 md:p-8 flex flex-col h-full transition-all duration-300 hover:shadow-xl relative">
+            <div class="rounded-xl border border-gray-200 bg-white p-4 sm:p-6 md:p-8 flex flex-col h-full transition-all duration-300 hover:shadow-xl relative">
                 <div class="mb-6">
                     <h3 class="text-xl font-bold mb-2">Enterprise</h3>
                     <div class="flex items-end gap-1 mb-2">
-                        <span class="text-3xl md:text-4xl font-bold">$99</span>
+                        <span class="text-2xl sm:text-3xl md:text-4xl font-bold">$99</span>
                         <span class="text-gray-500 mb-1">per month</span>
                     </div>
                     <p class="text-gray-600 text-sm">For power users with high-volume stores</p>
@@ -606,31 +665,31 @@
                 
                 <div class="space-y-4 mb-8 flex-grow">
                     <div class="flex items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500"><polyline points="20 6 9 17 4 12"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500 flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
                         <span class="text-gray-700">Product Research Database</span>
                     </div>
                     <div class="flex items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500"><polyline points="20 6 9 17 4 12"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500 flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
                         <span class="text-gray-700">Market Trend Analysis</span>
                     </div>
                     <div class="flex items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500"><polyline points="20 6 9 17 4 12"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500 flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
                         <span class="text-gray-700">Unlimited Products Import</span>
                     </div>
                     <div class="flex items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500"><polyline points="20 6 9 17 4 12"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500 flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
                         <span class="text-gray-700">Advanced Competitor Tracking</span>
                     </div>
                     <div class="flex items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500"><polyline points="20 6 9 17 4 12"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500 flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
                         <span class="text-gray-700">24/7 Priority Support</span>
                     </div>
                     <div class="flex items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500"><polyline points="20 6 9 17 4 12"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500 flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
                         <span class="text-gray-700">Advanced Analytics</span>
                     </div>
                     <div class="flex items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500"><polyline points="20 6 9 17 4 12"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500 flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
                         <span class="text-gray-700">Unlimited Product Imports</span>
                     </div>
                 </div>
@@ -929,13 +988,13 @@
             
             <div class="pt-8 border-t border-gray-200">
                 <p class="text-center text-gray-500 text-sm">
-                    &copy; <span id="currentYear">2024</span> Weenify. All rights reserved.
+                    &copy; <span id="currentYear"></span> Weenify. All rights reserved.
                 </p>
             </div>
         </div>
     </footer>
 
     <!-- JavaScript -->
-    <script src="js/scripts.js"></script>
+    <script src="js/weenifyscripts.js"></script>
 </body>
 </html>

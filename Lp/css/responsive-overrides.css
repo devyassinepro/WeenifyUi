@@ -1,0 +1,214 @@
+/* 
+  Responsive CSS Overrides
+  This stylesheet contains specific fixes for the existing classes to make the page mobile-responsive
+*/
+
+/* Make sure the pricing cards display properly on mobile */
+#pricing .grid {
+    display: grid !important;
+    flex-wrap: wrap !important;
+  }
+  
+  @media (max-width: 768px) {
+    #pricing .grid {
+      grid-template-columns: 1fr !important;
+    }
+    
+    #pricing .grid > div.scale-105 {
+      transform: none !important;
+      margin: 2rem 0;
+    }
+    
+    /* Fix forced flex in pricing, which was breaking the responsive layout */
+    #pricing .grid {
+      display: grid !important;
+      flex-wrap: wrap !important;
+    }
+    
+    /* Adjust hero section */
+    .hero-content {
+      width: 100%;
+    }
+    
+    /* Adjust feature cards for smaller screens */
+    .feature-card {
+      padding: 1.25rem;
+    }
+    
+    /* Fix the "How it works" section */
+    .hidden.lg\:block.absolute {
+      display: none !important;
+    }
+    
+    /* Fix sizing for testimonials */
+    #testimonials .card {
+      height: auto;
+    }
+    
+    /* Improve accordion for mobile */
+    .accordion-header {
+      padding: 1rem;
+    }
+    
+    .accordion-header h3 {
+      font-size: 1rem;
+      max-width: 80%;
+    }
+    
+    /* Adjust CTA section for mobile */
+    .py-16.md\:py-24 .container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    
+    /* Adjust footer for mobile */
+    footer .grid {
+      grid-template-columns: 1fr !important;
+      gap: 2rem;
+    }
+  }
+  
+  /* Fixes for smaller phones */
+  @media (max-width: 480px) {
+    /* Adjustments for very small screens */
+    .container {
+      padding-left: 0.75rem !important;
+      padding-right: 0.75rem !important;
+    }
+    
+    /* Fix the product showcase grid */
+    #winners .grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 0.75rem;
+    }
+    
+    #winners .grid .p-4 {
+      padding: 0.75rem;
+    }
+    
+    #winners .grid h3 {
+      font-size: 0.875rem;
+    }
+    
+    #winners .text-sm {
+      font-size: 0.75rem;
+    }
+    
+    /* Fix feature grid */
+    .grid.grid-cols-1.md\:grid-cols-2 {
+      grid-template-columns: 1fr !important;
+    }
+    
+    /* Fix button sizes on small screens */
+    .btn {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+    }
+    
+    /* Adjust margins and paddings */
+    .mb-16, .mb-12 {
+      margin-bottom: 1.5rem;
+    }
+    
+    .py-24, .py-16 {
+      padding-top: 2rem !important;
+      padding-bottom: 2rem !important;
+    }
+    
+    .gap-8 {
+      gap: 1rem;
+    }
+    
+    /* Fix detailed features section */
+    .space-y-24 {
+      margin-top: 2rem;
+    }
+    
+    .flex.flex-col.lg\:flex-row,
+    .flex.flex-col.lg\:flex-row-reverse {
+      gap: 2rem;
+    }
+  }
+  
+  /* Fix image sizes on small screens */
+  @media (max-width: 640px) {
+    .aspect-video img,
+    .aspect-square img {
+      object-fit: contain;
+    }
+    
+    .p-3.bg-gray-50.aspect-square {
+      padding: 0.5rem;
+    }
+  }
+  
+  /* Fix spacing in specific sections */
+  @media (max-width: 768px) {
+    /* Adjust header height for mobile */
+    header .h-16 {
+      height: 4rem;
+    }
+    
+    /* Fix padding on hero section */
+    .pt-28 {
+      padding-top: 5rem !important;
+    }
+    
+    .pb-16 {
+      padding-bottom: 2rem !important;
+    }
+    
+    /* Fix how it works section */
+    #how-it-works .avatar {
+      width: 3rem;
+      height: 3rem;
+    }
+    
+    #how-it-works .text-xl {
+      font-size: 1.125rem;
+    }
+  }
+  
+  /* Fix mobile menu */
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 4rem;
+    left: 0;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    z-index: 40;
+    padding: 1rem;
+    border-bottom: 1px solid rgba(229, 231, 235, 1);
+  }
+  
+  .mobile-menu.is-active {
+    display: block;
+  }
+  
+  /* Fix mobile menu toggle icons */
+  #menu-closed-icon.hidden,
+  #menu-open-icon:not(.hidden) {
+    display: none;
+  }
+  
+  #menu-closed-icon:not(.hidden),
+  #menu-open-icon.hidden {
+    display: block;
+  }
+  
+  .mobile-menu.is-active + #menu-closed-icon {
+    display: none;
+  }
+  
+  .mobile-menu.is-active + #menu-open-icon {
+    display: block;
+  }
+  
+  /* Fix image display on mobile */
+  @media (max-width: 768px) {
+    .animate-float {
+      animation: none;
+    }
+  }

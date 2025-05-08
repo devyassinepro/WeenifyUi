@@ -1,0 +1,241 @@
+/* Mobile Responsiveness Enhancement */
+
+/* Base updates for mobile */
+@media (max-width: 768px) {
+    html {
+      font-size: 14px;
+    }
+    
+    .container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    
+    h1 {
+      font-size: 2rem;
+    }
+    
+    h2 {
+      font-size: 1.75rem;
+    }
+    
+    h3 {
+      font-size: 1.25rem;
+    }
+    
+    .text-3xl {
+      font-size: 1.75rem;
+    }
+    
+    .text-2xl {
+      font-size: 1.5rem;
+    }
+    
+    .py-28, .py-24, .py-20, .py-16 {
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
+    
+    .gap-8 {
+      gap: 1.5rem;
+    }
+    
+    .mb-16, .mb-12 {
+      margin-bottom: 2rem;
+    }
+  }
+  
+  /* Mobile Navigation */
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 4rem;
+    left: 0;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    z-index: 40;
+    padding: 1rem;
+    border-bottom: 1px solid rgba(229, 231, 235, 1);
+  }
+  
+  .mobile-menu.is-active {
+    display: block;
+  }
+  
+  .mobile-menu a {
+    display: block;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(243, 244, 246, 1);
+  }
+  
+  .mobile-menu a:last-child {
+    border-bottom: none;
+  }
+  
+  @media (max-width: 768px) {
+    .mobile-toggle {
+      display: block;
+    }
+    
+    .desktop-nav {
+      display: none;
+    }
+    
+    header .container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    
+    .btn {
+      padding: 0.5rem 1rem;
+    }
+  }
+  
+  /* Hero Section Mobile */
+  @media (max-width: 768px) {
+    .hero-content {
+      text-align: center;
+    }
+    
+    .hero-actions {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .hero-testimonial {
+      justify-content: center;
+    }
+  }
+  
+  /* Features Mobile */
+  @media (max-width: 768px) {
+    .feature-card {
+      padding: 1.25rem;
+    }
+  }
+  
+  /* Fix Pricing Section */
+  @media (max-width: 992px) {
+    #pricing .grid {
+      display: flex;
+      flex-direction: column !important;
+      gap: 2rem !important;
+    }
+    
+    #pricing .grid > div {
+      width: 100%;
+      max-width: 100%;
+    }
+    
+    #pricing .grid > div.scale-105 {
+      transform: none;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+  }
+  
+  /* Fix for very small screens */
+  @media (max-width: 480px) {
+    .btn {
+      width: 100%;
+      justify-content: center;
+      margin-bottom: 0.5rem;
+    }
+    
+    .flex-col-mobile {
+      flex-direction: column;
+    }
+    
+    .w-full-mobile {
+      width: 100%;
+    }
+    
+    .text-center-mobile {
+      text-align: center;
+    }
+    
+    .px-4-mobile {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    
+    .py-8-mobile {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+    
+    .pt-24-mobile {
+      padding-top: 6rem;
+    }
+    
+    .hidden-mobile {
+      display: none;
+    }
+    
+    /* Adjust hero section */
+    .pt-28 {
+      padding-top: 5rem;
+    }
+    
+    /* Product showcase */
+    #winners .grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+    
+    #winners .grid .p-4 {
+      padding: 0.75rem;
+    }
+    
+    #winners .grid h3 {
+      font-size: 0.875rem;
+    }
+    
+    #winners .grid .text-sm {
+      font-size: 0.75rem;
+    }
+    
+    /* Smaller spacing */
+    .p-6 {
+      padding: 1rem;
+    }
+  }
+  
+  /* How it works section */
+  @media (max-width: 768px) {
+    .avatar.h-20.w-20 {
+      height: 3rem;
+      width: 3rem;
+    }
+    
+    .avatar.h-20.w-20 svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+  }
+  
+  /* Testimonials section */
+  @media (max-width: 768px) {
+    #testimonials .grid {
+      gap: 1rem;
+    }
+  }
+  
+  /* FAQ section */
+  @media (max-width: 768px) {
+    .accordion-header h3 {
+      font-size: 1rem;
+    }
+    
+    .accordion-content {
+      font-size: 0.875rem;
+    }
+  }
+  
+  /* Footer mobile */
+  @media (max-width: 768px) {
+    footer .grid {
+      gap: 2rem;
+    }
+  }

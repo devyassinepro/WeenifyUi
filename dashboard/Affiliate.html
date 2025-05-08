@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Affiliate Dashboard - ProductNexus</title>
+  <meta name="description" content="Manage your affiliate program and track your earnings with ProductNexus affiliate dashboard.">
+  <link rel="stylesheet" href="assets/css/reactcss.css">
+  <link rel="stylesheet" href="assets/css/skeleton-weenifystyles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Overlay for mobile sidebar -->
+    <div class="overlay"></div>
+
+    <!-- Header -->
+    <header class="header">
+      <!-- Mobile menu button -->
+      <button class="btn btn-icon mobile-menu-button hidden-desktop">
+        <i class="fas fa-bars"></i>
+      </button>
+      
+      <!-- Brand logo and name (visible on desktop) -->
+      <div class="header-brand hidden-mobile">
+        <i class="fas fa-chart-line header-logo"></i>
+        <span>WEENIFY</span>
+      </div>
+      
+      <!-- Search box -->
+      <div class="header-search hidden-mobile">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search..." />
+      </div>
+      
+      <!-- Header actions -->
+      <div class="header-actions">
+        <!-- Notifications -->
+        <button class="btn btn-icon notification-button">
+          <i class="fas fa-bell"></i>
+          <span class="notification-badge"></span>
+        </button>
+        
+        <!-- Theme toggle -->
+        <label class="theme-toggle">
+          <input type="checkbox" id="theme-toggle">
+          <span class="theme-toggle-track"></span>
+        </label>
+        
+        <!-- User menu -->
+        <div class="dropdown">
+          <button class="btn btn-ghost dropdown-trigger flex gap-2 items-center">
+              <div class="avatar">
+                  <div class="avatar-fallback">JS</div>
+              </div>
+              <div class="hidden md:block text-left">
+                  <div class="text-sm font-medium">John Smith</div>
+                  <div class="text-xs text-muted">john@example.com</div>
+              </div>
+              <i class="fas fa-chevron-down text-sm hidden md:block"></i>
+          </button>
+          <div class="dropdown-content">
+              <div class="dropdown-header">My Account</div>
+              <div class="dropdown-divider"></div>
+              <a href="Profile.html" class="dropdown-item">
+                  <i class="fas fa-user"></i> Profile
+              </a>
+              <a href="Settings.html" class="dropdown-item">
+                  <i class="fas fa-cog"></i> Settings
+              </a>
+              <a href="Billing.html" class="dropdown-item">
+                  <i class="fas fa-credit-card"></i> Billing
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item">
+                  <i class="fas fa-sign-out-alt"></i> Log out
+              </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="main-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-content">
+          <div class="sidebar-section">
+            <div class="sidebar-section-title">Overview</div>
+            <ul class="sidebar-nav">
+              <li class="sidebar-nav-item">
+                <a href="index.html" class="sidebar-nav-link">
+                  <i class="fas fa-home"></i>
+                  <span>Dashboard</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="sidebar-section-title">Analysis</div>
+            <ul class="sidebar-nav">
+              <li class="sidebar-nav-item">
+                <a href="salestracker.html" class="sidebar-nav-link">
+                  <i class="fas fa-chart-bar"></i>
+                  <span>Sales Tracker</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="trending.html" class="sidebar-nav-link">
+                  <i class="fas fa-chart-line"></i>
+                  <span>Trending</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="research.html" class="sidebar-nav-link">
+                  <i class="fas fa-search"></i>
+                  <span>Product Research</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="realtimesearch.html" class="sidebar-nav-link">
+                  <i class="fas fa-bolt"></i>
+                  <span>Real-Time Search</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="shopifyimporter.html" class="sidebar-nav-link">
+                  <i class="fas fa-shopping-cart"></i>
+                  <span>Shopify Importer</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="sidebar-section-title">Monetization</div>
+            <ul class="sidebar-nav">
+              <li class="sidebar-nav-item">
+                <a href="affiliate.html" class="sidebar-nav-link active">
+                  <i class="fas fa-users"></i>
+                  <span>Affiliate Program</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="sidebar-section-title">Support</div>
+            <ul class="sidebar-nav">
+              <li class="sidebar-nav-item">
+                <a href="tutorials.html" class="sidebar-nav-link">
+                  <i class="fas fa-video"></i>
+                  <span>Tutorials</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="supporttickets.html" class="sidebar-nav-link">
+                  <i class="fas fa-ticket-alt"></i>
+                  <span>Support Tickets</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="sidebar-section-title">Account</div>
+            <ul class="sidebar-nav">
+              <li class="sidebar-nav-item">
+                <a href="profile.html" class="sidebar-nav-link">
+                  <i class="fas fa-user"></i>
+                  <span>Profile</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="billing.html" class="sidebar-nav-link">
+                  <i class="fas fa-credit-card"></i>
+                  <span>Billing</span>
+                </a>
+              </li>
+              <li class="sidebar-nav-item">
+                <a href="settings.html" class="sidebar-nav-link">
+                  <i class="fas fa-cog"></i>
+                  <span>Settings</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Sidebar footer -->
+        <div class="sidebar-footer">
+          <div class="user-status">
+            <span class="user-status-dot"></span>
+            <span class="pro-badge">Pro Plan</span>
+          </div>
+          
+          <label class="theme-toggle">
+            <input type="checkbox" id="sidebar-theme-toggle">
+            <span class="theme-toggle-track"></span>
+          </label>
+        </div>
+      </aside>
+
+      <!-- Main content -->
+      <main class="main-content">
+        <div class="container mx-auto px-4 py-8 space-y-8">
+          <div>
+            <h1 class="text-3xl font-bold">Affiliate Dashboard</h1>
+            <p class="text-muted">Manage your affiliate program and track your earnings</p>
+          </div>
+          
+          <!-- Affiliate Link Section -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Your Affiliate Link</div>
+              <div class="card-description">Share this unique link to start earning commissions</div>
+            </div>
+            <div class="card-content">
+              <div class="flex gap-2">
+                <input id="affiliate-link" value="https://myapp.com/ref=XXXXX" readonly class="form-input flex-1">
+                <button id="copy-btn" class="btn btn-outline">
+                  <i class="fas fa-copy mr-2"></i>
+                  Copy
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Affiliate Stats -->
+ <!-- Affiliate Stats -->
+ <section class="space-y-6">
+    <div>
+      <h2 class="text-2xl font-bold">Statistics Overview</h2>
+      <p class="text-muted text-sm">Track your affiliate performance in real-time</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="card">
+        <div class="card-content p-4">
+          <div class="flex justify-between items-start mb-1">
+            <span class="text-sm text-muted-foreground">Total Clicks</span>
+            <i class="fas fa-chart-bar text-muted-foreground h-4 w-4"></i>
+          </div>
+          <div class="text-2xl font-bold">1,234</div>
+          <div class="flex items-center mt-1 text-xs">
+            <span class="mr-1 text-green-500">+12%</span>
+            <span class="text-muted-foreground">from last month</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-content p-4">
+          <div class="flex justify-between items-start mb-1">
+            <span class="text-sm text-muted-foreground">Registered Users</span>
+            <i class="fas fa-users text-muted-foreground h-4 w-4"></i>
+          </div>
+          <div class="text-2xl font-bold">56</div>
+          <div class="flex items-center mt-1 text-xs">
+            <span class="mr-1 text-green-500">+8%</span>
+            <span class="text-muted-foreground">from last month</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-content p-4">
+          <div class="flex justify-between items-start mb-1">
+            <span class="text-sm text-muted-foreground">Active Trials</span>
+            <i class="fas fa-user-check text-muted-foreground h-4 w-4"></i>
+          </div>
+          <div class="text-2xl font-bold">23</div>
+          <div class="flex items-center mt-1 text-xs">
+            <span class="text-muted-foreground">Converting users</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-content p-4">
+          <div class="flex justify-between items-start mb-1">
+            <span class="text-sm text-muted-foreground">Total Revenue</span>
+            <i class="fas fa-euro-sign text-muted-foreground h-4 w-4"></i>
+          </div>
+          <div class="text-2xl font-bold">€892</div>
+          <div class="flex items-center mt-1 text-xs">
+            <span class="mr-1 text-green-500">+15%</span>
+            <span class="text-muted-foreground">from last month</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+          
+          <!-- How it works -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">How Our Affiliate Program Works</div>
+            </div>
+            <div class="card-content space-y-4">
+              <p class="text-muted">
+                Earn 30% commission on every customer you refer who subscribes to our service.
+                Our affiliate program is designed to reward you for sharing our product with your audience.
+              </p>
+              
+              <div class="bg-primary/10 rounded-lg p-4">
+                <h3 class="font-medium mb-2">Key Benefits:</h3>
+                <ul class="list-disc pl-5 space-y-1">
+                  <li>Lifetime 30% recurring commission</li>
+                  <li>Monthly payouts via PayPal or Stripe</li>
+                  <li>Real-time tracking dashboard</li>
+                  <li>Marketing materials and support</li>
+                </ul>
+              </div>
+              
+              <button class="btn btn-outline btn-sm mt-2">
+                Learn more about our affiliate program
+                <i class="fas fa-arrow-right ml-2"></i>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Earnings Calculator -->
+          <section class="space-y-6">
+            <div class="text-center">
+              <h2 class="text-2xl font-bold">Potential Earnings Calculator</h2>
+              <p class="text-muted mt-2">See how much you can potentially earn by referring our product research SaaS</p>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title flex items-center">
+                  <i class="fas fa-chart-line mr-2 text-primary"></i>
+                  Earnings Projection
+                </div>
+              </div>
+              <div class="card-content space-y-6">
+                <div class="space-y-4">
+                  <div class="flex justify-between items-center">
+                    <span class="text-muted">Number of Referrals</span>
+                    <span class="font-semibold" id="referral-count">10</span>
+                  </div>
+                  <div class="range-slider">
+                    <input type="range" min="1" max="50" value="10" class="w-100" id="referral-slider">
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div class="p-4 rounded-lg bg-secondary">
+                    <p class="text-sm text-muted">Monthly Earnings</p>
+                    <p class="text-2xl font-bold" id="monthly-earnings">€147.00</p>
+                  </div>
+                  <div class="p-4 rounded-lg bg-secondary">
+                    <p class="text-sm text-muted">Yearly Earnings</p>
+                    <p class="text-2xl font-bold" id="yearly-earnings">€1,764.00</p>
+                  </div>
+                </div>
+
+                <p class="text-sm text-muted text-center">
+                  Based on €49/month plan with 30% commission rate
+                </p>
+              </div>
+            </div>
+          </section>
+          
+          <!-- Benefits Section -->
+          <section class="space-y-6">
+            <div class="text-center">
+              <h2 class="text-2xl font-bold">Why Join Our Affiliate Program?</h2>
+              <p class="text-muted mt-2">We've designed an affiliate program that rewards your efforts and helps you build a sustainable income stream.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div class="card">
+                <div class="card-content p-6">
+                  <div class="space-y-4">
+                    <div class="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center">
+                      <i class="fas fa-euro-sign text-primary w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg">30% Lifetime Commission</h3>
+                    <p class="text-muted">Earn recurring revenue for every referral's lifetime</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="card">
+                <div class="card-content p-6">
+                  <div class="space-y-4">
+                    <div class="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center">
+                      <i class="fas fa-chart-line text-primary w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg">Automated Payouts</h3>
+                    <p class="text-muted">Get paid monthly via PayPal or Stripe</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="card">
+                <div class="card-content p-6">
+                  <div class="space-y-4">
+                    <div class="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center">
+                      <i class="fas fa-chart-bar text-primary w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg">Real-time Analytics</h3>
+                    <p class="text-muted">Track performance with detailed dashboards</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="card">
+                <div class="card-content p-6">
+                  <div class="space-y-4">
+                    <div class="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center">
+                      <i class="fas fa-users text-primary w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg">High-converting Leads</h3>
+                    <p class="text-muted">Our product sells itself, you just share the link</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="card">
+                <div class="card-content p-6">
+                  <div class="space-y-4">
+                    <div class="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center">
+                      <i class="fas fa-comments text-primary w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg">Marketing Resources</h3>
+                    <p class="text-muted">Banners, email templates, and more</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="card">
+                <div class="card-content p-6">
+                  <div class="space-y-4">
+                    <div class="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center">
+                      <i class="fas fa-credit-card text-primary w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg">Fast Payments</h3>
+                    <p class="text-muted">Consistent and reliable monthly income</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          
+          <!-- Referred Users / Payouts -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">Trial Users</div>
+              </div>
+              <div class="card-content">
+                <div class="table-container">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>User</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>user1@example.com</td>
+                        <td>May 1, 2023</td>
+                        <td><span class="badge badge-primary">Active Trial</span></td>
+                      </tr>
+                      <tr>
+                        <td>user2@example.com</td>
+                        <td>May 5, 2023</td>
+                        <td><span class="badge badge-primary">Active Trial</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <a href="affiliatetrialusers.html" class="btn btn-link btn-sm mt-4">
+                  View all trial users
+                  <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+              </div>
+            </div>
+            
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">Payouts</div>
+              </div>
+              <div class="card-content">
+                <div class="table-container">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>April 30, 2023</td>
+                        <td>€120.00</td>
+                        <td><span class="badge badge-success">Paid</span></td>
+                      </tr>
+                      <tr>
+                        <td>March 31, 2023</td>
+                        <td>€98.50</td>
+                        <td><span class="badge badge-success">Paid</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <a href="affiliatepayouts.html" class="btn btn-link btn-sm mt-4">
+                  View all payouts
+                  <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="assets/js/reactjs.js"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Copy affiliate link functionality
+      const copyBtn = document.getElementById('copy-btn');
+      const affiliateLink = document.getElementById('affiliate-link');
+      
+      copyBtn.addEventListener('click', function() {
+        affiliateLink.select();
+        document.execCommand('copy');
+        
+        // Change button text temporarily
+        const originalHTML = copyBtn.innerHTML;
+        copyBtn.innerHTML = '<i class="fas fa-check mr-2"></i> Copied!';
+        
+        setTimeout(() => {
+          copyBtn.innerHTML = originalHTML;
+        }, 2000);
+      });
+      
+      // Earnings calculator functionality
+      const referralSlider = document.getElementById('referral-slider');
+      const referralCount = document.getElementById('referral-count');
+      const monthlyEarnings = document.getElementById('monthly-earnings');
+      const yearlyEarnings = document.getElementById('yearly-earnings');
+      
+      const monthlyPlan = 49;
+      const commissionRate = 0.3;
+      
+      function updateEarnings() {
+        const count = parseInt(referralSlider.value);
+        referralCount.textContent = count;
+        
+        const monthly = count * monthlyPlan * commissionRate;
+        const yearly = monthly * 12;
+        
+        monthlyEarnings.textContent = `€${monthly.toFixed(2)}`;
+        yearlyEarnings.textContent = `€${yearly.toFixed(2)}`;
+      }
+      
+      referralSlider.addEventListener('input', updateEarnings);
+      
+      // Initialize earnings calculator
+      updateEarnings();
+      
+      // Initialize sidebar theme toggle to match the main theme toggle
+      const mainThemeToggle = document.getElementById('theme-toggle');
+      const sidebarThemeToggle = document.getElementById('sidebar-theme-toggle');
+      
+      if (mainThemeToggle && sidebarThemeToggle) {
+        // Sync the sidebar toggle with the main toggle
+        sidebarThemeToggle.checked = mainThemeToggle.checked;
+        
+        // Keep them in sync when either changes
+        mainThemeToggle.addEventListener('change', function() {
+          sidebarThemeToggle.checked = this.checked;
+        });
+        
+        sidebarThemeToggle.addEventListener('change', function() {
+          mainThemeToggle.checked = this.checked;
+          // Trigger the change event to update the theme
+          const event = new Event('change');
+          mainThemeToggle.dispatchEvent(event);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,2080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weenify - Extensive Product Research Database</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --weenify-purple: #8B5CF6;
+            --weenify-purple-light: #D6BCFA;
+            --weenify-purple-dark: #6E59A5;
+            --weenify-blue: #1EAEDB;
+            --weenify-blue-light: #33C3F0;
+            --weenify-green: #10B981;
+            --weenify-red: #EF4444;
+            --weenify-yellow: #F59E0B;
+            --radius: 0.75rem;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #1F2937;
+            line-height: 1.5;
+            background-color: #F9FAFB;
+        }
+
+        /* Feature Section Styles */
+        .feature-section {
+            padding: 6rem 1.5rem;
+            background-color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Background elements */
+        .feature-bg-shape {
+            position: absolute;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(30, 174, 219, 0.05));
+            z-index: 0;
+        }
+
+        .feature-bg-shape-1 {
+            width: 400px;
+            height: 400px;
+            border-radius: 100px;
+            top: -50px;
+            right: -150px;
+            transform: rotate(35deg);
+        }
+
+        .feature-bg-shape-2 {
+            width: 300px;
+            height: 300px;
+            border-radius: 16px;
+            bottom: -100px;
+            left: -100px;
+            transform: rotate(-15deg);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Feature Content */
+        .feature-content {
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 4rem;
+        }
+
+        @media (min-width: 1024px) {
+            .feature-content {
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+
+        .feature-text {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .feature-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background-color: rgba(139, 92, 246, 0.1);
+            color: var(--weenify-purple);
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-badge svg {
+            margin-right: 0.5rem;
+        }
+
+        .feature-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        @media (min-width: 768px) {
+            .feature-title {
+                font-size: 3rem;
+            }
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, var(--weenify-purple), var(--weenify-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline;
+        }
+
+        .feature-description {
+            font-size: 1.125rem;
+            color: #4B5563;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .feature-benefits {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-benefit {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .feature-benefit-icon {
+            width: 24px;
+            height: 24px;
+            min-width: 24px;
+            border-radius: 50%;
+            background-color: rgba(139, 92, 246, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--weenify-purple);
+        }
+
+        .feature-benefit-text {
+            font-size: 1rem;
+            color: #4B5563;
+        }
+
+        .feature-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            border-radius: 9999px;
+            transition: all 0.3s;
+            font-size: 1rem;
+            text-decoration: none;
+            background-color: var(--weenify-purple);
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(139, 92, 246, 0.2);
+        }
+
+        .feature-btn:hover {
+            background-color: var(--weenify-purple-dark);
+            box-shadow: 0 4px 6px -1px rgba(139, 92, 246, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Feature Visual (Left Side) */
+        .feature-visual {
+            flex: 1;
+            position: relative;
+        }
+
+        /* Product Database Interface */
+        .database-ui {
+            position: relative;
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid #F3F4F6;
+        }
+
+        /* Glow effect */
+        .database-ui::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--weenify-purple), var(--weenify-blue));
+            z-index: -1;
+            border-radius: 1.125rem;
+            opacity: 0.3;
+            filter: blur(10px);
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            0% {
+                opacity: 0.2;
+            }
+            100% {
+                opacity: 0.4;
+            }
+        }
+
+        .database-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #F3F4F6;
+            background-color: #FAFAFA;
+        }
+
+        .database-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+        }
+
+        .database-icon {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, var(--weenify-purple), var(--weenify-blue));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .database-controls {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .database-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.75rem;
+            color: #6B7280;
+        }
+
+        .database-stat-value {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--weenify-purple);
+            margin-bottom: 0.125rem;
+        }
+
+        /* Search and Filter Bar */
+        .search-filter-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            border-bottom: 1px solid #F3F4F6;
+            background-color: white;
+        }
+
+        .search-box {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.5rem 0.75rem 0.5rem 2.25rem;
+            border: 1px solid #E5E7EB;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            background-color: #F9FAFB;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--weenify-purple);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+            background-color: white;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9CA3AF;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .filter-button {
+            padding: 0.375rem 0.75rem;
+            border: 1px solid #E5E7EB;
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #4B5563;
+            background-color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            transition: all 0.2s;
+        }
+
+        .filter-button:hover {
+            border-color: var(--weenify-purple-light);
+            color: var(--weenify-purple);
+        }
+
+        .filter-button.active {
+            background-color: rgba(139, 92, 246, 0.1);
+            color: var(--weenify-purple);
+            border-color: var(--weenify-purple-light);
+        }
+
+        /* Database Content */
+        .database-content {
+            max-height: 550px;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Product Card */
+        .product-card {
+            border: 1px solid #F3F4F6;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            transition: all 0.3s;
+            background-color: white;
+            position: relative;
+        }
+
+        .product-card:hover {
+            border-color: var(--weenify-purple-light);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+            transform: translateY(-4px);
+        }
+
+        .product-card-selectable {
+            cursor: pointer;
+        }
+
+        .product-thumbnail {
+            position: relative;
+            width: 100%;
+            padding-top: 100%; /* 1:1 Aspect Ratio */
+            background-color: #F9FAFB;
+            overflow: hidden;
+        }
+
+        .product-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 1rem;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.375rem;
+            font-size: 0.625rem;
+            font-weight: 600;
+            z-index: 1;
+        }
+
+        .product-badge-trending {
+            background-color: #FFF7ED;
+            color: #C2410C;
+        }
+
+        .product-badge-hot {
+            background-color: #FEF2F2;
+            color: #B91C1C;
+        }
+
+        .product-badge-new {
+            background-color: #ECFDF5;
+            color: #065F46;
+        }
+
+        .product-info {
+            padding: 1rem;
+        }
+
+        .product-name {
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            color: #1F2937;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stars {
+            display: flex;
+            color: #F59E0B;
+        }
+
+        .rating-count {
+            font-size: 0.75rem;
+            color: #6B7280;
+        }
+
+        .product-price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-weight: 700;
+            color: var(--weenify-purple);
+            font-size: 1rem;
+        }
+
+        .product-profit {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--weenify-green);
+        }
+
+        .product-metrics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid #F3F4F6;
+        }
+
+        .product-metric {
+            flex: 1;
+            min-width: calc(50% - 0.25rem);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0.5rem;
+            background-color: #F9FAFB;
+            border-radius: 0.5rem;
+        }
+
+        .metric-icon {
+            width: 20px;
+            height: 20px;
+            margin-bottom: 0.25rem;
+            color: var(--weenify-purple);
+        }
+
+        .metric-value {
+            font-weight: 700;
+            font-size: 0.875rem;
+            margin-bottom: 0.125rem;
+        }
+
+        .metric-label {
+            font-size: 0.625rem;
+            color: #6B7280;
+            text-align: center;
+        }
+
+        /* Product Detail Overlay */
+        .product-detail-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            z-index: 50;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .product-detail-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .product-detail-panel {
+            background-color: white;
+            border-radius: 1rem;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transform: scale(0.95);
+            transition: all 0.3s;
+        }
+
+        .product-detail-overlay.active .product-detail-panel {
+            transform: scale(1);
+        }
+
+        .product-detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 1.5rem;
+            border-bottom: 1px solid #F3F4F6;
+        }
+
+        .product-detail-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-detail-subtitle {
+            font-size: 0.875rem;
+            color: #6B7280;
+        }
+
+        .product-detail-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #F3F4F6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .product-detail-close:hover {
+            background-color: #E5E7EB;
+        }
+
+        .product-detail-content {
+            padding: 1.5rem;
+        }
+
+        .product-detail-gallery {
+            margin-bottom: 1.5rem;
+        }
+
+        .product-main-image {
+            width: 100%;
+            height: 250px;
+            background-color: #F9FAFB;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .product-main-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            padding: 1rem;
+        }
+
+        .product-thumbnails {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+
+        .product-thumbnail-item {
+            width: 60px;
+            height: 60px;
+            background-color: #F9FAFB;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid transparent;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .product-thumbnail-item.active {
+            border-color: var(--weenify-purple);
+        }
+
+        .product-thumbnail-item img {
+            max-width: 80%;
+            max-height: 80%;
+            object-fit: contain;
+        }
+
+        .product-detail-info {
+            margin-bottom: 1.5rem;
+        }
+
+        .product-detail-price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #F3F4F6;
+        }
+
+        .product-detail-price-column {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-detail-label {
+            font-size: 0.75rem;
+            color: #6B7280;
+            margin-bottom: 0.25rem;
+        }
+
+        .product-detail-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--weenify-purple);
+        }
+
+        .product-detail-cost {
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: #4B5563;
+        }
+
+        .product-detail-profit {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--weenify-green);
+        }
+
+        .product-data-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-data-item {
+            padding: 0.75rem;
+            background-color: #F9FAFB;
+            border-radius: 0.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .data-item-label {
+            font-size: 0.75rem;
+            color: #6B7280;
+            margin-bottom: 0.25rem;
+        }
+
+        .data-item-value {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #1F2937;
+        }
+
+        .product-description {
+            margin-bottom: 1.5rem;
+        }
+
+        .product-description-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .product-description-text {
+            font-size: 0.875rem;
+            color: #4B5563;
+            line-height: 1.5;
+        }
+
+        .performance-metrics-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .metrics-card-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .metric-card {
+            padding: 0.75rem;
+            background-color: #F9FAFB;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .metric-card-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 0.5rem;
+            background-color: rgba(139, 92, 246, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--weenify-purple);
+        }
+
+        .metric-card-info {
+            flex: 1;
+        }
+
+        .metric-card-value {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: #1F2937;
+        }
+
+        .metric-card-label {
+            font-size: 0.75rem;
+            color: #6B7280;
+        }
+
+        .chart-container {
+            height: 200px;
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #6B7280;
+            background-color: #F9FAFB;
+            border-radius: 0.5rem;
+        }
+
+        .chart-placeholder svg {
+            width: 32px;
+            height: 32px;
+            color: #D1D5DB;
+            margin-bottom: 0.5rem;
+        }
+
+        .audience-demographics {
+            margin-bottom: 1.5rem;
+        }
+
+        .audience-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .demographics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+        }
+
+        .demographic-item {
+            background-color: #F9FAFB;
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            text-align: center;
+        }
+
+        .demographic-value {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--weenify-purple);
+            margin-bottom: 0.25rem;
+        }
+
+        .demographic-label {
+            font-size: 0.75rem;
+            color: #6B7280;
+        }
+
+        .product-detail-actions {
+            display: flex;
+            gap: 0.75rem;
+            padding: 1.5rem;
+            border-top: 1px solid #F3F4F6;
+            background-color: #FAFAFA;
+        }
+
+        .action-button {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem;
+            border-radius: 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .action-button svg {
+            margin-right: 0.5rem;
+        }
+
+        .action-button-primary {
+            background-color: var(--weenify-purple);
+            color: white;
+        }
+
+        .action-button-primary:hover {
+            background-color: var(--weenify-purple-dark);
+        }
+
+        .action-button-secondary {
+            background-color: #F3F4F6;
+            color: #4B5563;
+        }
+
+        .action-button-secondary:hover {
+            background-color: #E5E7EB;
+            color: #1F2937;
+        }
+
+        /* Pagination Controls */
+        .pagination-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-top: 1px solid #F3F4F6;
+            background-color: #FAFAFA;
+        }
+
+        .results-info {
+            font-size: 0.875rem;
+            color: #6B7280;
+        }
+
+        .pagination-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .page-button {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            background-color: white;
+            border: 1px solid #E5E7EB;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .page-button:hover {
+            border-color: var(--weenify-purple-light);
+            color: var(--weenify-purple);
+        }
+
+        .page-button.active {
+            background-color: var(--weenify-purple);
+            color: white;
+            border-color: var(--weenify-purple);
+        }
+
+        .page-button.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .page-button-text {
+            width: auto;
+            padding: 0 0.5rem;
+        }
+
+        /* Loading Animation */
+        .loading-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .loading-animation.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 3px solid rgba(139, 92, 246, 0.1);
+            border-top-color: var(--weenify-purple);
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-text {
+            font-size: 0.875rem;
+            color: #4B5563;
+            font-weight: 500;
+        }
+
+        /* Database Stats Cards */
+        .database-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .database-stats {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .database-stat-card {
+            background-color: white;
+            border: 1px solid #F3F4F6;
+            border-radius: 0.75rem;
+            padding: 1rem;
+        }
+
+        .database-stat-card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 0.5rem;
+            background-color: rgba(139, 92, 246, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--weenify-purple);
+            margin-bottom: 0.75rem;
+        }
+
+        .database-stat-card-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1F2937;
+            margin-bottom: 0.25rem;
+        }
+
+        .database-stat-card-label {
+            font-size: 0.875rem;
+            color: #6B7280;
+        }
+    </style>
+</head>
+<body>
+    <section class="feature-section">
+        <!-- Background decorative elements -->
+        <div class="feature-bg-shape feature-bg-shape-1"></div>
+        <div class="feature-bg-shape feature-bg-shape-2"></div>
+
+        <div class="container">
+            <div class="feature-content">
+                <div class="feature-visual">
+                    <div class="database-ui">
+                        <!-- Database Header -->
+                        <div class="database-header">
+                            <div class="database-title">
+                                <div class="database-icon">W</div>
+                                <span>Product Database</span>
+                            </div>
+                            <div class="database-controls">
+                                <div class="database-stat">
+                                    <div class="database-stat-value">1M+</div>
+                                    <div>Products</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Search and Filter Bar -->
+                        <div class="search-filter-bar">
+                            <div class="search-box">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                <input type="text" placeholder="Search products..." class="search-input" id="searchInput">
+                            </div>
+                            <div class="filter-buttons">
+                                <button class="filter-button active" data-filter="all">
+                                    All
+                                </button>
+                                <button class="filter-button" data-filter="trending">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                        <polyline points="17 6 23 6 23 12"></polyline>
+                                    </svg>
+                                    Trending
+                                </button>
+                                <button class="filter-button" data-filter="high-profit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                    </svg>
+                                    High Profit
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Database Content -->
+                        <div class="database-content">
+                            <!-- Database Stats -->
+                            <div class="database-stats">
+                                <div class="database-stat-card">
+                                    <div class="database-stat-card-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                                            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                                            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="database-stat-card-value">1.2M</div>
+                                    <div class="database-stat-card-label">Products</div>
+                                </div>
+                                <div class="database-stat-card">
+                                    <div class="database-stat-card-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                                            <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                                        </svg>
+                                    </div>
+                                    <div class="database-stat-card-value">68%</div>
+                                    <div class="database-stat-card-label">Avg. Profit Margin</div>
+                                </div>
+                                <div class="database-stat-card">
+                                    <div class="database-stat-card-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="9" cy="21" r="1"></circle>
+                                            <circle cx="20" cy="21" r="1"></circle>
+                                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="database-stat-card-value">3,240</div>
+                                    <div class="database-stat-card-label">Suppliers</div>
+                                </div>
+                                <div class="database-stat-card">
+                                    <div class="database-stat-card-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                                            <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                                            <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                                            <line x1="6" y1="18" x2="6.01" y2="18"></line>
+                                        </svg>
+                                    </div>
+                                    <div class="database-stat-card-value">42M+</div>
+                                    <div class="database-stat-card-label">Data Points</div>
+                                </div>
+                            </div>
+
+                            <!-- Product Grid -->
+                            <div class="product-grid" id="productGrid">
+                                <!-- Product cards will be added dynamically via JavaScript -->
+                            </div>
+                        </div>
+
+                        <!-- Pagination Controls -->
+                        <div class="pagination-controls">
+                            <div class="results-info">Showing 1-4 of 1,234,568 products</div>
+                            <div class="pagination-buttons">
+                                <button class="page-button disabled">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="15 18 9 12 15 6"></polyline>
+                                    </svg>
+                                </button>
+                                <button class="page-button active">1</button>
+                                <button class="page-button">2</button>
+                                <button class="page-button">3</button>
+                                <button class="page-button page-button-text">...</button>
+                                <button class="page-button">42</button>
+                                <button class="page-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="9 18 15 12 9 6"></polyline>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Loading Animation -->
+                        <div class="loading-animation" id="loadingAnimation">
+                            <div class="spinner"></div>
+                            <div class="loading-text">Loading product data...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-text">
+                    <div class="feature-badge">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                        </svg>
+                        EXTENSIVE DATABASE
+                    </div>
+                    <h2 class="feature-title">
+                        <span class="gradient-text">Product Research Database</span> with Comprehensive Analytics
+                    </h2>
+                    <p class="feature-description">
+                        Access our database of over 1 million products with detailed performance metrics. Each product comes with comprehensive analytics including sales history, profit margins, supplier information, and audience demographics to help you make informed decisions.
+                    </p>
+                    <div class="feature-benefits">
+                        <div class="feature-benefit">
+                            <div class="feature-benefit-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="feature-benefit-text">
+                                <strong>Performance Analytics:</strong> Track sales history, growth trends, and competitive positioning for any product.
+                            </div>
+                        </div>
+                        <div class="feature-benefit">
+                            <div class="feature-benefit-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="feature-benefit-text">
+                                <strong>Supplier Insights:</strong> Compare suppliers by price, shipping times, and reliability to find the best source.
+                            </div>
+                        </div>
+                        <div class="feature-benefit">
+                            <div class="feature-benefit-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="feature-benefit-text">
+                                <strong>Audience Demographics:</strong> Understand who's buying each product to target your marketing effectively.
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" class="feature-btn">Explore the database</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Product Detail Overlay -->
+    <div class="product-detail-overlay" id="productDetailOverlay">
+        <div class="product-detail-panel" id="productDetailPanel">
+            <!-- Product Detail Content will be dynamically added via JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sample product data
+            const products = [
+                {
+                    id: 1,
+                    name: "Wireless Security Camera",
+                    price: 49.99,
+                    costPrice: 19.99,
+                    profit: 30.00,
+                    profitMargin: 60,
+                    rating: 4.7,
+                    ratingCount: 1287,
+                    soldLastMonth: 324,
+                    dailyVisits: 560,
+                    conversionRate: 4.2,
+                    competitionLevel: "Medium",
+                    image: "https://via.placeholder.com/150",
+                    thumbnails: [
+                        "https://via.placeholder.com/60",
+                        "https://via.placeholder.com/60",
+                        "https://via.placeholder.com/60",
+                        "https://via.placeholder.com/60"
+                    ],
+                    badge: "trending",
+                    category: "Electronics",
+                    ageGroups: { "18-24": "15%", "25-34": "40%", "35-44": "30%", "45+": "15%" },
+                    gender: { "Male": "55%", "Female": "45%" },
+                    locations: "US (45%), Europe (30%), Asia (15%), Other (10%)",
+                    description: "HD 1080p wireless security camera with night vision and motion detection. Features two-way audio, cloud storage, and works with Alexa and Google Home."
+                },
+                {
+                    id: 2,
+                    name: "Dog Training Collar",
+                    price: 37.50,
+                    costPrice: 8.25,
+                    profit: 29.25,
+                    profitMargin: 78,
+                    rating: 4.5,
+                    ratingCount: 943,
+                    soldLastMonth: 287,
+                    dailyVisits: 420,
+                    conversionRate: 5.1,
+                    competitionLevel: "Low",
+                    image: "https://via.placeholder.com/150",
+                    thumbnails: [
+                        "https://via.placeholder.com/60",
+                        "https://via.placeholder.com/60",
+                        "https://via.placeholder.com/60"
+                    ],
+                    badge: "hot",
+                    category: "Pet Supplies",
+                    ageGroups: { "18-24": "10%", "25-34": "35%", "35-44": "40%", "45+": "15%" },
+                    gender: { "Male": "45%", "Female": "55%" },
+                    locations: "US (60%), Canada (20%), UK (10%), Other (10%)",
+                    description: "Rechargeable dog training collar with 3 modes: beep, vibration, and shock. Waterproof with a range of up to 1000 yards. Suitable for all dog sizes."
+                },
+                {
+                    id: 3,
+                    name: "Smart Fitness Watch",
+                    price: 78.95,
+                    costPrice: 40.25,
+                    profit: 38.70,
+                    profitMargin: 49,
+                    rating: 4.3,
+                    ratingCount: 756,
+                    soldLastMonth: 156,
+                    dailyVisits: 340,
+                    conversionRate: 3.2,
+                    competitionLevel: "High",
+                    image: "https://via.placeholder.com/150",
+                    thumbnails: [
+                        "https://via.placeholder.com/60",
+                        "https://via.placeholder.com/60",
+                        "https://via.placeholder.com/60",
+                        "https://via.placeholder.com/60"
+                    ],
+                    badge: "",
+                    category: "Wearables",
+                    ageGroups: { "18-24": "25%", "25-34": "45%", "35-44": "20%", "45+": "10%" },
+                    gender: { "Male": "50%", "Female": "50%" },
+                    locations: "US (40%), Europe (30%), Asia (20%), Other (10%)",
+                    description: "Fitness tracker with heart rate monitor, sleep tracking, and activity tracking. Features a color touchscreen, water resistance, and up to 7 days of battery life."
+                },
+                {
+                    id: 4,
+                    name: "Portable Bluetooth Speaker",
+                    price: 32.99,
+                    costPrice: 12.50,
+                    profit: 20.49,
+                    profitMargin: 62,
+                    rating: 4.6,
+                    ratingCount: 1423,
+                    soldLastMonth: 412,
+                    dailyVisits: 590,
+                    conversionRate: 5.2,
+                    competitionLevel: "Medium",
+                    image: "https://via.placeholder.com/150",
+                    thumbnails: [
+                        "https://via.placeholder.com/60",
+                        "https://via.placeholder.com/60",
+                        "https://via.placeholder.com/60"
+                    ],
+                    badge: "new",
+                    category: "Audio",
+                    ageGroups: { "18-24": "30%", "25-34": "35%", "35-44": "25%", "45+": "10%" },
+                    gender: { "Male": "60%", "Female": "40%" },
+                    locations: "US (50%), Europe (25%), Asia (15%), Other (10%)",
+                    description: "Portable Bluetooth speaker with 24-hour battery life, IPX7 waterproof rating, and 360° sound. Features built-in microphone for calls and voice assistant compatibility."
+                }
+            ];
+
+            // Initialize the product grid
+            const productGrid = document.getElementById('productGrid');
+            const loadingAnimation = document.getElementById('loadingAnimation');
+            const searchInput = document.getElementById('searchInput');
+            const filterButtons = document.querySelectorAll('.filter-button');
+            const productDetailOverlay = document.getElementById('productDetailOverlay');
+            const productDetailPanel = document.getElementById('productDetailPanel');
+            
+            // Function to format currency
+            function formatCurrency(amount) {
+                return '$' + amount.toFixed(2);
+            }
+            
+            // Function to create star rating HTML
+            function createStarRating(rating) {
+                const fullStars = Math.floor(rating);
+                const halfStar = rating % 1 >= 0.5;
+                const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+                
+                let starsHTML = '';
+                
+                // Full stars
+                for (let i = 0; i < fullStars; i++) {
+                    starsHTML += `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                        </svg>
+                    `;
+                }
+                
+                // Half star if needed
+                if (halfStar) {
+                    starsHTML += `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round">
+                            <defs>
+                                <linearGradient id="halfStarGradient">
+                                    <stop offset="50%" stop-color="currentColor" />
+                                    <stop offset="50%" stop-color="#E5E7EB" />
+                                </linearGradient>
+                            </defs>
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="url(#halfStarGradient)"></polygon>
+                        </svg>
+                    `;
+                }
+                
+                // Empty stars
+                for (let i = 0; i < emptyStars; i++) {
+                    starsHTML += `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#E5E7EB" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                        </svg>
+                    `;
+                }
+                
+                return starsHTML;
+            }
+            
+            // Function to create product card
+            function createProductCard(product) {
+                let badgeHTML = '';
+                if (product.badge) {
+                    const badgeClass = `product-badge-${product.badge}`;
+                    badgeHTML = `<div class="product-badge ${badgeClass}">${product.badge.toUpperCase()}</div>`;
+                }
+                
+                const card = document.createElement('div');
+                card.className = 'product-card product-card-selectable';
+                card.setAttribute('data-product-id', product.id);
+                
+                card.innerHTML = `
+                    <div class="product-thumbnail">
+                        ${badgeHTML}
+                        <img src="${product.image}" alt="${product.name}" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-rating">
+                            <div class="stars">
+                                ${createStarRating(product.rating)}
+                            </div>
+                            <div class="rating-count">(${product.ratingCount})</div>
+                        </div>
+                        <div class="product-price-row">
+                            <div class="product-price">${formatCurrency(product.price)}</div>
+                            <div class="product-profit">${product.profitMargin}% profit</div>
+                        </div>
+                        <div class="product-metrics">
+                            <div class="product-metric">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="metric-icon">
+                                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                                    <path d="M16 10a4 4 0 0 1-8 0"></path>
+                                </svg>
+                                <div class="metric-value">${product.soldLastMonth}</div>
+                                <div class="metric-label">Sales/Mo.</div>
+                            </div>
+                            <div class="product-metric">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="metric-icon">
+                                    <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                                    <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                                </svg>
+                                <div class="metric-value">${formatCurrency(product.profit)}</div>
+                                <div class="metric-label">Profit/Unit</div>
+                            </div>
+                            <div class="product-metric">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="metric-icon">
+                                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                                </svg>
+                                <div class="metric-value">${product.conversionRate}%</div>
+                                <div class="metric-label">Conv. Rate</div>
+                            </div>
+                            <div class="product-metric">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="metric-icon">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                                </svg>
+                                <div class="metric-value">${product.competitionLevel}</div>
+                                <div class="metric-label">Competition</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                return card;
+            }
+            
+            // Function to simulate loading and render products
+            function loadProducts(filter = 'all') {
+                // Show loading animation
+                loadingAnimation.classList.add('active');
+                
+                // Clear current products
+                productGrid.innerHTML = '';
+                
+                // Simulate API delay
+                setTimeout(() => {
+                    // Filter products if needed
+                    let filteredProducts = products;
+                    if (filter === 'trending') {
+                        filteredProducts = products.filter(p => p.badge === 'trending');
+                    } else if (filter === 'high-profit') {
+                        filteredProducts = products.filter(p => p.profitMargin >= 60);
+                    }
+                    
+                    // Create and append product cards
+                    filteredProducts.forEach(product => {
+                        const card = createProductCard(product);
+                        productGrid.appendChild(card);
+                    });
+                    
+                    // Add click handlers to product cards
+                    document.querySelectorAll('.product-card-selectable').forEach(card => {
+                        card.addEventListener('click', function() {
+                            const productId = parseInt(this.getAttribute('data-product-id'));
+                            showProductDetail(productId);
+                        });
+                    });
+                    
+                    // Hide loading animation
+                    loadingAnimation.classList.remove('active');
+                    
+                    // Update products shown count in pagination info
+                    const resultsInfo = document.querySelector('.results-info');
+                    if (resultsInfo) {
+                        resultsInfo.textContent = `Showing 1-${filteredProducts.length} of ${filter === 'all' ? '1,234,568' : filteredProducts.length} products`;
+                    }
+                }, 800);
+            }
+            
+            // Function to show product detail
+            function showProductDetail(productId) {
+                // Find product
+                const product = products.find(p => p.id === productId);
+                if (!product) return;
+                
+                // Create product detail content
+                productDetailPanel.innerHTML = `
+                    <div class="product-detail-header">
+                        <div>
+                            <div class="product-detail-title">${product.name}</div>
+                            <div class="product-detail-subtitle">Category: ${product.category} | ID: WEE-${100000 + product.id}</div>
+                        </div>
+                        <div class="product-detail-close" id="closeDetailBtn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <div class="product-detail-content">
+                        <div class="product-detail-gallery">
+                            <div class="product-main-image">
+                                <img src="${product.image}" alt="${product.name}" id="mainProductImage">
+                            </div>
+                            <div class="product-thumbnails">
+                                ${product.thumbnails.map((thumb, index) => `
+                                    <div class="product-thumbnail-item ${index === 0 ? 'active' : ''}" data-thumb-index="${index}">
+<img src="${thumb}" alt="Product thumbnail ${index + 1}">
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        
+                        <div class="product-detail-info">
+                            <div class="product-detail-price-row">
+                                <div class="product-detail-price-column">
+                                    <div class="product-detail-label">Selling Price</div>
+                                    <div class="product-detail-price">${formatCurrency(product.price)}</div>
+                                </div>
+                                <div class="product-detail-price-column">
+                                    <div class="product-detail-label">Cost Price</div>
+                                    <div class="product-detail-cost">${formatCurrency(product.costPrice)}</div>
+                                </div>
+                                <div class="product-detail-price-column">
+                                    <div class="product-detail-label">Profit per Sale</div>
+                                    <div class="product-detail-profit">${formatCurrency(product.profit)}</div>
+                                </div>
+                            </div>
+                            
+                            <div class="product-data-grid">
+                                <div class="product-data-item">
+                                    <div class="data-item-label">Rating</div>
+                                    <div class="data-item-value">
+                                        <div class="stars">
+                                            ${createStarRating(product.rating)}
+                                        </div>
+                                        ${product.rating} (${product.ratingCount} reviews)
+                                    </div>
+                                </div>
+                                <div class="product-data-item">
+                                    <div class="data-item-label">Sales Volume</div>
+                                    <div class="data-item-value">${product.soldLastMonth} units/month</div>
+                                </div>
+                                <div class="product-data-item">
+                                    <div class="data-item-label">Daily Traffic</div>
+                                    <div class="data-item-value">${product.dailyVisits} visits/day</div>
+                                </div>
+                                <div class="product-data-item">
+                                    <div class="data-item-label">Conversion Rate</div>
+                                    <div class="data-item-value">${product.conversionRate}%</div>
+                                </div>
+                                <div class="product-data-item">
+                                    <div class="data-item-label">Profit Margin</div>
+                                    <div class="data-item-value">${product.profitMargin}%</div>
+                                </div>
+                                <div class="product-data-item">
+                                    <div class="data-item-label">Competition Level</div>
+                                    <div class="data-item-value">${product.competitionLevel}</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="product-description">
+                            <div class="product-description-title">Product Description</div>
+                            <div class="product-description-text">${product.description}</div>
+                        </div>
+                        
+                        <div class="performance-metrics">
+                            <div class="performance-metrics-title">Performance Metrics</div>
+                            
+                            <div class="metrics-card-grid">
+                                <div class="metric-card">
+                                    <div class="metric-card-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                                        </svg>
+                                    </div>
+                                    <div class="metric-card-info">
+                                        <div class="metric-card-value">+18% MoM</div>
+                                        <div class="metric-card-label">Sales Growth</div>
+                                    </div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-card-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                            <polyline points="17 6 23 6 23 12"></polyline>
+                                        </svg>
+                                    </div>
+                                    <div class="metric-card-info">
+                                        <div class="metric-card-value">Top 5%</div>
+                                        <div class="metric-card-label">Market Position</div>
+                                    </div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-card-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="metric-card-info">
+                                        <div class="metric-card-value">$${Math.floor(product.soldLastMonth * product.profit).toLocaleString()}</div>
+                                        <div class="metric-card-label">Monthly Profit</div>
+                                    </div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-card-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M12 20h9"></path>
+                                            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="metric-card-info">
+                                        <div class="metric-card-value">4.3/5</div>
+                                        <div class="metric-card-label">Seller Rating</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="chart-container">
+                                <div class="chart-placeholder">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="3" y1="9" x2="21" y2="9"></line>
+                                        <line x1="9" y1="21" x2="9" y2="9"></line>
+                                    </svg>
+                                    <span>Sales History (6 Months)</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="audience-demographics">
+                            <div class="audience-title">Audience Demographics</div>
+                            
+                            <div class="demographics-grid">
+                                <div class="demographic-item">
+                                    <div class="demographic-value">25-34</div>
+                                    <div class="demographic-label">Top Age Group</div>
+                                </div>
+                                <div class="demographic-item">
+                                    <div class="demographic-value">${Object.keys(product.gender)[0]}</div>
+                                    <div class="demographic-label">Primary Gender</div>
+                                </div>
+                                <div class="demographic-item">
+                                    <div class="demographic-value">US</div>
+                                    <div class="demographic-label">Top Location</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-detail-actions">
+                        <div class="action-button action-button-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 3h18v18H3zM12 8v8m-4-4h8"></path>
+                            </svg>
+                            Import Product
+                        </div>
+                        <div class="action-button action-button-secondary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                                <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                                <polyline points="7 3 7 8 15 8"></polyline>
+                            </svg>
+                            Save for Later
+                        </div>
+                    </div>
+                `;
+                
+                // Show overlay
+                productDetailOverlay.classList.add('active');
+                
+                // Add event listener to close button
+                const closeBtn = document.getElementById('closeDetailBtn');
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', closeProductDetail);
+                }
+                
+                // Add event listeners to thumbnail images
+                const thumbnailItems = document.querySelectorAll('.product-thumbnail-item');
+                thumbnailItems.forEach(item => {
+                    item.addEventListener('click', function() {
+                        // Remove active class from all thumbnails
+                        thumbnailItems.forEach(thumb => thumb.classList.remove('active'));
+                        
+                        // Add active class to clicked thumbnail
+                        this.classList.add('active');
+                        
+                        // Update main image
+                        const mainImage = document.getElementById('mainProductImage');
+                        if (mainImage) {
+                            mainImage.src = this.querySelector('img').src;
+                        }
+                    });
+                });
+                
+                // Add event listeners to action buttons
+                const importBtn = document.querySelector('.action-button-primary');
+                const saveBtn = document.querySelector('.action-button-secondary');
+                
+                if (importBtn) {
+                    importBtn.addEventListener('click', function() {
+                        showNotification('Product added to import queue', 'success');
+                        setTimeout(closeProductDetail, 500);
+                    });
+                }
+                
+                if (saveBtn) {
+                    saveBtn.addEventListener('click', function() {
+                        showNotification('Product saved to your collection', 'info');
+                        setTimeout(closeProductDetail, 500);
+                    });
+                }
+                
+                // Close when clicking outside the panel
+                productDetailOverlay.addEventListener('click', function(e) {
+                    if (e.target === productDetailOverlay) {
+                        closeProductDetail();
+                    }
+                });
+                
+                // Close on Escape key
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') {
+                        closeProductDetail();
+                    }
+                });
+            }
+            
+            // Function to close product detail
+            function closeProductDetail() {
+                productDetailOverlay.classList.remove('active');
+            }
+            
+            // Function to show notification
+            function showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.className = 'notification';
+                notification.style.position = 'fixed';
+                notification.style.bottom = '20px';
+                notification.style.right = '20px';
+                notification.style.padding = '0.75rem 1rem';
+                notification.style.borderRadius = '0.5rem';
+                notification.style.backgroundColor = 'white';
+                notification.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05)';
+                notification.style.zIndex = '1000';
+                notification.style.transform = 'translateY(100px)';
+                notification.style.opacity = '0';
+                notification.style.transition = 'all 0.3s ease-out';
+                
+                // Set colors based on notification type
+                if (type === 'success') {
+                    notification.style.borderLeft = '4px solid #10B981';
+                } else if (type === 'warning') {
+                    notification.style.borderLeft = '4px solid #F59E0B';
+                } else if (type === 'error') {
+                    notification.style.borderLeft = '4px solid #EF4444';
+                } else {
+                    notification.style.borderLeft = '4px solid #8B5CF6';
+                }
+                
+                notification.textContent = message;
+                
+                document.body.appendChild(notification);
+                
+                // Animate in
+                setTimeout(() => {
+                    notification.style.transform = 'translateY(0)';
+                    notification.style.opacity = '1';
+                }, 10);
+                
+                // Remove after 3 seconds
+                setTimeout(() => {
+                    notification.style.transform = 'translateY(100px)';
+                    notification.style.opacity = '0';
+                    
+                    // Remove from DOM after animation
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 300);
+                }, 3000);
+            }
+            
+            // Add event listeners to filter buttons
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Load products with filter
+                    const filter = this.getAttribute('data-filter');
+                    loadProducts(filter);
+                });
+            });
+            
+            // Add event listener to search input
+            searchInput.addEventListener('keyup', function(e) {
+                // If Enter key is pressed
+                if (e.key === 'Enter') {
+                    const searchTerm = this.value.trim().toLowerCase();
+                    
+                    // Show loading animation
+                    loadingAnimation.classList.add('active');
+                    
+                    // Simulate search (just for demo)
+                    setTimeout(() => {
+                        // Filter products
+                        const filteredProducts = products.filter(p => 
+                            p.name.toLowerCase().includes(searchTerm) || 
+                            p.category.toLowerCase().includes(searchTerm)
+                        );
+                        
+                        // Clear current products
+                        productGrid.innerHTML = '';
+                        
+                        // Create and append product cards
+                        filteredProducts.forEach(product => {
+                            const card = createProductCard(product);
+                            productGrid.appendChild(card);
+                        });
+                        
+                        // Add click handlers to product cards
+                        document.querySelectorAll('.product-card-selectable').forEach(card => {
+                            card.addEventListener('click', function() {
+                                const productId = parseInt(this.getAttribute('data-product-id'));
+                                showProductDetail(productId);
+                            });
+                        });
+                        
+                        // Hide loading animation
+                        loadingAnimation.classList.remove('active');
+                        
+                        // Update results info
+                        const resultsInfo = document.querySelector('.results-info');
+                        if (resultsInfo) {
+                            resultsInfo.textContent = `Showing 1-${filteredProducts.length} of ${filteredProducts.length} products for "${searchTerm}"`;
+                        }
+                        
+                        // Show notification for search
+                        if (filteredProducts.length > 0) {
+                            showNotification(`Found ${filteredProducts.length} products matching "${searchTerm}"`, 'success');
+                        } else {
+                            showNotification(`No products found matching "${searchTerm}"`, 'warning');
+                        }
+                    }, 800);
+                }
+            });
+            
+            // Add event listeners to pagination buttons
+            const pageButtons = document.querySelectorAll('.page-button');
+            
+            pageButtons.forEach(button => {
+                if (!button.classList.contains('disabled')) {
+                    button.addEventListener('click', function() {
+                        // Simulate page change
+                        // In a real app, this would load the corresponding page
+                        
+                        // Remove active class from all buttons
+                        pageButtons.forEach(btn => btn.classList.remove('active'));
+                        
+                        // Add active class to clicked button (if it's a number)
+                        if (!this.classList.contains('page-button-text')) {
+                            this.classList.add('active');
+                        }
+                        
+                        // Show loading animation
+                        loadingAnimation.classList.add('active');
+                        
+                        // Simulate loading delay
+                        setTimeout(() => {
+                            // Hide loading animation
+                            loadingAnimation.classList.remove('active');
+                            
+                            // Show notification for page change
+                            const pageNum = this.textContent.trim();
+                            if (!this.innerHTML.includes('svg')) {
+                                showNotification(`Navigated to page ${pageNum}`, 'info');
+                            }
+                        }, 600);
+                    });
+                }
+            });
+            
+            // Initialize: load products
+            loadProducts();
+            
+            // Replace placeholder images with actual product images if available
+            try {
+                const productImages = {
+                    1: 'images/mini-portable-projector.png',
+                    2: 'images/dog-training-collar.png',
+                    3: 'images/ab-wheel-roller.png',
+                    4: 'images/pet-cleaner.png'
+                };
+                
+                // After products are loaded, update their images
+                setTimeout(() => {
+                    products.forEach(product => {
+                        if (productImages[product.id]) {
+                            const imgElements = document.querySelectorAll(`[data-product-id="${product.id}"] .product-image`);
+                            imgElements.forEach(img => {
+                                img.src = productImages[product.id];
+                            });
+                        }
+                    });
+                }, 1000);
+            } catch(e) {
+                console.log('Using placeholder images for demo');
+            }
+            
+            // Add cool hover effect to the database UI
+            const databaseUI = document.querySelector('.database-ui');
+            
+            if (databaseUI) {
+                document.addEventListener('mousemove', function(e) {
+                    const boundingRect = databaseUI.getBoundingClientRect();
+                    const mouseX = e.clientX - boundingRect.left;
+                    const mouseY = e.clientY - boundingRect.top;
+                    
+                    // Only apply effect if mouse is over the element
+                    if (mouseX >= 0 && mouseX <= boundingRect.width && mouseY >= 0 && mouseY <= boundingRect.height) {
+                        // Calculate distance from center in percentage
+                        const centerX = boundingRect.width / 2;
+                        const centerY = boundingRect.height / 2;
+                        
+                        const deltaX = (mouseX - centerX) / centerX * 3; // Max 3 degrees
+                        const deltaY = (mouseY - centerY) / centerY * 1.5; // Max 1.5 degrees
+                        
+                        // Apply subtle rotation
+                        databaseUI.style.transform = `perspective(1000px) rotateY(${-deltaX}deg) rotateX(${deltaY}deg)`;
+                    } else {
+                        // Reset when mouse leaves
+                        databaseUI.style.transform = 'perspective(1000px) rotateY(0) rotateX(0)';
+                    }
+                });
+                
+                // Reset on mouse leave
+                databaseUI.addEventListener('mouseleave', function() {
+                    databaseUI.style.transition = 'transform 0.5s ease-out';
+                    databaseUI.style.transform = 'perspective(1000px) rotateY(0) rotateX(0)';
+                });
+                
+                databaseUI.addEventListener('mouseenter', function() {
+                    databaseUI.style.transition = 'transform 0.1s ease-out';
+                });
+            }
+            
+            // Add random scan animation for product grid when page loads
+            function addScanEffect() {
+                const scanElement = document.createElement('div');
+                scanElement.className = 'scan-effect';
+                scanElement.style.position = 'absolute';
+                scanElement.style.top = '0';
+                scanElement.style.left = '-100px';
+                scanElement.style.width = '100px';
+                scanElement.style.height = '100%';
+                scanElement.style.background = 'linear-gradient(to right, rgba(139, 92, 246, 0) 0%, rgba(139, 92, 246, 0.1) 50%, rgba(139, 92, 246, 0) 100%)';
+                scanElement.style.zIndex = '1';
+                scanElement.style.pointerEvents = 'none';
+                
+                productGrid.style.position = 'relative';
+                productGrid.appendChild(scanElement);
+                
+                // Animate scan effect
+                let startTime = null;
+                
+                function animateScan(timestamp) {
+                    if (!startTime) startTime = timestamp;
+                    const elapsed = timestamp - startTime;
+                    
+                    // Move from left to right over 1.5 seconds
+                    const progress = elapsed / 1500;
+                    
+                    if (progress <= 1) {
+                        const xPos = -100 + progress * (productGrid.offsetWidth + 200);
+                        scanElement.style.left = `${xPos}px`;
+                        requestAnimationFrame(animateScan);
+                    } else {
+                        productGrid.removeChild(scanElement);
+                    }
+                }
+                
+                requestAnimationFrame(animateScan);
+            }
+            
+            // Add scan effect after products load
+            setTimeout(addScanEffect, 1200);
+            
+            // Add interactive demo features
+            function initInteractiveDemo() {
+                // Simulate real-time data updates
+                setInterval(() => {
+                    // Randomly update one of the database stats
+                    const statCards = document.querySelectorAll('.database-stat-card');
+                    const randomIndex = Math.floor(Math.random() * statCards.length);
+                    const randomCard = statCards[randomIndex];
+                    
+                    if (randomCard) {
+                        const valueElement = randomCard.querySelector('.database-stat-card-value');
+                        const currentText = valueElement.textContent;
+                        
+                        // Briefly highlight the stat
+                        randomCard.style.transition = 'background-color 0.5s ease-out';
+                        randomCard.style.backgroundColor = 'rgba(139, 92, 246, 0.1)';
+                        
+                        setTimeout(() => {
+                            randomCard.style.backgroundColor = 'white';
+                        }, 500);
+                        
+                        // If it's a percentage stat, randomly adjust it
+                        if (currentText.includes('%')) {
+                            const currentValue = parseFloat(currentText);
+                            const adjustment = (Math.random() * 0.6) - 0.3; // -0.3 to +0.3
+                            const newValue = (currentValue + adjustment).toFixed(1) + '%';
+                            valueElement.textContent = newValue;
+                        }
+                        // If it's a count stat, randomly adjust it
+                        else if (currentText.includes('M')) {
+                            // Don't change the millions value, just for demo stability
+                        }
+                        else {
+                            const currentValue = parseInt(currentText.replace(/,/g, ''));
+                            const adjustment = Math.floor((Math.random() * 20) - 10); // -10 to +10
+                            const newValue = (currentValue + adjustment).toLocaleString();
+                            valueElement.textContent = newValue;
+                        }
+                    }
+                }, 8000);
+            }
+            
+            // Initialize the interactive demo features
+            initInteractiveDemo();
+        });
+    </script>
+</body>
+</html>

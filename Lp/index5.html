@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weenify - Real-Time Market Analysis Feature</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --weenify-purple: #8B5CF6;
+            --weenify-purple-light: #D6BCFA;
+            --weenify-purple-dark: #6E59A5;
+            --weenify-blue: #1EAEDB;
+            --weenify-blue-light: #33C3F0;
+            --weenify-green: #10B981;
+            --weenify-red: #EF4444;
+            --weenify-yellow: #F59E0B;
+            --radius: 0.75rem;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #1F2937;
+            line-height: 1.5;
+            background-color: #F9FAFB;
+        }
+
+        /* Feature Section Styles */
+        .feature-section {
+            padding: 6rem 1.5rem;
+            background: linear-gradient(to right, #f5f3ff, #ede9fe);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Background elements */
+        .feature-bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(30, 174, 219, 0.1));
+            z-index: 0;
+        }
+
+        .feature-bg-circle-1 {
+            width: 600px;
+            height: 600px;
+            top: -250px;
+            right: -150px;
+        }
+
+        .feature-bg-circle-2 {
+            width: 400px;
+            height: 400px;
+            bottom: -150px;
+            left: -150px;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Feature Content */
+        .feature-content {
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
+        }
+
+        @media (min-width: 1024px) {
+            .feature-content {
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+
+        .feature-text {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .feature-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background-color: rgba(139, 92, 246, 0.1);
+            color: var(--weenify-purple);
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-badge svg {
+            margin-right: 0.5rem;
+        }
+
+        .feature-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        @media (min-width: 768px) {
+            .feature-title {
+                font-size: 3rem;
+            }
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, var(--weenify-purple), var(--weenify-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline;
+        }
+
+        .feature-description {
+            font-size: 1.125rem;
+            color: #4B5563;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .feature-benefits {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-benefit {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .feature-benefit-icon {
+            width: 24px;
+            height: 24px;
+            min-width: 24px;
+            border-radius: 50%;
+            background-color: rgba(139, 92, 246, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--weenify-purple);
+        }
+
+        .feature-benefit-text {
+            font-size: 1rem;
+            color: #4B5563;
+        }
+
+        .feature-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            border-radius: 9999px;
+            transition: all 0.3s;
+            font-size: 1rem;
+            text-decoration: none;
+            background-color: var(--weenify-purple);
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(139, 92, 246, 0.2);
+        }
+
+        .feature-btn:hover {
+            background-color: var(--weenify-purple-dark);
+            box-shadow: 0 4px 6px -1px rgba(139, 92, 246, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Feature Visual (Right Side) */
+        .feature-visual {
+            flex: 1;
+            position: relative;
+            min-height: 600px;
+        }
+
+        /* Market Analysis Dashboard */
+        .market-dashboard {
+            position: relative;
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+            height: 600px;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #F3F4F6;
+        }
+
+        .dashboard-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+        }
+
+        .dashboard-icon {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, var(--weenify-purple), var(--weenify-blue));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .dashboard-controls {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .dashboard-tab {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.875rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .dashboard-tab.active {
+            background-color: rgba(139, 92, 246, 0.1);
+            color: var(--weenify-purple);
+        }
+
+        .dashboard-content {
+            padding: 1.5rem;
+            height: calc(100% - 60px);
+            overflow-y: auto;
+        }
+
+        /* Market Analysis Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .metrics-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .metric-card {
+            background-color: #F9FAFB;
+            border-radius: 0.75rem;
+            padding: 1rem;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            color: #6B7280;
+        }
+
+        .metric-trend {
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-top: 0.25rem;
+        }
+
+        .trend-up {
+            color: var(--weenify-green);
+        }
+
+        .trend-down {
+            color: var(--weenify-red);
+        }
+
+        /* Trending Products */
+        .trending-products {
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-weight: 600;
+            font-size: 1.125rem;
+        }
+
+        .section-action {
+            font-size: 0.875rem;
+            color: var(--weenify-purple);
+            cursor: pointer;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .product-card {
+            background-color: white;
+            border: 1px solid #F3F4F6;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+        }
+
+        .product-image {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background-color: #F9FAFB;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .product-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .product-info {
+            padding: 0.75rem;
+        }
+
+        .product-name {
+            font-weight: 500;
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .product-price {
+            font-weight: 700;
+            color: var(--weenify-purple);
+            font-size: 1rem;
+        }
+
+        .product-stats {
+            margin-top: 0.5rem;
+            display: flex;
+            gap: 0.75rem;
+            font-size: 0.75rem;
+            color: #6B7280;
+        }
+
+        .product-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        /* Market Trends Chart */
+        .market-trends {
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-container {
+            background-color: white;
+            border: 1px solid #F3F4F6;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            height: 250px;
+            position: relative;
+        }
+
+        .chart-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #6B7280;
+        }
+
+        .chart-placeholder svg {
+            width: 40px;
+            height: 40px;
+            color: #D1D5DB;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Real-time Feed */
+        .real-time-feed {
+            background-color: white;
+            border: 1px solid #F3F4F6;
+            border-radius: 0.75rem;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .feed-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #F3F4F6;
+        }
+
+        .feed-title {
+            font-weight: 600;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feed-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            background-color: #ECFDF5;
+            color: #065F46;
+        }
+
+        .feed-status-dot {
+            width: 6px;
+            height: 6px;
+            background-color: var(--weenify-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 4px rgba(16, 185, 129, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+
+        .feed-items {
+            height: calc(100% - 41px);
+            overflow-y: auto;
+            padding: 0.5rem 0;
+        }
+
+        .feed-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 1rem;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .feed-item:hover {
+            background-color: #F9FAFB;
+            border-left-color: var(--weenify-purple);
+        }
+
+        .feed-item-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 0.5rem;
+            background-color: #F3F4F6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .feed-item-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .feed-item-content {
+            flex: 1;
+        }
+
+        .feed-item-title {
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .feed-item-subtitle {
+            font-size: 0.75rem;
+            color: #6B7280;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feed-item-time {
+            font-size: 0.75rem;
+            color: #9CA3AF;
+        }
+
+        .feed-badge {
+            display: inline-flex;
+            font-size: 0.625rem;
+            font-weight: 600;
+            padding: 0.125rem 0.375rem;
+            border-radius: 9999px;
+        }
+
+        .feed-badge-trend {
+            background-color: #FFF7ED;
+            color: #C2410C;
+        }
+
+        .feed-badge-hot {
+            background-color: #FEF2F2;
+            color: #B91C1C;
+        }
+
+        .feed-badge-new {
+            background-color: #ECFDF5;
+            color: #065F46;
+        }
+
+        /* Animated Pulse around Dashboard */
+        .market-dashboard::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 1.25rem;
+            background: linear-gradient(135deg, var(--weenify-purple), var(--weenify-blue));
+            z-index: -1;
+            opacity: 0.5;
+            animation: pulse-border 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-border {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        /* Animated Highlight/Scan Effect */
+        .highlight-scan {
+            position: absolute;
+            top: 0;
+            left: -150px;
+            width: 100px;
+            height: 100%;
+            background: linear-gradient(
+                to right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.8) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            animation: scan 3s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        @keyframes scan {
+            0% {
+                left: -150px;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="feature-section">
+        <!-- Background decorative elements -->
+        <div class="feature-bg-circle feature-bg-circle-1"></div>
+        <div class="feature-bg-circle feature-bg-circle-2"></div>
+
+        <div class="container">
+            <div class="feature-content">
+                <div class="feature-text">
+                    <div class="feature-badge">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        REAL-TIME ANALYSIS
+                    </div>
+                    <h2 class="feature-title">
+                        <span class="gradient-text">Real-Time Market Analysis</span> for Winning Products
+                    </h2>
+                    <p class="feature-description">
+                        Track trending products across multiple marketplaces in real-time. Our algorithm analyzes thousands of products daily to identify those with the highest profit potential based on sales velocity, competition, and markup opportunities.
+                    </p>
+                    <div class="feature-benefits">
+                        <div class="feature-benefit">
+                            <div class="feature-benefit-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </div>
+                            <div class="feature-benefit-text">
+                                <strong>Live Market Insights:</strong> Discover products as they start trending, before your competitors.
+                            </div>
+                        </div>
+                        <div class="feature-benefit">
+                            <div class="feature-benefit-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </div>
+                            <div class="feature-benefit-text">
+                                <strong>Data-Driven Decisions:</strong> Make informed choices based on accurate sales data, not guesswork.
+                            </div>
+                        </div>
+                        <div class="feature-benefit">
+                            <div class="feature-benefit-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </div>
+                            <div class="feature-benefit-text">
+                                <strong>Profit Opportunity Alerts:</strong> Get notified when high-margin products start gaining traction.
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" class="feature-btn">See it in action</a>
+                </div>
+
+                <div class="feature-visual">
+                    <div class="market-dashboard">
+                        <div class="highlight-scan"></div>
+                        <div class="dashboard-header">
+                            <div class="dashboard-title">
+                                <div class="dashboard-icon">W</div>
+                                <span>Market Analysis</span>
+                            </div>
+                            <div class="dashboard-controls">
+                                <div class="dashboard-tab active">Trending</div>
+                                <div class="dashboard-tab">Profitable</div>
+                                <div class="dashboard-tab">New</div>
+                            </div>
+                        </div>
+                        <div class="dashboard-content">
+                            <div class="metrics-grid">
+                                <div class="metric-card">
+                                    <div class="metric-value">2,453</div>
+                                    <div class="metric-label">Products Analyzed</div>
+                                    <div class="metric-trend trend-up">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="18 15 12 9 6 15"/>
+                                        </svg>
+                                        +12% today
+                                    </div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-value">32</div>
+                                    <div class="metric-label">Trending Products</div>
+                                    <div class="metric-trend trend-up">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="18 15 12 9 6 15"/>
+                                        </svg>
+                                        +4% today
+                                    </div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-value">68%</div>
+                                    <div class="metric-label">Avg. Profit Margin</div>
+                                    <div class="metric-trend trend-up">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="18 15 12 9 6 15"/>
+                                        </svg>
+                                        +1.5% today
+                                    </div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-value">$18.9K</div>
+                                    <div class="metric-label">Market Volume</div>
+                                    <div class="metric-trend trend-down">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="6 9 12 15 18 9"/>
+                                        </svg>
+                                        -2.1% today
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="trending-products">
+                                <div class="section-header">
+                                    <div class="section-title">Top Trending Products</div>
+                                    <div class="section-action">View All</div>
+                                </div>
+                                <div class="products-grid">
+                                    <div class="product-card">
+                                        <div class="product-image">
+                                            <img src="https://via.placeholder.com/150" alt="Wireless Camera" id="product1Img">
+                                        </div>
+                                        <div class="product-info">
+                                            <div class="product-name">Wireless Security Camera</div>
+                                            <div class="product-price">$49.99</div>
+                                            <div class="product-stats">
+                                                <div class="product-stat">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                                                    </svg>
+                                                    324 sales
+                                                </div>
+                                                <div class="product-stat">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                        <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+                                                        <line x1="7" y1="7" x2="7.01" y2="7"/>
+                                                    </svg>
+                                                    64% margin
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="product-card">
+                                        <div class="product-image">
+                                            <img src="https://via.placeholder.com/150" alt="Dog Training Collar" id="product2Img">
+                                        </div>
+                                        <div class="product-info">
+                                            <div class="product-name">Dog Training Collar</div>
+                                            <div class="product-price">$37.50</div>
+                                            <div class="product-stats">
+                                                <div class="product-stat">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                                                    </svg>
+                                                    287 sales</div>
+                                                    <div class="product-stat">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                            <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+                                                            <line x1="7" y1="7" x2="7.01" y2="7"/>
+                                                        </svg>
+                                                        78% margin
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-card">
+                                            <div class="product-image">
+                                                <img src="https://via.placeholder.com/150" alt="Smart Watch" id="product3Img">
+                                            </div>
+                                            <div class="product-info">
+                                                <div class="product-name">Smart Fitness Watch</div>
+                                                <div class="product-price">$78.95</div>
+                                                <div class="product-stats">
+                                                    <div class="product-stat">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                                                        </svg>
+                                                        156 sales
+                                                    </div>
+                                                    <div class="product-stat">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                            <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+                                                            <line x1="7" y1="7" x2="7.01" y2="7"/>
+                                                        </svg>
+                                                        49% margin
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <div class="market-trends">
+                                    <div class="section-header">
+                                        <div class="section-title">Market Trends</div>
+                                        <div class="section-action">Last 30 Days</div>
+                                    </div>
+                                    <div class="chart-container" id="trendsChart">
+                                        <canvas id="marketTrendsChart"></canvas>
+                                    </div>
+                                </div>
+    
+                                <div class="real-time-feed">
+                                    <div class="feed-header">
+                                        <div class="feed-title">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="12" cy="12" r="10"/>
+                                                <polyline points="12 6 12 12 16 14"/>
+                                            </svg>
+                                            Live Product Feed
+                                        </div>
+                                        <div class="feed-status">
+                                            <div class="feed-status-dot"></div>
+                                            Live
+                                        </div>
+                                    </div>
+                                    <div class="feed-items" id="liveFeed">
+                                        <!-- Feed items will be dynamically populated by JavaScript -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <!-- Include Chart.js for the market trends chart -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Replace placeholder images with actual product images if available
+                try {
+                    document.getElementById('product1Img').src = 'images/mini-portable-projector.png';
+                    document.getElementById('product2Img').src = 'images/dog-training-collar.png';
+                    document.getElementById('product3Img').src = 'images/ab-wheel-roller.png';
+                } catch(e) {
+                    console.log('Using placeholder images for demo');
+                }
+    
+                // Live feed sample data
+                const feedItems = [
+                    {
+                        name: 'Wireless Security Camera',
+                        image: 'images/mini-portable-projector.png',
+                        event: 'Sales increased by 24% in last hour',
+                        time: '2 min ago',
+                        badge: 'trending'
+                    },
+                    {
+                        name: 'Portable Bluetooth Speaker',
+                        image: 'https://via.placeholder.com/32',
+                        event: 'New product detected with high potential',
+                        time: '5 min ago',
+                        badge: 'new'
+                    },
+                    {
+                        name: 'Neck Massager',
+                        image: 'https://via.placeholder.com/32',
+                        event: 'Profit margin increased to 72%',
+                        time: '12 min ago',
+                        badge: 'hot'
+                    },
+                    {
+                        name: 'LED Plant Grow Light',
+                        image: 'https://via.placeholder.com/32',
+                        event: 'Competition decreased by 15%',
+                        time: '23 min ago',
+                        badge: 'trending'
+                    },
+                    {
+                        name: 'Waterproof Phone Case',
+                        image: 'https://via.placeholder.com/32',
+                        event: 'Becoming popular in summer markets',
+                        time: '32 min ago',
+                        badge: 'trending'
+                    }
+                ];
+    
+                // Populate initial feed
+                const liveFeed = document.getElementById('liveFeed');
+                populateFeed(feedItems);
+    
+                // Set up periodic updates to the feed
+                setInterval(() => {
+                    addNewFeedItem();
+                }, 8000);
+    
+                // Function to populate the live feed
+                function populateFeed(items) {
+                    liveFeed.innerHTML = '';
+                    items.forEach(item => {
+                        const feedItem = createFeedItem(item);
+                        liveFeed.appendChild(feedItem);
+                    });
+                }
+    
+                // Function to create a feed item element
+                function createFeedItem(item) {
+                    const feedItem = document.createElement('div');
+                    feedItem.className = 'feed-item';
+                    
+                    let badgeClass = 'feed-badge-trend';
+                    if (item.badge === 'hot') {
+                        badgeClass = 'feed-badge-hot';
+                    } else if (item.badge === 'new') {
+                        badgeClass = 'feed-badge-new';
+                    }
+                    
+                    feedItem.innerHTML = `
+                        <div class="feed-item-icon">
+                            <img src="${item.image}" alt="${item.name}">
+                        </div>
+                        <div class="feed-item-content">
+                            <div class="feed-item-title">${item.name}</div>
+                            <div class="feed-item-subtitle">
+                                ${item.event}
+                                <div class="feed-badge ${badgeClass}">${item.badge.toUpperCase()}</div>
+                            </div>
+                        </div>
+                        <div class="feed-item-time">${item.time}</div>
+                    `;
+                    
+                    // Highlight new items with animation
+                    if (item.isNew) {
+                        feedItem.style.backgroundColor = 'rgba(139, 92, 246, 0.1)';
+                        setTimeout(() => {
+                            feedItem.style.transition = 'background-color 1s ease-out';
+                            feedItem.style.backgroundColor = '';
+                        }, 50);
+                    }
+                    
+                    return feedItem;
+                }
+    
+                // Function to add a new random feed item
+                function addNewFeedItem() {
+                    // Sample new items that could appear
+                    const newItems = [
+                        {
+                            name: 'Foldable Laptop Stand',
+                            image: 'https://via.placeholder.com/32',
+                            event: 'Sales velocity increased by 18%',
+                            time: 'Just now',
+                            badge: 'trending',
+                            isNew: true
+                        },
+                        {
+                            name: 'Smart Home Camera',
+                            image: 'https://via.placeholder.com/32',
+                            event: 'High profit margin detected (85%)',
+                            time: 'Just now',
+                            badge: 'hot',
+                            isNew: true
+                        },
+                        {
+                            name: 'USB LED Light Strip',
+                            image: 'https://via.placeholder.com/32',
+                            event: 'New product with low competition',
+                            time: 'Just now',
+                            badge: 'new',
+                            isNew: true
+                        }
+                    ];
+                    
+                    // Select a random new item
+                    const randomItem = newItems[Math.floor(Math.random() * newItems.length)];
+                    
+                    // Add to the beginning of the feed
+                    const newFeedItem = createFeedItem(randomItem);
+                    liveFeed.insertBefore(newFeedItem, liveFeed.firstChild);
+                    
+                    // Remove the last item if more than 5 items
+                    if (liveFeed.children.length > 5) {
+                        liveFeed.removeChild(liveFeed.lastChild);
+                    }
+                    
+                    // Update times for all items
+                    updateFeedTimes();
+                }
+    
+                // Update relative times
+                function updateFeedTimes() {
+                    const items = liveFeed.querySelectorAll('.feed-item');
+                    items.forEach((item, index) => {
+                        const timeElement = item.querySelector('.feed-item-time');
+                        if (index === 0 && timeElement.textContent === 'Just now') {
+                            // Keep "Just now" for the newest item
+                        } else if (timeElement.textContent === 'Just now') {
+                            timeElement.textContent = '1 min ago';
+                        } else if (timeElement.textContent.includes('min ago')) {
+                            let mins = parseInt(timeElement.textContent);
+                            if (!isNaN(mins)) {
+                                timeElement.textContent = (mins + 1) + ' min ago';
+                            }
+                        }
+                    });
+                }
+    
+                // Create and initialize the market trends chart
+                initializeTrendsChart();
+    
+                function initializeTrendsChart() {
+                    // Check if we can use Canvas (for Chart.js)
+                    const canvas = document.getElementById('marketTrendsChart');
+                    
+                    if (!canvas || typeof Chart === 'undefined') {
+                        // If Chart.js is not available, show a placeholder
+                        const chartContainer = document.getElementById('trendsChart');
+                        chartContainer.innerHTML = `
+                            <div class="chart-placeholder">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="2" x2="12" y2="6"></line>
+                                    <line x1="12" y1="18" x2="12" y2="22"></line>
+                                    <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
+                                    <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line>
+                                    <line x1="2" y1="12" x2="6" y2="12"></line>
+                                    <line x1="18" y1="12" x2="22" y2="12"></line>
+                                    <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line>
+                                    <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
+                                </svg>
+                                <span>Line Chart: Product Trends (30 Days)</span>
+                            </div>
+                        `;
+                        return;
+                    }
+                    
+                    // Sample data for the chart
+                    const data = {
+                        labels: ['Day 1', 'Day 5', 'Day 10', 'Day 15', 'Day 20', 'Day 25', 'Day 30'],
+                        datasets: [
+                            {
+                                label: 'Product Views',
+                                data: [1200, 1900, 3000, 5000, 4700, 6500, 7800],
+                                borderColor: 'rgba(139, 92, 246, 1)',
+                                backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                                tension: 0.4,
+                                fill: true
+                            },
+                            {
+                                label: 'Sales Volume',
+                                data: [300, 600, 900, 1400, 1800, 2200, 2500],
+                                borderColor: 'rgba(30, 174, 219, 1)',
+                                backgroundColor: 'rgba(30, 174, 219, 0.1)',
+                                tension: 0.4,
+                                fill: true
+                            }
+                        ]
+                    };
+                    
+                    // Chart configuration
+                    const config = {
+                        type: 'line',
+                        data: data,
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                },
+                                tooltip: {
+                                    mode: 'index',
+                                    intersect: false
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    grid: {
+                                        drawBorder: false
+                                    }
+                                },
+                                x: {
+                                    grid: {
+                                        display: false
+                                    }
+                                }
+                            }
+                        }
+                    };
+                    
+                    // Render the chart
+                    if (typeof Chart !== 'undefined') {
+                        new Chart(canvas, config);
+                    }
+                }
+                
+                // Tab switching functionality
+                const tabs = document.querySelectorAll('.dashboard-tab');
+                
+                tabs.forEach(tab => {
+                    tab.addEventListener('click', function() {
+                        // Remove active class from all tabs
+                        tabs.forEach(t => t.classList.remove('active'));
+                        
+                        // Add active class to clicked tab
+                        this.classList.add('active');
+                        
+                        // Update dashboard content based on selected tab
+                        // For demo purposes, we're just showing a notification
+                        const tabName = this.textContent;
+                        
+                        // Show a notification that tab was clicked (for demo)
+                        showNotification(`${tabName} tab selected`, 'info');
+                    });
+                });
+                
+                // Function to show a notification
+                function showNotification(message, type = 'info') {
+                    const notification = document.createElement('div');
+                    notification.className = 'notification';
+                    notification.style.position = 'fixed';
+                    notification.style.bottom = '20px';
+                    notification.style.right = '20px';
+                    notification.style.padding = '0.75rem 1rem';
+                    notification.style.borderRadius = '0.5rem';
+                    notification.style.backgroundColor = 'white';
+                    notification.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05)';
+                    notification.style.zIndex = '1000';
+                    notification.style.transform = 'translateY(100px)';
+                    notification.style.opacity = '0';
+                    notification.style.transition = 'all 0.3s ease-out';
+                    
+                    // Set colors based on notification type
+                    if (type === 'success') {
+                        notification.style.borderLeft = '4px solid #10B981';
+                    } else if (type === 'warning') {
+                        notification.style.borderLeft = '4px solid #F59E0B';
+                    } else if (type === 'error') {
+                        notification.style.borderLeft = '4px solid #EF4444';
+                    } else {
+                        notification.style.borderLeft = '4px solid #8B5CF6';
+                    }
+                    
+                    notification.textContent = message;
+                    
+                    document.body.appendChild(notification);
+                    
+                    // Animate in
+                    setTimeout(() => {
+                        notification.style.transform = 'translateY(0)';
+                        notification.style.opacity = '1';
+                    }, 10);
+                    
+                    // Remove after 3 seconds
+                    setTimeout(() => {
+                        notification.style.transform = 'translateY(100px)';
+                        notification.style.opacity = '0';
+                        
+                        // Remove from DOM after animation
+                        setTimeout(() => {
+                            if (notification.parentNode) {
+                                notification.parentNode.removeChild(notification);
+                            }
+                        }, 300);
+                    }, 3000);
+                }
+    
+                // Add hover effects to product cards
+                const productCards = document.querySelectorAll('.product-card');
+                
+                productCards.forEach(card => {
+                    card.addEventListener('mouseenter', function() {
+                        this.style.transform = 'translateY(-8px)';
+                        this.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)';
+                    });
+                    
+                    card.addEventListener('mouseleave', function() {
+                        this.style.transform = '';
+                        this.style.boxShadow = '';
+                    });
+                    
+                    card.addEventListener('click', function() {
+                        const productName = this.querySelector('.product-name').textContent;
+                        showNotification(`Viewing details for ${productName}`, 'success');
+                    });
+                });
+    
+                // Make feed items clickable
+                liveFeed.addEventListener('click', function(e) {
+                    const feedItem = e.target.closest('.feed-item');
+                    if (feedItem) {
+                        const title = feedItem.querySelector('.feed-item-title').textContent;
+                        showNotification(`Analyzing ${title}`, 'success');
+                    }
+                });
+    
+                // Add some interactivity to the dashboard
+                const dashboardTitle = document.querySelector('.dashboard-title');
+                if (dashboardTitle) {
+                    dashboardTitle.addEventListener('click', function() {
+                        showNotification('Real-time market analysis is running', 'info');
+                    });
+                }
+    
+                // Optional: Add keyboard shortcuts for demo
+                document.addEventListener('keydown', function(e) {
+                    // Press 'N' to trigger a new feed item
+                    if (e.key === 'n') {
+                        addNewFeedItem();
+                        showNotification('New product detected', 'info');
+                    }
+                    
+                    // Press 'T' to switch to Trending tab
+                    if (e.key === 't') {
+                        tabs[0].click();
+                    }
+                    
+                    // Press 'P' to switch to Profitable tab
+                    if (e.key === 'p') {
+                        tabs[1].click();
+                    }
+                    
+                    // Press 'R' to refresh data
+                    if (e.key === 'r') {
+                        showNotification('Market data refreshed', 'success');
+                    }
+                });
+            });
+        </script>
+    </body>
+    </html>

@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weenify - Radar Product Finder</title>
+    <style>
+        :root {
+            --weenify-purple: #8B5CF6;
+            --weenify-purple-light: #D6BCFA;
+            --weenify-purple-dark: #6E59A5;
+            --weenify-blue: #1EAEDB;
+            --weenify-blue-light: #33C3F0;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background-color: #ffffff;
+        }
+
+        /* Hero container */
+        .hero {
+            padding: 4rem 2rem;
+            background: linear-gradient(to right, #f5f3ff, #ede9fe);
+            position: relative;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero__container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (min-width: 768px) {
+            .hero__container {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+
+        /* Hero content */
+        .hero__content {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .hero__content {
+                flex: 1;
+                text-align: left;
+                margin: 0;
+            }
+        }
+
+        .hero__title {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        @media (min-width: 768px) {
+            .hero__title {
+                font-size: 3.5rem;
+            }
+        }
+
+        .hero__desc {
+            font-size: 1.125rem;
+            color: #4B5563;
+            margin-bottom: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .hero__desc {
+                font-size: 1.25rem;
+            }
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, var(--weenify-purple), var(--weenify-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline;
+        }
+
+        .hero__actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .hero__actions {
+                justify-content: flex-start;
+            }
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            border-radius: 9999px;
+            transition: all 0.2s;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+
+        .btn--primary {
+            background-color: var(--weenify-purple);
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(139, 92, 246, 0.2);
+        }
+
+        .btn--primary:hover {
+            background-color: var(--weenify-purple-dark);
+            box-shadow: 0 4px 6px -1px rgba(139, 92, 246, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .btn--outline {
+            background-color: white;
+            color: #4B5563;
+            border: 1px solid #D1D5DB;
+        }
+
+        .btn--outline:hover {
+            border-color: #9CA3AF;
+            color: #1F2937;
+        }
+
+        /* Radar Animation Container */
+        .hero__visual {
+            flex: 1;
+            position: relative;
+            height: 500px;
+            margin: 0 auto;
+            max-width: 500px;
+        }
+
+        /* Radar Base */
+        .radar-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .radar-base {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            overflow: hidden;
+        }
+
+        /* Radar Rings */
+        .radar-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .radar-ring:nth-child(1) {
+            width: 25%;
+            height: 25%;
+        }
+
+        .radar-ring:nth-child(2) {
+            width: 50%;
+            height: 50%;
+        }
+
+        .radar-ring:nth-child(3) {
+            width: 75%;
+            height: 75%;
+        }
+
+        .radar-ring:nth-child(4) {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Radar Grid Lines */
+        .radar-grid-line {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 1px;
+            height: 100%;
+            background-color: rgba(139, 92, 246, 0.2);
+        }
+
+        .radar-grid-line:nth-child(5) {
+            transform: translateX(-50%) rotate(0deg);
+        }
+
+        .radar-grid-line:nth-child(6) {
+            transform: translateX(-50%) rotate(45deg);
+        }
+
+        .radar-grid-line:nth-child(7) {
+            transform: translateX(-50%) rotate(90deg);
+        }
+
+        .radar-grid-line:nth-child(8) {
+            transform: translateX(-50%) rotate(135deg);
+        }
+
+        /* Radar Sweep Animation */
+        .radar-sweep {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 50%;
+            transform-origin: bottom right;
+            background: linear-gradient(
+                to right,
+                rgba(139, 92, 246, 0.01) 0%,
+                rgba(139, 92, 246, 0.15) 100%
+            );
+            animation: sweep 5s linear infinite;
+            border-top-left-radius: 100%;
+        }
+
+        @keyframes sweep {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Radar Center */
+        .radar-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--weenify-purple), var(--weenify-blue));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+
+        /* Product Dots */
+        .product-dot {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transform: scale(0);
+            opacity: 0;
+            z-index: 5;
+        }
+
+        .product-dot img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+        }
+
+        /* Product Labels */
+        .product-label {
+            position: absolute;
+            background-color: white;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            color: #1F2937;
+            opacity: 0;
+            transform: translateY(10px);
+            z-index: 6;
+        }
+
+        .product-price {
+            font-weight: 700;
+            color: var(--weenify-purple);
+        }
+
+        /* Product Signals */
+        .product-signal {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(139, 92, 246, 0.2);
+            transform: scale(0);
+            opacity: 0;
+        }
+
+        /* Detailed Product Card Animation */
+        .detailed-product {
+            position: absolute;
+            width: 200px;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+            transform: scale(0);
+            opacity: 0;
+            transition: all 0.4s ease-out;
+            z-index: 20;
+        }
+
+        .detailed-product__header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .detailed-product__icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 0.5rem;
+            background-color: var(--weenify-purple-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .detailed-product__icon img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+        }
+
+        .detailed-product__title {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: #1F2937;
+            margin: 0;
+        }
+
+        .detailed-product__stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #F3F4F6;
+        }
+
+        .detailed-product__stat {
+            text-align: center;
+        }
+
+        .detailed-product__stat-value {
+            font-weight: 700;
+            color: var(--weenify-purple);
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        .detailed-product__stat-label {
+            font-size: 0.75rem;
+            color: #6B7280;
+            margin: 0;
+        }
+
+        .detailed-product__badge {
+            display: inline-block;
+            background-color: #ECFDF5;
+            color: #047857;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+        }
+
+        /* Notification bubble animation */
+        .notification-bubble {
+            position: absolute;
+            background-color: white;
+            border-radius: 1rem;
+            padding: 0.75rem 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transform: scale(0);
+            opacity: 0;
+            z-index: 30;
+        }
+
+        .notification-bubble__icon {
+            width: 24px;
+            height: 24px;
+            background-color: #ECFDF5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #047857;
+            font-weight: bold;
+            font-size: 0.75rem;
+        }
+
+        /* Animation for blink */
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        /* Pulse animation for signals */
+        @keyframes pulse {
+            0% {
+                transform: scale(0.5);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        /* Add Navbar and Announcement Bar (Optional) */
+        .announcement-bar {
+            background-color: #2563EB;
+            color: white;
+            text-align: center;
+            padding: 12px 20px;
+            position: relative;
+        }
+
+        .navbar {
+            background-color: white;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+        }
+
+        .navbar__container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .navbar__logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar__logo-icon {
+            width: 2rem;
+            height: 2rem;
+            background: linear-gradient(135deg, var(--weenify-purple), var(--weenify-blue));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Announcement Bar -->
+    <div class="announcement-bar">
+        <div>Get a Done-For-You Shopify Store ➤ Start Today!</div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar__container">
+            <a href="#" class="navbar__logo">
+                <div class="navbar__logo-icon">W</div>
+                <span>Weenify</span>
+            </a>
+            <div>
+                <a href="#" class="btn btn--primary">Get Started</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero__container">
+            <div class="hero__content">
+                <h1 class="hero__title">
+                    Your <span class="gradient-text">#1 dropshipping</span> product research tool & supplier
+                </h1>
+                <p class="hero__desc">
+                    Discover the best dropshipping products, import winning products with one click and automate your order processing. All in one.
+                </p>
+                <div class="hero__actions">
+                    <a href="#" class="btn btn--primary">
+                        Get started for free
+                    </a>
+                    <a href="#" class="btn btn--outline">
+                        Find winning products
+                    </a>
+                </div>
+            </div>
+            
+            <div class="hero__visual">
+                <div class="radar-container">
+                    <div class="radar-base">
+                        <!-- Radar Rings -->
+                        <div class="radar-ring"></div>
+                        <div class="radar-ring"></div>
+                        <div class="radar-ring"></div>
+                        <div class="radar-ring"></div>
+                        
+                        <!-- Radar Grid Lines -->
+                        <div class="radar-grid-line"></div>
+                        <div class="radar-grid-line"></div>
+                        <div class="radar-grid-line"></div>
+                        <div class="radar-grid-line"></div>
+                        
+                        <!-- Radar Sweep Animation -->
+                        <div class="radar-sweep"></div>
+                    </div>
+                    
+                    <!-- Radar Center Logo -->
+                    <div class="radar-center">W</div>
+                    
+                    <!-- Product Dots (will be dynamically positioned) -->
+                    <div class="product-dot" id="product1">
+                        <img src="https://via.placeholder.com/50" alt="Product 1" id="product1Img">
+                    </div>
+                    
+                    <div class="product-dot" id="product2">
+                        <img src="https://via.placeholder.com/50" alt="Product 2" id="product2Img">
+                    </div>
+                    
+                    <div class="product-dot" id="product3">
+                        <img src="https://via.placeholder.com/50" alt="Product 3" id="product3Img">
+                    </div>
+
+                    <div class="product-dot" id="product4">
+                        <img src="https://via.placeholder.com/50" alt="Product 4" id="product4Img">
+                    </div>
+                    
+                    <div class="product-dot" id="product5">
+                        <img src="https://via.placeholder.com/50" alt="Product 5" id="product5Img">
+                    </div>
+                    
+                    <!-- Product Labels -->
+                    <div class="product-label" id="label1">
+                        Wireless Camera<br>
+                        <span class="product-price">$49.99</span>
+                    </div>
+                    
+                    <div class="product-label" id="label2">
+                        Dog Training Collar<br>
+                        <span class="product-price">$37.50</span>
+                    </div>
+                    
+                    <div class="product-label" id="label3">
+                        Smart Watch<br>
+                        <span class="product-price">$78.95</span>
+                    </div>
+
+                    <div class="product-label" id="label4">
+                        LED Projector<br>
+                        <span class="product-price">$129.95</span>
+                    </div>
+                    
+                    <div class="product-label" id="label5">
+                        Pet Cleaning Spray<br>
+                        <span class="product-price">$24.99</span>
+                        <div class="product-badge" style="margin-top: 5px; background: #fee2e2; color: #dc2626; padding: 2px 6px; border-radius: 9999px; font-size: 10px; display: inline-block;">HOT PRODUCT</div>
+                    </div>
+                    
+                    <!-- Product Signals (pulse animations) -->
+                    <div class="product-signal" id="signal1"></div>
+                    <div class="product-signal" id="signal2"></div>
+                    <div class="product-signal" id="signal3"></div>
+                    <div class="product-signal" id="signal4"></div>
+                    <div class="product-signal" id="signal5"></div>
+                    
+                    <!-- Detailed Product Card (appears on final product) -->
+                    <div class="detailed-product" id="detailedProduct">
+                        <div class="detailed-product__header">
+                            <div class="detailed-product__icon">
+                                <img src="https://via.placeholder.com/50" alt="Winning Product" id="detailedProductImg">
+                            </div>
+                            <h3 class="detailed-product__title">Pet Cleaning Spray</h3>
+                        </div>
+                        
+                        <div class="detailed-product__stats">
+                            <div class="detailed-product__stat">
+                                <p class="detailed-product__stat-value">$8.45</p>
+                                <p class="detailed-product__stat-label">Cost</p>
+                            </div>
+                            
+                            <div class="detailed-product__stat">
+                                <p class="detailed-product__stat-value">$24.99</p>
+                                <p class="detailed-product__stat-label">Price</p>
+                            </div>
+                            
+                            <div class="detailed-product__stat">
+                                <p class="detailed-product__stat-value">$16.54</p>
+                                <p class="detailed-product__stat-label">Profit</p>
+                            </div>
+                        </div>
+                        
+                        <div class="detailed-product__badge">HOT PRODUCT</div>
+                    </div>
+
+                    <!-- Notification Bubbles -->
+                    <div class="notification-bubble" id="notification1" style="top: 50px; right: -80px;">
+                        <div class="notification-bubble__icon">✓</div>
+                        <span>Product Found!</span>
+                    </div>
+
+                    <div class="notification-bubble" id="notification2" style="bottom: 60px; left: -80px;">
+                        <div class="notification-bubble__icon" style="background-color: #FEF3C7; color: #D97706;">★</div>
+                        <span>Trending Product!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Helper function to set multiple CSS properties at once
+            function setStyles(element, styles) {
+                for (const property in styles) {
+                    element.style[property] = styles[property];
+                }
+            }
+            
+            // Helper function to animate with setTimeout
+            function animateSequence(steps) {
+                let currentStep = 0;
+                
+                function executeNextStep() {
+                    if (currentStep < steps.length) {
+                        const step = steps[currentStep];
+                        step.action();
+                        currentStep++;
+                        setTimeout(executeNextStep, step.delay || 0);
+                    }
+                }
+                
+                executeNextStep();
+            }
+            
+            // Product Animation Sequence
+            function startProductRadarAnimation() {
+                // Define products with their positions and data
+                const products = [
+                    {
+                        id: 'product1',
+                        labelId: 'label1',
+                        signalId: 'signal1',
+                        position: { x: -25, y: -35 },  // position in percentage from center
+                        name: 'Wireless Camera',
+                        price: '$49.99',
+                        delay: 1500,
+                        image: 'images/mini-portable-projector.png'
+                    },
+                    {
+                        id: 'product2',
+                        labelId: 'label2',
+                        signalId: 'signal2',
+                        position: { x: 40, y: -20 },
+                        name: 'Dog Training Collar',
+                        price: '$37.50',
+                        delay: 4000,
+                        image: 'images/dog-training-collar.png'
+                    },
+                    {
+                        id: 'product3',
+                        labelId: 'label3',
+                        signalId: 'signal3',
+                        position: { x: 30, y: 30 },
+                        name: 'Smart Watch',
+                        price: '$78.95',
+                        delay: 7500,
+                        image: 'images/ab-wheel-roller.png'
+                    },
+                    {
+                        id: 'product4',
+                        labelId: 'label4',
+                        signalId: 'signal4',
+                        position: { x: -35, y: 20 },
+                        name: 'LED Projector',
+                        price: '$129.95',
+                        delay: 10000,
+                        image: 'images/mini-portable-projector.png'
+                    },
+                    {
+                        id: 'product5',
+                        labelId: 'label5',
+                        signalId: 'signal5',
+                        position: { x: 0, y: 40 },
+                        name: 'Pet Cleaning Spray',
+                        price: '$24.99',
+                        delay: 13000,
+                        isHot: true,
+                        image: 'images/pet-cleaner.png'
+                    }
+                ];
+                
+                // Get the radar container dimensions
+                const radarContainer = document.querySelector('.radar-container');
+                const radarRect = radarContainer.getBoundingClientRect();
+                const radarCenter = {
+                    x: radarRect.width / 2,
+                    y: radarRect.height / 2
+                };
+                
+                // Position all products and related elements
+                products.forEach(product => {
+                    const productElement = document.getElementById(product.id);
+                    const labelElement = document.getElementById(product.labelId);
+                    const signalElement = document.getElementById(product.signalId);
+                    
+                    if (!productElement || !labelElement || !signalElement) return;
+                    
+                    // Calculate absolute positions
+                    const productX = radarCenter.x + (product.position.x / 100) * radarRect.width;
+                    const productY = radarCenter.y + (product.position.y / 100) * radarRect.height;
+                    
+                    // Position product dot
+                    setStyles(productElement, {
+                        left: `${productX - 12}px`,  // 12px is half of the 24px width
+                        top: `${productY - 12}px`,   // 12px is half of the 24px height
+                        transform: 'scale(0)',
+                        opacity: '0'
+                    });
+                    
+                    // Position label (above the product)
+                    setStyles(labelElement, {
+                        left: `${productX - 60}px`,  // Center the label (assuming 120px width)
+                        top: `${productY - 60}px`,   // Place above the product
+                        opacity: '0',
+                        transform: 'translateY(10px)'
+                    });
+                    
+                    // Position signal (same position as product but larger)
+                    setStyles(signalElement, {
+                        left: `${productX - 25}px`,  // 25px is half of the 50px width
+                        top: `${productY - 25}px`,   // 25px is half of the 50px height
+                        width: '50px',
+                        height: '50px',
+                        transform: 'scale(0)',
+                        opacity: '0'
+                    });
+                    
+                    // Set product image if available
+                    const imgElement = document.getElementById(`${product.id}Img`);
+                    if (imgElement && product.image) {
+                        try {
+                            imgElement.src = product.image;
+                        } catch(e) {
+                            console.log('Using placeholder image for', product.id);
+                        }
+                    }
+                });
+                
+                // Position detailed product card
+                const detailedProduct = document.getElementById('detailedProduct');
+                setStyles(detailedProduct, {
+                    right: '30px',
+                    bottom: '30px',
+                    transform: 'scale(0)',
+                    opacity: '0'
+                });
+
+                // Position notification bubbles
+                const notification1 = document.getElementById('notification1');
+                const notification2 = document.getElementById('notification2');
+                
+                // Create animation steps for each product
+                let animationSteps = [];
+                
+                // Start initial delay
+                animationSteps.push({
+                    action: () => {
+                        console.log('Starting radar animation...');
+                    },
+                    delay: 500
+                });
+                
+                // Show first notification
+                animationSteps.push({
+                    action: () => {
+                        setStyles(notification1, {
+                            transform: 'scale(1)',
+                            opacity: '1',
+                            transition: 'all 0.3s ease-out'
+                        });
+                    },
+                    delay: 800
+                });
+                
+                // Hide first notification
+                animationSteps.push({
+                    action: () => {
+                        setStyles(notification1, {
+                            transform: 'scale(0)',
+                            opacity: '0',
+                            transition: 'all 0.3s ease-out'
+                        });
+                    },
+                    delay: 2000
+                });
+                
+                // Add animation steps for each product
+                products.forEach((product, index) => {
+                    const productElement = document.getElementById(product.id);
+                    const labelElement = document.getElementById(product.labelId);
+                    const signalElement = document.getElementById(product.signalId);
+                    
+                    if (!productElement || !labelElement || !signalElement) return;
+                    
+                    // Step 1: Signal pulse animation
+                    animationSteps.push({
+                        action: () => {
+                            setStyles(signalElement, {
+                                transform: 'scale(1)',
+                                opacity: '0.5',
+                                transition: 'all 0.5s ease-out'
+                            });
+                        },
+                        delay: index === 0 ? 0 : 500  // First product needs no delay, others need 500ms
+                    });
+                    
+                    // Step 2: Signal expands and product appears
+                    animationSteps.push({
+                        action: () => {
+                            setStyles(signalElement, {
+                                transform: 'scale(2)',
+                                opacity: '0',
+                                transition: 'all 0.5s ease-out'
+                            });
+                            
+                            setStyles(productElement, {
+                                transform: product.isHot ? 'scale(1.2)' : 'scale(1)',
+                                opacity: '1',
+                                transition: 'all 0.3s ease-out',
+                                boxShadow: product.isHot ? '0 0 15px rgba(220, 38, 38, 0.6)' : '0 0 10px rgba(139, 92, 246, 0.3)'
+                            });
+                        },
+                        delay: 500
+                    });
+                    
+                    // Step 3: Show label
+                    animationSteps.push({
+                        action: () => {
+                            setStyles(labelElement, {
+                                opacity: '1',
+                                transform: 'translateY(0)',
+                                transition: 'all 0.3s ease-out',
+                                boxShadow: product.isHot ? '0 4px 12px rgba(220, 38, 38, 0.3)' : '0 4px 6px rgba(0, 0, 0, 0.1)'
+                            });
+                            
+                            // If this is the hot product (last one), also show the second notification
+                            if (product.isHot) {
+                                setStyles(notification2, {
+                                    transform: 'scale(1)',
+                                    opacity: '1',
+                                    transition: 'all 0.3s ease-out'
+                                });
+                            }
+                        },
+                        delay: 300
+                    });
+                    
+                    // Step 4: Show detailed card for the hot product
+                    if (product.isHot) {
+                        animationSteps.push({
+                            action: () => {
+                                // Update detailed product image if possible
+                                const detailedProductImg = document.getElementById('detailedProductImg');
+                                if (detailedProductImg && product.image) {
+                                    try {
+                                        detailedProductImg.src = product.image;
+                                    } catch(e) {
+                                        console.log('Using placeholder image for detailed product');
+                                    }
+                                }
+                                
+                                // Show the detailed product card
+                                setStyles(detailedProduct, {
+                                    transform: 'scale(1)',
+                                    opacity: '1',
+                                    transition: 'all 0.5s ease-out'
+                                });
+                                
+                                // Hide the second notification after a delay
+                                setTimeout(() => {
+                                    setStyles(notification2, {
+                                        transform: 'scale(0)',
+                                        opacity: '0',
+                                        transition: 'all 0.3s ease-out'
+                                    });
+                                }, 2000);
+                            },
+                            delay: 1000
+                        });
+                    }
+                    
+                    // Add delay before next product (if not the last product)
+                    if (index < products.length - 1) {
+                        animationSteps.push({
+                            action: () => {}, // Empty action, just for delay
+                            delay: 1000 // Delay before starting next product animation
+                        });
+                    }
+                });
+                
+                // Final step: Reset animation after a delay
+                animationSteps.push({
+                    action: () => {
+                        // Keep everything visible for a while
+                    },
+                    delay: 5000
+                });
+                
+                // Reset animation step
+                animationSteps.push({
+                    action: () => {
+                        // Reset all products
+                        products.forEach(product => {
+                            const productElement = document.getElementById(product.id);
+                            const labelElement = document.getElementById(product.labelId);
+                            
+                            if (productElement && labelElement) {
+                                setStyles(productElement, {
+                                    transform: 'scale(0)',
+                                    opacity: '0',
+                                    transition: 'all 0.3s ease-out',
+                                    boxShadow: 'none'
+                                });
+                                
+                                setStyles(labelElement, {
+                                    opacity: '0',
+                                    transform: 'translateY(10px)',
+                                    transition: 'all 0.3s ease-out',
+                                    boxShadow: 'none'
+                                });
+                            }
+                        });
+                        
+                        // Reset detailed product card
+                        setStyles(detailedProduct, {
+                            transform: 'scale(0)',
+                            opacity: '0',
+                            transition: 'all 0.3s ease-out'
+                        });
+                    },
+                    delay: 1000
+                });
+                
+                // Restart animation
+                animationSteps.push({
+                    action: () => {
+                        startProductRadarAnimation();
+                    },
+                    delay: 500
+                });
+                
+                // Execute the animation sequence
+                animateSequence(animationSteps);
+            }
+            
+            // Responsive radar sizing
+            function handleResize() {
+                const radarBase = document.querySelector('.radar-base');
+                const heroVisual = document.querySelector('.hero__visual');
+                
+                if (radarBase && heroVisual) {
+                    const size = Math.min(heroVisual.offsetWidth, 400);
+                    
+                    radarBase.style.width = `${size}px`;
+                    radarBase.style.height = `${size}px`;
+                    
+                    // Set positions after resize
+                    const radarCenter = document.querySelector('.radar-center');
+                    if (radarCenter) {
+                        const centerSize = parseInt(getComputedStyle(radarCenter).width);
+                        radarCenter.style.marginLeft = `-${centerSize / 2}px`;
+                        radarCenter.style.marginTop = `-${centerSize / 2}px`;
+                    }
+                }
+            }
+            
+            // Add animated blips to make the radar look active
+            function addRandomBlips() {
+                const radarBase = document.querySelector('.radar-base');
+                
+                if (!radarBase) return;
+                
+                // Create 3 random blips
+                for (let i = 0; i < 3; i++) {
+                    createRandomBlip(radarBase);
+                }
+                
+                // Schedule next batch of blips
+                setTimeout(addRandomBlips, 3000);
+            }
+            
+            function createRandomBlip(radarBase) {
+                const blip = document.createElement('div');
+                const size = Math.random() * 6 + 4; // Random size between 4-10px
+                
+                // Position randomly in the radar (in polar coordinates)
+                const angle = Math.random() * Math.PI * 2; // Random angle in radians
+                const radius = Math.random() * 45; // Random distance from center (0-45% of radius)
+                
+                // Convert polar to cartesian coordinates
+                const radarRect = radarBase.getBoundingClientRect();
+                const radarRadius = radarRect.width / 2;
+                const x = radarRadius + Math.cos(angle) * (radius * radarRadius / 100);
+                const y = radarRadius + Math.sin(angle) * (radius * radarRadius / 100);
+                
+                // Style the blip
+                setStyles(blip, {
+                    position: 'absolute',
+                    width: `${size}px`,
+                    height: `${size}px`,
+                    borderRadius: '50%',
+                    backgroundColor: 'rgba(139, 92, 246, 0.7)',
+                    left: `${x - size/2}px`,
+                    top: `${y - size/2}px`,
+                    animation: 'blink 1.5s ease-in-out',
+                    pointerEvents: 'none',
+                    zIndex: '2'
+                });
+                
+                // Add to radar and remove after animation
+                radarBase.appendChild(blip);
+                
+                // Remove after animation finishes
+                setTimeout(() => {
+                    radarBase.removeChild(blip);
+                }, 1500);
+            }
+            
+            // Handle window resize events
+            window.addEventListener('resize', handleResize);
+            
+            // Initialize the radar
+            handleResize();
+            
+            // Start the animations
+            setTimeout(() => {
+                startProductRadarAnimation();
+                addRandomBlips();
+            }, 500);
+        });
+    </script>
+</body>
+</html>

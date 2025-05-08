@@ -5,14 +5,57 @@ document.addEventListener('DOMContentLoaded', function() {
         yearEl.textContent = new Date().getFullYear();
     }
 
-    // Mobile menu functionality (to be implemented)
-    // const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-    // const mobileMenu = document.getElementById('mobile-menu');
-    // if (mobileMenuToggle && mobileMenu) {
-    //     mobileMenuToggle.addEventListener('click', function() {
-    //         mobileMenu.classList.toggle('hidden');
-    //     });
-    // }
+    // User dropdown menu functionality
+    const userMenuButton = document.getElementById('user-menu-button');
+    const userDropdown = document.getElementById('user-dropdown');
+    const chevronIcon = userMenuButton?.querySelector('.chevron-down');
+    
+    if (userMenuButton && userDropdown) {
+        // Toggle dropdown when clicking the button
+        userMenuButton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const expanded = userMenuButton.getAttribute('aria-expanded') === 'true';
+            userMenuButton.setAttribute('aria-expanded', !expanded);
+            userDropdown.classList.toggle('hidden');
+            
+            // Rotate chevron icon
+            if (chevronIcon) {
+                chevronIcon.style.transform = expanded ? 'rotate(0deg)' : 'rotate(180deg)';
+            }
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!userMenuButton.contains(event.target) && !userDropdown.contains(event.target)) {
+                userMenuButton.setAttribute('aria-expanded', 'false');
+                userDropdown.classList.add('hidden');
+                
+                if (chevronIcon) {
+                    chevronIcon.style.transform = 'rotate(0deg)';
+                }
+            }
+        });
+    }
+
+    // Mobile menu functionality
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuClosedIcon = document.getElementById('menu-closed-icon');
+    const menuOpenIcon = document.getElementById('menu-open-icon');
+    
+    if (mobileMenuToggle && mobileMenu) {
+        mobileMenuToggle.addEventListener('click', function() {
+            const expanded = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
+            mobileMenuToggle.setAttribute('aria-expanded', !expanded);
+            mobileMenu.classList.toggle('hidden');
+            
+            // Toggle menu icons
+            if (menuClosedIcon && menuOpenIcon) {
+                menuClosedIcon.classList.toggle('hidden');
+                menuOpenIcon.classList.toggle('hidden');
+            }
+        });
+    }
 
     // Accordion functionality for FAQ section
     const accordionHeaders = document.querySelectorAll('.accordion-header');
@@ -175,42 +218,3 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-
-    // Accordion functionality
-    document.addEventListener('DOMContentLoaded', function() {
-        const accordionHeaders = document.querySelectorAll('.accordion-header');
-        
-        // Open the first accordion by default
-        toggleAccordion(accordionHeaders[0]);
-        
-        accordionHeaders.forEach(header => {
-            header.addEventListener('click', function() {
-                toggleAccordion(this);
-            });
-        });
-        
-        function toggleAccordion(header) {
-            const content = header.nextElementSibling;
-            const chevron = header.querySelector('.chevron-down');
-            
-            if (content.classList.contains('hidden')) {
-                // Close all accordions first
-                accordionHeaders.forEach(h => {
-                    const c = h.nextElementSibling;
-                    const chev = h.querySelector('.chevron-down');
-                    if (c && !c.classList.contains('hidden')) {
-                        c.classList.add('hidden');
-                        chev.style.transform = 'rotate(0deg)';
-                    }
-                });
-                
-                // Open clicked accordion
-                content.classList.remove('hidden');
-                chevron.style.transform = 'rotate(180deg)';
-            } else {
-                // Close clicked accordion if it's already open
-                content.classList.add('hidden');
-                chevron.style.transform = 'rotate(0deg)';
-            }
-        }
-    });
