@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One-Click Import Feature</title>
+    <style>
+        /* Base styles matching the Weenify theme */
+        :root {
+            --weenify-purple: #8B5CF6;
+            --weenify-purple-light: #D6BCFA;
+            --weenify-purple-dark: #6E59A5;
+            --weenify-blue: #1EAEDB;
+            --weenify-blue-light: #33C3F0;
+            --weenify-green: #10B981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.5;
+        }
+
+        /* One-Click Import Section */
+        .import-section {
+            padding: 4rem 1rem;
+            background-color: #f9fafb;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .import-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .import-wrapper {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+
+        .import-content {
+            flex: 1;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .import-content {
+                text-align: left;
+            }
+        }
+
+        .import-badge {
+            display: inline-block;
+            background-color: rgba(139, 92, 246, 0.1);
+            color: var(--weenify-purple);
+            font-weight: 600;
+            font-size: 0.875rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            margin-bottom: 1rem;
+        }
+
+        .import-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1F2937;
+        }
+
+        .import-title span {
+            background-image: linear-gradient(to right, var(--weenify-purple), var(--weenify-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .import-description {
+            color: #6B7280;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            background-color: rgba(139, 92, 246, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .feature-icon svg {
+            width: 14px;
+            height: 14px;
+            color: var(--weenify-purple);
+        }
+
+        .feature-text {
+            color: #4B5563;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-image: linear-gradient(to right, var(--weenify-purple), var(--weenify-blue));
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(139, 92, 246, 0.2), 0 2px 4px -1px rgba(139, 92, 246, 0.1);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 10px 15px -3px rgba(139, 92, 246, 0.3), 0 4px 6px -2px rgba(139, 92, 246, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* Visual demo part */
+        .import-visual {
+            flex: 1;
+            position: relative;
+            max-width: 600px;
+            aspect-ratio: 5 / 3;
+            margin: 0 auto;
+        }
+
+        .store-card {
+            position: absolute;
+            width: 240px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .store-card.source {
+            top: 20px;
+            left: 20px;
+            z-index: 1;
+        }
+
+        .store-card.destination {
+            bottom: 20px;
+            right: 20px;
+            z-index: 1;
+        }
+
+        .store-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background-color: #F3F4F6;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .store-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #1F2937;
+        }
+
+        .store-action {
+            font-size: 0.75rem;
+            background-color: var(--weenify-purple);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .store-content {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .product-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            background-color: #F9FAFB;
+            padding: 0.25rem;
+            margin-right: 0.75rem;
+            object-fit: contain;
+        }
+
+        .product-details {
+            flex: 1;
+        }
+
+        .product-name {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #1F2937;
+            margin-bottom: 0.25rem;
+        }
+
+        .product-price {
+            font-size: 0.875rem;
+            color: var(--weenify-purple);
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .product-stats {
+            display: flex;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            color: #6B7280;
+        }
+
+        .product-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .product-stat-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .dot-green {
+            background-color: var(--weenify-green);
+        }
+
+        .dot-amber {
+            background-color: #F59E0B;
+        }
+
+        /* Import button and animation */
+        .import-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-image: linear-gradient(to right, var(--weenify-purple), var(--weenify-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 10px 15px -3px rgba(139, 92, 246, 0.3), 0 4px 6px -2px rgba(139, 92, 246, 0.15);
+            cursor: pointer;
+            z-index: 5;
+            transition: all 0.3s ease;
+        }
+
+        .import-button:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 20px 25px -5px rgba(139, 92, 246, 0.4), 0 10px 10px -5px rgba(139, 92, 246, 0.2);
+        }
+
+        .import-trail {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: rgba(139, 92, 246, 0.2);
+            transform: translateY(-50%);
+            z-index: 2;
+        }
+
+        .import-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0;
+            background-image: linear-gradient(to right, var(--weenify-purple), var(--weenify-blue));
+            z-index: 3;
+        }
+
+        .import-dot {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--weenify-purple);
+            transform: translate(-50%, -50%);
+            z-index: 4;
+            opacity: 0;
+        }
+
+        .success-badge {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background-color: #ECFDF5;
+            color: #065F46;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .store-card {
+                width: 180px;
+            }
+            
+            .import-title {
+                font-size: 1.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .store-card {
+                width: 140px;
+            }
+            
+            .product-image {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .product-name, .product-price {
+                font-size: 0.75rem;
+            }
+            
+            .product-stats {
+                font-size: 0.625rem;
+            }
+            
+            .import-title {
+                font-size: 1.5rem;
+            }
+            
+            .import-badge {
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Decoration elements */
+        .bg-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.2;
+            z-index: 1;
+        }
+
+        .blob-1 {
+            width: 300px;
+            height: 300px;
+            background-color: var(--weenify-purple-light);
+            top: -100px;
+            left: -100px;
+        }
+
+        .blob-2 {
+            width: 250px;
+            height: 250px;
+            background-color: var(--weenify-blue-light);
+            bottom: -80px;
+            right: -80px;
+        }
+    </style>
+</head>
+<body>
+    <section class="import-section">
+        <!-- Background blobs for decoration -->
+        <div class="bg-blob blob-1"></div>
+        <div class="bg-blob blob-2"></div>
+        
+        <div class="container">
+            <div class="import-wrapper">
+                <div class="import-content">
+                    <div class="import-badge">Time-Saving Feature</div>
+                    <h2 class="import-title"><span>1-Click Import</span> to Shopify</h2>
+                    <p class="import-description">
+                        Save hours of work with our seamless import system. Find winning products and add them directly to your Shopify store in seconds.
+                    </p>
+                    
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                            <span class="feature-text">Complete product details & optimized descriptions</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                            <span class="feature-text">High-quality product images & variants</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                            <span class="feature-text">Smart pricing suggestions for maximum profit</span>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary">Try It Free</button>
+                </div>
+                
+                <div class="import-visual">
+                    <!-- Source store card -->
+                    <div class="store-card source">
+                        <div class="store-header">
+                            <div class="store-title">Winning Product</div>
+                            <div class="store-action" id="import-trigger">Import</div>
+                        </div>
+                        <div class="store-content">
+                            <img src="/api/placeholder/60/60" alt="Product" class="product-image" id="source-image">
+                            <div class="product-details">
+                                <div class="product-name">Pet Cleaning Spray</div>
+                                <div class="product-price">$24.99</div>
+                                <div class="product-stats">
+                                    <div class="product-stat">
+                                        <div class="product-stat-dot dot-green"></div>
+                                        <span>7.4k+ units</span>
+                                    </div>
+                                    <div class="product-stat">
+                                        <div class="product-stat-dot dot-amber"></div>
+                                        <span>Hot</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Destination store card -->
+                    <div class="store-card destination">
+                        <div class="store-header">
+                            <div class="store-title">Your Shopify Store</div>
+                            <div class="store-action" style="visibility: hidden;">View</div>
+                        </div>
+                        <div class="store-content">
+                            <img src="/api/placeholder/60/60" alt="Product" class="product-image" id="dest-image" style="opacity: 0.3;">
+                            <div class="product-details">
+                                <div class="product-name" style="color: #E5E7EB;">Product Name</div>
+                                <div class="product-price" style="color: #E5E7EB;">$0.00</div>
+                                <div class="product-stats" style="color: #E5E7EB;">
+                                    <span>Ready to import</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="success-badge" id="success-badge">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 6L9 17l-5-5" />
+                            </svg>
+                            Imported!
+                        </div>
+                    </div>
+                    
+                    <!-- Import button and animation -->
+                    <div class="import-button" id="import-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14" />
+                            <path d="M12 5l7 7-7 7" />
+                        </svg>
+                    </div>
+                    <div class="import-trail">
+                        <div class="import-progress" id="import-progress"></div>
+                        <div class="import-dot" id="import-dot"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const importBtn = document.getElementById('import-btn');
+            const importTrigger = document.getElementById('import-trigger');
+            const importProgress = document.getElementById('import-progress');
+            const importDot = document.getElementById('import-dot');
+            const sourceImage = document.getElementById('source-image');
+            const destImage = document.getElementById('dest-image');
+            const successBadge = document.getElementById('success-badge');
+            const destinationCard = document.querySelector('.store-card.destination');
+            
+            // Simple animation function for the import demo
+            function animateImport() {
+                // Reset
+                importProgress.style.width = '0%';
+                importDot.style.left = '0%';
+                importDot.style.opacity = '1';
+                destImage.style.opacity = '0.3';
+                successBadge.style.transform = 'translateY(100%)';
+                destinationCard.querySelector('.product-name').style.color = '#E5E7EB';
+                destinationCard.querySelector('.product-price').style.color = '#E5E7EB';
+                destinationCard.querySelector('.product-stats').style.color = '#E5E7EB';
+                destinationCard.querySelector('.product-stats').innerHTML = '<span>Ready to import</span>';
+                
+                // Disable button during animation
+                importBtn.style.pointerEvents = 'none';
+                importTrigger.style.pointerEvents = 'none';
+                
+                // Animate progress
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += 1;
+                    importProgress.style.width = progress + '%';
+                    importDot.style.left = progress + '%';
+                    
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        
+                        // Complete the import
+                        setTimeout(() => {
+                            importDot.style.opacity = '0';
+                            destImage.style.opacity = '1';
+                            destImage.src = sourceImage.src;
+                            
+                            // Update destination card
+                            destinationCard.querySelector('.product-name').textContent = 'Pet Cleaning Spray';
+                            destinationCard.querySelector('.product-name').style.color = '#1F2937';
+                            destinationCard.querySelector('.product-price').textContent = '$24.99';
+                            destinationCard.querySelector('.product-price').style.color = 'var(--weenify-purple)';
+                            destinationCard.querySelector('.product-stats').innerHTML = `
+                                <div class="product-stat">
+                                    <div class="product-stat-dot dot-green"></div>
+                                    <span>Imported</span>
+                                </div>
+                            `;
+                            destinationCard.querySelector('.product-stats').style.color = '#6B7280';
+                            
+                            // Show success badge
+                            successBadge.style.transform = 'translateY(0)';
+                            
+                            // Re-enable buttons
+                            setTimeout(() => {
+                                importBtn.style.pointerEvents = 'auto';
+                                importTrigger.style.pointerEvents = 'auto';
+                            }, 500);
+                        }, 300);
+                    }
+                }, 15);
+            }
+            
+            // Add click event listeners
+            importBtn.addEventListener('click', animateImport);
+            importTrigger.addEventListener('click', animateImport);
+            
+            // Auto-trigger the animation after a delay for demo purposes
+            setTimeout(animateImport, 1500);
+        });
+    </script>
+</body>
+</html>
