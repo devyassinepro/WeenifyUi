@@ -271,8 +271,322 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
 
     initProductRadar();
+        // Initialize Product Spy Section
+    initProductSpy();
+
+    // Initialize One-Click Import Section
+    initOneClickImport();
+    
+    // Initialize Product Research Database
+    initProductDatabase();
+    
+    // Initialize Market Research Dashboard
+    initMarketDashboard();
 });
 
+// Product Spy Section
+function initProductSpy() {
+    const spyNotification = document.getElementById('spy-notification');
+    if (spyNotification) {
+        // Show notification with slight delay for demo
+        setTimeout(() => {
+            spyNotification.style.transform = 'translateY(0)';
+        }, 1500);
+    }
+}
+
+// One-Click Import Section
+function initOneClickImport() {
+    const importBtn = document.getElementById('import-btn');
+    const importTrigger = document.getElementById('import-trigger');
+    const importProgress = document.getElementById('import-progress');
+    const importDot = document.getElementById('import-dot');
+    const sourceImage = document.getElementById('source-image');
+    const destImage = document.getElementById('dest-image');
+    const successBadge = document.getElementById('success-badge');
+    const destinationCard = document.querySelector('.store-card.destination');
+    
+    // Skip initialization if elements don't exist
+    if (!importBtn || !importTrigger || !importProgress || !importDot) return;
+    
+    // Simple animation function for the import demo
+    function animateImport() {
+        // Reset
+        importProgress.style.width = '0%';
+        importDot.style.left = '0%';
+        importDot.style.opacity = '1';
+        destImage.style.opacity = '0.3';
+        successBadge.style.transform = 'translateY(100%)';
+        destinationCard.querySelector('.product-name').style.color = '#E5E7EB';
+        destinationCard.querySelector('.product-price').style.color = '#E5E7EB';
+        destinationCard.querySelector('.product-stats').style.color = '#E5E7EB';
+        destinationCard.querySelector('.product-stats').innerHTML = '<span>Ready to import</span>';
+        
+        // Disable button during animation
+        importBtn.style.pointerEvents = 'none';
+        importTrigger.style.pointerEvents = 'none';
+        
+        // Animate progress
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += 1;
+            importProgress.style.width = progress + '%';
+            importDot.style.left = progress + '%';
+            
+            if (progress >= 100) {
+                clearInterval(interval);
+                
+                // Complete the import
+                setTimeout(() => {
+                    importDot.style.opacity = '0';
+                    destImage.style.opacity = '1';
+                    destImage.src = sourceImage.src;
+                    
+                    // Update destination card
+                    destinationCard.querySelector('.product-name').textContent = 'Pet Cleaning Spray';
+                    destinationCard.querySelector('.product-name').style.color = '#1F2937';
+                    destinationCard.querySelector('.product-price').textContent = '$24.99';
+                    destinationCard.querySelector('.product-price').style.color = 'var(--weenify-purple)';
+                    destinationCard.querySelector('.product-stats').innerHTML = `
+                        <div class="product-stat">
+                            <div class="product-stat-dot dot-green"></div>
+                            <span>Imported</span>
+                        </div>
+                    `;
+                    destinationCard.querySelector('.product-stats').style.color = '#6B7280';
+                    
+                    // Show success badge
+                    successBadge.style.transform = 'translateY(0)';
+                    
+                    // Re-enable buttons
+                    setTimeout(() => {
+                        importBtn.style.pointerEvents = 'auto';
+                        importTrigger.style.pointerEvents = 'auto';
+                    }, 500);
+                }, 300);
+            }
+        }, 15);
+    }
+    
+    // Add click event listeners
+    importBtn.addEventListener('click', animateImport);
+    importTrigger.addEventListener('click', animateImport);
+    
+    // Auto-trigger the animation after a delay for demo purposes
+    setTimeout(animateImport, 1500);
+}
+
+// Product Research Database
+function initProductDatabase() {
+    // Add hover effects to product cards
+    const productCards = document.querySelectorAll('.product-card');
+    productCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-8px)';
+            card.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0)';
+            card.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+        });
+    });
+
+    // Add hover effects to buttons in product cards
+    const productButtons = document.querySelectorAll('.product-button');
+    productButtons.forEach(button => {
+        button.addEventListener('mouseenter', () => {
+            if (button.classList.contains('primary')) {
+                button.style.backgroundColor = 'var(--weenify-purple-dark)';
+            } else {
+                button.style.backgroundColor = 'rgba(139, 92, 246, 0.05)';
+            }
+        });
+        
+        button.addEventListener('mouseleave', () => {
+            if (button.classList.contains('primary')) {
+                button.style.backgroundColor = 'var(--weenify-purple)';
+            } else {
+                button.style.backgroundColor = 'white';
+            }
+        });
+    });
+
+    // Make product detail visible on page load for demo purposes
+    const productDetail = document.querySelector('.product-detail');
+    if (productDetail) {
+        productDetail.style.opacity = '1';
+        productDetail.style.visibility = 'visible';
+    }
+
+    // Make filter buttons functional
+    const filterButtons = document.querySelectorAll('.results-button');
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+        });
+    });
+
+    // Make pagination buttons appear interactive
+    const pageButtons = document.querySelectorAll('.page-button');
+    pageButtons.forEach(button => {
+        button.addEventListener('mouseenter', () => {
+            if (!button.classList.contains('active')) {
+                button.style.backgroundColor = '#F3F4F6';
+            }
+        });
+        
+        button.addEventListener('mouseleave', () => {
+            if (!button.classList.contains('active')) {
+                button.style.backgroundColor = 'transparent';
+            }
+        });
+    });
+}
+
+// Market Research Dashboard
+function initMarketDashboard() {
+    // Make marketplace items interactive
+    const marketplaceItems = document.querySelectorAll('.marketplace-item');
+    marketplaceItems.forEach(item => {
+        item.addEventListener('click', () => {
+            marketplaceItems.forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+        });
+    });
+
+    // Make filter pills interactive
+    const filterPills = document.querySelectorAll('.filter-pill');
+    filterPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+            filterPills.forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+        });
+    });
+
+    // Make view options interactive
+    const viewOptions = document.querySelectorAll('.view-option');
+    viewOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            viewOptions.forEach(opt => opt.classList.remove('active'));
+            option.classList.add('active');
+        });
+    });
+
+    // Add hover effects to product dots
+    const productDots = document.querySelectorAll('.product-dot');
+    productDots.forEach(dot => {
+        dot.addEventListener('mouseenter', () => {
+            dot.style.transform = 'translate(-50%, -50%) scale(1.1)';
+            dot.style.zIndex = '15';
+            
+            // If this dot has an associated card, show it
+            const dotClasses = dot.classList;
+            if (dotClasses.contains('product-dot-hot')) {
+                showProductCard();
+            }
+        });
+        
+        dot.addEventListener('mouseleave', () => {
+            dot.style.transform = 'translate(-50%, -50%) scale(1)';
+            dot.style.zIndex = '10';
+        });
+        
+        dot.addEventListener('click', () => {
+            showProductCard();
+        });
+    });
+
+    // Show product card function
+    function showProductCard() {
+        const productCard = document.querySelector('.product-card');
+        if (productCard) {
+            productCard.style.opacity = '1';
+            productCard.style.visibility = 'visible';
+            productCard.style.transform = 'translate(-50%, -50%) scale(1)';
+            
+            // After a short delay, show the notification
+            setTimeout(() => {
+                const notification = document.querySelector('.notification');
+                if (notification) {
+                    notification.style.opacity = '1';
+                    notification.style.visibility = 'visible';
+                    
+                    // Hide notification after some time
+                    setTimeout(() => {
+                        notification.style.opacity = '0';
+                    }, 3000);
+                }
+            }, 1000);
+        }
+    }
+
+    // Make buttons in product card interactive
+    const productCardButtons = document.querySelectorAll('.card-actions .btn');
+    productCardButtons.forEach(button => {
+        button.addEventListener('mouseenter', () => {
+            if (button.classList.contains('btn-primary')) {
+                button.style.backgroundColor = 'var(--primary-dark, #4338CA)';
+            } else {
+                button.style.backgroundColor = 'rgba(99, 102, 241, 0.05)';
+            }
+        });
+        
+        button.addEventListener('mouseleave', () => {
+            if (button.classList.contains('btn-primary')) {
+                button.style.backgroundColor = 'var(--primary)';
+            } else {
+                button.style.backgroundColor = 'white';
+            }
+        });
+    });
+
+    // Make action buttons in detail panel interactive
+    const actionButtons = document.querySelectorAll('.action-btn');
+    actionButtons.forEach(button => {
+        button.addEventListener('mouseenter', () => {
+            if (!button.classList.contains('secondary')) {
+                button.style.backgroundColor = 'var(--primary-dark, #4338CA)';
+            } else {
+                button.style.backgroundColor = 'rgba(99, 102, 241, 0.05)';
+            }
+        });
+        
+        button.addEventListener('mouseleave', () => {
+            if (!button.classList.contains('secondary')) {
+                button.style.backgroundColor = 'var(--primary)';
+            } else {
+                button.style.backgroundColor = 'white';
+            }
+        });
+        
+        button.addEventListener('click', () => {
+            if (!button.classList.contains('secondary')) {
+                button.textContent = 'Product Imported!';
+                button.style.backgroundColor = 'var(--success)';
+                
+                // Reset after a delay
+                setTimeout(() => {
+                    button.textContent = 'Import Product';
+                    button.style.backgroundColor = 'var(--primary)';
+                }, 2000);
+            }
+        });
+    });
+
+    // Trigger animation sequence for the dashboard on load
+    setTimeout(() => {
+        const productDot = document.querySelector('.product-dot-hot');
+        if (productDot) {
+            productDot.style.transform = 'translate(-50%, -50%) scale(1.1)';
+            setTimeout(() => {
+                showProductCard();
+                productDot.style.transform = 'translate(-50%, -50%) scale(1)';
+            }, 300);
+        }
+    }, 1000);
+}
 
 function initProductRadar() {
     // Check if radar elements exist on page
