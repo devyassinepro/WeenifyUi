@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Market Analysis</title>
+    <style>
+        /* Base styles matching the Weenify theme */
+        :root {
+            --weenify-purple: #8B5CF6;
+            --weenify-purple-light: #D6BCFA;
+            --weenify-purple-dark: #6E59A5;
+            --weenify-blue: #1EAEDB;
+            --weenify-blue-light: #33C3F0;
+            --weenify-green: #10B981;
+            --weenify-red: #EF4444;
+            --weenify-amber: #F59E0B;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.5;
+        }
+
+        /* Market Analysis Section */
+        .analysis-section {
+            padding: 4rem 1rem;
+            background-color: #f9fafb;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .analysis-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .analysis-wrapper {
+                flex-direction: row-reverse;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+
+        .analysis-content {
+            flex: 1;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .analysis-content {
+                text-align: left;
+            }
+        }
+
+        .analysis-badge {
+            display: inline-block;
+            background-color: rgba(139, 92, 246, 0.1);
+            color: var(--weenify-purple);
+            font-weight: 600;
+            font-size: 0.875rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            margin-bottom: 1rem;
+        }
+
+        .analysis-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1F2937;
+        }
+
+        .analysis-title span {
+            background-image: linear-gradient(to right, var(--weenify-purple), var(--weenify-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .analysis-description {
+            color: #6B7280;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            background-color: rgba(139, 92, 246, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .feature-icon svg {
+            width: 14px;
+            height: 14px;
+            color: var(--weenify-purple);
+        }
+
+        .feature-text {
+            color: #4B5563;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-image: linear-gradient(to right, var(--weenify-purple), var(--weenify-blue));
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(139, 92, 246, 0.2), 0 2px 4px -1px rgba(139, 92, 246, 0.1);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 10px 15px -3px rgba(139, 92, 246, 0.3), 0 4px 6px -2px rgba(139, 92, 246, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* Interactive Dashboard */
+        .analysis-visual {
+            flex: 1;
+            position: relative;
+            max-width: 600px;
+            aspect-ratio: 4 / 3;
+            margin: 0 auto;
+        }
+
+        .dashboard {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background-color: #F9FAFB;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .dashboard-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dashboard-icon {
+            width: 28px;
+            height: 28px;
+            background-image: linear-gradient(to right, var(--weenify-purple), var(--weenify-blue));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .dashboard-name {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #1F2937;
+        }
+
+        .dashboard-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            background-color: #ECFDF5;
+            color: #065F46;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--weenify-green);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+
+        .refresh-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            background-color: #F3F4F6;
+            color: #6B7280;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .refresh-btn:hover {
+            background-color: #E5E7EB;
+            color: #1F2937;
+        }
+
+        .refresh-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .dashboard-filters {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            border-bottom: 1px solid #F3F4F6;
+        }
+
+        .filter-options {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-option:hover, .filter-option.active {
+            background-color: #F3F4F6;
+        }
+
+        .filter-option.active {
+            color: var(--weenify-purple);
+            font-weight: 500;
+        }
+
+        .time-filter {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.75rem;
+            color: #6B7280;
+            padding: 0.25rem 0.5rem;
+            background-color: #F9FAFB;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .time-filter svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .dashboard-body {
+            flex: 1;
+            padding: 0.5rem 1rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            overflow-y: auto;
+        }
+
+        .data-row {
+            width: 100%;
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .stats-cards {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .stat-card {
+            flex: 1;
+            padding: 0.75rem;
+            background-color: #F9FAFB;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.2s ease;
+        }
+
+        .stat-card:hover {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            transform: translateY(-2px);
+        }
+
+        .stat-title {
+            font-size: 0.75rem;
+            color: #6B7280;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-value {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1F2937;
+        }
+
+        .stat-trend {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            color: #6B7280;
+        }
+
+        .trend-up {
+            color: var(--weenify-green);
+        }
+
+        .trend-down {
+            color: var(--weenify-red);
+        }
+
+        .trend-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .trend-icon svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        .product-table {
+            margin-top: 0.5rem;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #F3F4F6;
+        }
+
+        .table-header {
+            display: flex;
+            padding: 0.5rem 0.75rem;
+            background-color: #F9FAFB;
+            border-bottom: 1px solid #F3F4F6;
+        }
+
+        .table-cell {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #4B5563;
+        }
+
+        .table-cell-product {
+            flex: 2;
+        }
+
+        .table-cell-trend, .table-cell-price, .table-cell-profit, .table-cell-action {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 480px) {
+            .table-cell-trend {
+                display: none;
+            }
+        }
+
+        .product-rows {
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .product-row {
+            display: flex;
+            padding: 0.75rem;
+            border-bottom: 1px solid #F3F4F6;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+
+        .product-row:hover {
+            background-color: #F9FAFB;
+        }
+
+        .product-row:last-child {
+            border-bottom: none;
+        }
+
+        .product-cell {
+            font-size: 0.75rem;
+            color: #4B5563;
+        }
+
+        .product-cell-product {
+            flex: 2;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .product-img {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            background-color: #F3F4F6;
+            padding: 0.25rem;
+            object-fit: contain;
+        }
+
+        .product-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-name {
+            font-weight: 500;
+            color: #1F2937;
+        }
+
+        .product-category {
+            font-size: 0.625rem;
+            color: #6B7280;
+        }
+
+        .product-cell-trend, .product-cell-price, .product-cell-profit {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 480px) {
+            .product-cell-trend {
+                display: none;
+            }
+        }
+
+        .trend-value {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-weight: 500;
+        }
+
+        .trend-hot {
+            color: var(--weenify-red);
+        }
+
+        .trend-rising {
+            color: var(--weenify-amber);
+        }
+
+        .trend-steady {
+            color: var(--weenify-green);
+        }
+
+        .price-value, .profit-value {
+            font-weight: 600;
+        }
+
+        .price-value {
+            color: #1F2937;
+        }
+
+        .profit-value {
+            color: var(--weenify-purple);
+        }
+
+        .product-cell-action {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .action-btn {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.625rem;
+            font-weight: 500;
+            background-color: #F3F4F6;
+            color: #4B5563;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .action-btn:hover {
+            background-color: var(--weenify-purple);
+            color: white;
+        }
+
+        /* Chart area */
+        .chart-container {
+            position: relative;
+            flex: 1;
+            min-height: 150px;
+            margin-top: 0.5rem;
+            background-color: #F9FAFB;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #F3F4F6;
+        }
+
+        .chart-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            gap: 0.5rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .chart-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .pulse-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--weenify-green);
+            animation: pulse 1.5s infinite;
+        }
+
+        .chart-message {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #4B5563;
+        }
+
+        /* Live notification */
+        .live-notification {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            color: #1F2937;
+            transform: translateY(100%);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 20;
+        }
+
+        .live-notification.active {
+            transform: translateY(0);
+        }
+
+        .notification-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #ECFDF5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--weenify-green);
+        }
+
+        .notification-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            color: #1F2937;
+        }
+
+        .notification-desc {
+            font-size: 0.625rem;
+            color: #6B7280;
+        }
+
+        /* Trend line */
+        .trend-line {
+            height: 24px;
+            width: 60px;
+            position: relative;
+        }
+
+        .trend-line svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .analysis-title {
+                font-size: 1.75rem;
+            }
+            
+            .stats-cards {
+                flex-wrap: wrap;
+            }
+            
+            .stat-card {
+                min-width: calc(50% - 0.375rem);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .analysis-title {
+                font-size: 1.5rem;
+            }
+            
+            .dashboard-filters {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .table-cell-action, .product-cell-action {
+                display: none;
+            }
+            
+            .table-cell-product, .product-cell-product {
+                flex: 1.5;
+            }
+        }
+
+        /* Decoration elements */
+        .bg-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.15;
+            z-index: 1;
+        }
+
+        .blob-1 {
+            width: 300px;
+            height: 300px;
+            background-color: var(--weenify-purple-light);
+            top: -100px;
+            right: -100px;
+        }
+
+        .blob-2 {
+            width: 250px;
+            height: 250px;
+            background-color: var(--weenify-blue-light);
+            bottom: -80px;
+            left: -80px;
+        }
+    </style>
+</head>
+<body>
+    <section class="analysis-section">
+        <!-- Background blobs for decoration -->
+        <div class="bg-blob blob-1"></div>
+        <div class="bg-blob blob-2"></div>
+        
+        <div class="container">
+            <div class="analysis-wrapper">
+                <div class="analysis-content">
+                    <div class="analysis-badge">Real-Time Intelligence</div>
+                    <h2 class="analysis-title"><span>Real-Time Market</span> Analysis</h2>
+                    <p class="analysis-description">
+                        Track trending products across multiple marketplaces in real-time. Our algorithm analyzes thousands of products daily to identify those with the highest profit potential.
+                    </p>
+                    
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                </svg>
+                            </div>
+                            <span class="feature-text">Track sales velocity and demand in real-time</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <span class="feature-text">Identify high-margin products with low competition</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                </svg>
+                            </div>
+                            <span class="feature-text">Get alerts when new trending products emerge</span>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary">Start Analyzing Now</button>
+                </div>
+                
+                <div class="analysis-visual">
+                    <div class="dashboard">
+                        <div class="dashboard-header">
+                            <div class="dashboard-title">
+                                <div class="dashboard-icon">W</div>
+                                <span class="dashboard-name">Real-Time Market Analysis</span>
+                            </div>
+                            <div class="dashboard-status">
+                                <div class="status-badge">
+                                    <div class="status-indicator"></div>
+                                    <span>Live Tracking</span>
+                                </div>
+                                <div class="refresh-btn" id="refresh-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="dashboard-filters">
+                            <div class="filter-options">
+                                <div class="filter-option active" data-filter="all">All Products</div>
+                                <div class="filter-option" data-filter="trending">Trending</div>
+                                <div class="filter-option" data-filter="profitable">High Profit</div>
+                            </div>
+                            <div class="time-filter">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <span>Last 24 hours</span>
+                            </div>
+                        </div>
+                        
+                        <div class="dashboard-body">
+                            <div class="stats-cards">
+                                <div class="stat-card">
+                                    <div class="stat-title">Products Analyzed</div>
+                                    <div class="stat-value" id="products-analyzed">4,583</div>
+                                    <div class="stat-trend">
+                                        <div class="trend-icon trend-up">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                                            </svg>
+                                        </div>
+                                        <span>+324 today</span>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">Trending Products</div>
+                                    <div class="stat-value" id="trending-products">27</div>
+                                    <div class="stat-trend">
+                                        <div class="trend-icon trend-up">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                                            </svg>
+                                        </div>
+                                        <span>+8 today</span>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">Avg. Profit Margin</div>
+                                    <div class="stat-value" id="avg-profit">68.2%</div>
+                                    <div class="stat-trend">
+                                        <div class="trend-icon trend-up">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                                            </svg>
+                                        </div>
+                                        <span>+3.4% today</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="chart-container">
+                                <svg width="100%" height="100%" viewBox="0 0 600 150" preserveAspectRatio="none">
+                                    <!-- Grid lines -->
+                                    <line x1="0" y1="30" x2="600" y2="30" stroke="#E5E7EB" stroke-width="1" />
+                                    <line x1="0" y1="60" x2="600" y2="60" stroke="#E5E7EB" stroke-width="1" />
+                                    <line x1="0" y1="90" x2="600" y2="90" stroke="#E5E7EB" stroke-width="1" />
+                                    <line x1="0" y1="120" x2="600" y2="120" stroke="#E5E7EB" stroke-width="1" />
+                                    
+                                    <!-- Time markers -->
+                                    <text x="0" y="145" font-size="8" fill="#9CA3AF">00:00</text>
+                                    <text x="120" y="145" font-size="8" fill="#9CA3AF">06:00</text>
+                                    <text x="240" y="145" font-size="8" fill="#9CA3AF">12:00</text>
+                                    <text x="360" y="145" font-size="8" fill="#9CA3AF">18:00</text>
+                                    <text x="480" y="145" font-size="8" fill="#9CA3AF">00:00</text>
+                                    <text x="590" y="145" font-size="8" text-anchor="end" fill="#9CA3AF">Now</text>
+                                    
+                                    <!-- Value markers -->
+                                    <text x="598" y="30" font-size="8" text-anchor="end" fill="#9CA3AF">100%</text>
+                                    <text x="598" y="60" font-size="8" text-anchor="end" fill="#9CA3AF">75%</text>
+                                    <text x="598" y="90" font-size="8" text-anchor="end" fill="#9CA3AF">50%</text>
+                                    <text x="598" y="120" font-size="8" text-anchor="end" fill="#9CA3AF">25%</text>
+                                    
+                                    <!-- Main trend line -->
+                                    <path d="M0,110 C50,100 80,115 110,90 C140,65 160,70 190,60 C220,50 250,45 300,55 C350,65 380,40 410,35 C440,30 470,40 500,20 C530,10 580,15 600,5" stroke="url(#trendGradient)" stroke-width="2" fill="none" />
+                                    
+                                    <!-- Area under the trend line -->
+                                    <path d="M0,110 C50,100 80,115 110,90 C140,65 160,70 190,60 C220,50 250,45 300,55 C350,65 380,40 410,35 C440,30 470,40 500,20 C530,10 580,15 600,5 V150 H0 Z" fill="url(#areaGradient)" opacity="0.2" />
+                                    
+                                    <!-- Highlight dots -->
+                                    <circle cx="190" cy="60" r="4" fill="#8B5CF6" />
+                                    <circle cx="410" cy="35" r="4" fill="#8B5CF6" />
+                                    <circle cx="500" cy="20" r="4" fill="#8B5CF6" />
+                                    
+                                    <!-- Gradients -->
+                                    <defs>
+                                        <linearGradient id="trendGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="0%" stop-color="#8B5CF6" />
+                                            <stop offset="100%" stop-color="#1EAEDB" />
+                                        </linearGradient>
+                                        <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" stop-color="#8B5CF6" />
+                                            <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                                
+                                <div class="chart-overlay" id="chart-overlay">
+                                    <div class="pulse-dot"></div>
+                                    <div class="chart-message">Analyzing market trends...</div>
+                                </div>
+                            </div>
+                            
+                            <div class="product-table">
+                                <div class="table-header">
+                                    <div class="table-cell table-cell-product">Product</div>
+                                    <div class="table-cell table-cell-trend">Trend</div>
+                                    <div class="table-cell table-cell-price">Price</div>
+                                    <div class="table-cell table-cell-profit">Profit</div>
+                                    <div class="table-cell table-cell-action">Action</div>
+                                </div>
+                                <div class="product-rows" id="product-table-body">
+                                    <!-- Product rows will be added here via JavaScript -->
+                                    <div class="product-row">
+                                        <div class="product-cell product-cell-product">
+                                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='%238B5CF6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2' y='3' width='20' height='14' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='8' y1='21' x2='16' y2='21'%3E%3C/line%3E%3Cline x1='12' y1='17' x2='12' y2='21'%3E%3C/line%3E%3C/svg%3E" alt="Mini Portable Projector" class="product-img">
+                                            <div class="product-info">
+                                                <div class="product-name">Mini Portable Projector</div>
+                                                <div class="product-category">Electronics</div>
+                                            </div>
+                                        </div>
+                                        <div class="product-cell product-cell-trend">
+                                            <div class="trend-value trend-hot">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M13 17.0001V3.00006H21L13 17.0001Z" />
+                                                    <path d="M11 3.00006V17.0001H3L11 3.00006Z" />
+                                                    <path d="M19 21.0001H5" />
+                                                </svg>
+                                                Hot
+                                            </div>
+                                        </div>
+                                        <div class="product-cell product-cell-price">
+                                            <div class="price-value">$129.95</div>
+                                        </div>
+                                        <div class="product-cell product-cell-profit">
+                                            <div class="profit-value">$67.80</div>
+                                        </div>
+                                        <div class="product-cell product-cell-action">
+                                            <div class="action-btn">Import</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="product-row">
+                                        <div class="product-cell product-cell-product">
+                                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='%238B5CF6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z'%3E%3C/path%3E%3Cpath d='m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z'%3E%3C/path%3E%3Cpath d='M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0'%3E%3C/path%3E%3Cpath d='M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5'%3E%3C/path%3E%3C/svg%3E" alt="Pet Cleaning Spray" class="product-img">
+                                            <div class="product-info">
+                                                <div class="product-name">Pet Cleaning Spray</div>
+                                                <div class="product-category">Pet Accessories</div>
+                                            </div>
+                                        </div>
+                                        <div class="product-cell product-cell-trend">
+                                            <div class="trend-value trend-rising">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                                                    <polyline points="17 6 23 6 23 12" />
+                                                </svg>
+                                                Rising
+                                            </div>
+                                        </div>
+                                        <div class="product-cell product-cell-price">
+                                            <div class="price-value">$24.99</div>
+                                        </div>
+                                        <div class="product-cell product-cell-profit">
+                                            <div class="profit-value">$16.54</div>
+                                        </div>
+                                        <div class="product-cell product-cell-action">
+                                            <div class="action-btn">Import</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="product-row">
+                                        <div class="product-cell product-cell-product">
+                                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='%238B5CF6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E" alt="Smart Watch" class="product-img">
+                                            <div class="product-info">
+                                                <div class="product-name">Smart Watch</div>
+                                                <div class="product-category">Wearables</div>
+                                            </div>
+                                        </div>
+                                        <div class="product-cell product-cell-trend">
+                                            <div class="trend-value trend-steady">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                                </svg>
+                                                Steady
+                                            </div>
+                                        </div>
+                                        <div class="product-cell product-cell-price">
+                                            <div class="price-value">$78.95</div>
+                                        </div>
+                                        <div class="product-cell product-cell-profit">
+                                            <div class="profit-value">$41.20</div>
+                                        </div>
+                                        <div class="product-cell product-cell-action">
+                                            <div class="action-btn">Import</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="product-row">
+                                        <div class="product-cell product-cell-product">
+                                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='%238B5CF6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Ccircle cx='12' cy='12' r='6'%3E%3C/circle%3E%3Ccircle cx='12' cy='12' r='2'%3E%3C/circle%3E%3C/svg%3E" alt="Dog Training Collar" class="product-img">
+                                            <div class="product-info">
+                                                <div class="product-name">Dog Training Collar</div>
+                                                <div class="product-category">Pet Accessories</div>
+                                            </div>
+                                        </div>
+                                        <div class="product-cell product-cell-trend">
+                                            <div class="trend-value trend-rising">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                                                    <polyline points="17 6 23 6 23 12" />
+                                                </svg>
+                                                Rising
+                                            </div>
+                                        </div>
+                                        <div class="product-cell product-cell-price">
+                                            <div class="price-value">$37.50</div>
+                                        </div>
+                                        <div class="product-cell product-cell-profit">
+                                            <div class="profit-value">$17.50</div>
+                                        </div>
+                                        <div class="product-cell product-cell-action">
+                                            <div class="action-btn">Import</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="product-row">
+                                        <div class="product-cell product-cell-product">
+                                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='%238B5CF6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z'%3E%3C/path%3E%3Cpolyline points='14 2 14 8 20 8'%3E%3C/polyline%3E%3C/svg%3E" alt="Ab Wheel Roller" class="product-img">
+                                            <div class="product-info">
+                                                <div class="product-name">Ab Wheel Roller</div>
+                                                <div class="product-category">Fitness</div>
+                                            </div>
+                                        </div>
+                                        <div class="product-cell product-cell-trend">
+                                            <div class="trend-value trend-steady">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                                </svg>
+                                                Steady
+                                            </div>
+                                        </div>
+                                        <div class="product-cell product-cell-price">
+                                            <div class="price-value">$32.95</div>
+                                        </div>
+                                        <div class="product-cell product-cell-profit">
+                                            <div class="profit-value">$12.25</div>
+                                        </div>
+                                        <div class="product-cell product-cell-action">
+                                            <div class="action-btn">Import</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="live-notification" id="live-notification">
+                            <div class="notification-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                                    <polyline points="14 2 14 8 20 8" />
+                                </svg>
+                            </div>
+                            <div class="notification-info">
+                                <div class="notification-title">New Trending Product Found!</div>
+                                <div class="notification-desc">Portable Electric Heater - 78.4% profit margin</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // References to DOM elements
+            const refreshBtn = document.getElementById('refresh-btn');
+            const chartOverlay = document.getElementById('chart-overlay');
+            const liveNotification = document.getElementById('live-notification');
+            const filterOptions = document.querySelectorAll('.filter-option');
+            const productRows = document.querySelectorAll('.product-row');
+            const productsAnalyzedEl = document.getElementById('products-analyzed');
+            const trendingProductsEl = document.getElementById('trending-products');
+            const avgProfitEl = document.getElementById('avg-profit');
+            
+            // Function to simulate refreshing data
+            function refreshData() {
+                // Show loading overlay
+                chartOverlay.classList.add('active');
+                
+                // Disable refresh button
+                refreshBtn.style.pointerEvents = 'none';
+                
+                // Simulate loading delay
+                setTimeout(() => {
+                    // Update stats with random increments
+                    const currentProductsAnalyzed = parseInt(productsAnalyzedEl.textContent.replace(',', ''));
+                    const newProductsAnalyzed = currentProductsAnalyzed + Math.floor(Math.random() * 50) + 10;
+                    productsAnalyzedEl.textContent = newProductsAnalyzed.toLocaleString();
+                    
+                    const currentTrendingProducts = parseInt(trendingProductsEl.textContent);
+                    const newTrendingProducts = currentTrendingProducts + Math.floor(Math.random() * 3);
+                    trendingProductsEl.textContent = newTrendingProducts.toString();
+                    
+                    const currentAvgProfit = parseFloat(avgProfitEl.textContent);
+                    const newAvgProfit = (currentAvgProfit + (Math.random() * 0.8) - 0.2).toFixed(1);
+                    avgProfitEl.textContent = newAvgProfit + '%';
+                    
+                    // Hide loading overlay
+                    chartOverlay.classList.remove('active');
+                    
+                    // Re-enable refresh button
+                    refreshBtn.style.pointerEvents = 'auto';
+                    
+                    // Show notification after a short delay
+                    setTimeout(() => {
+                        liveNotification.classList.add('active');
+                        
+                        // Hide notification after 5 seconds
+                        setTimeout(() => {
+                            liveNotification.classList.remove('active');
+                        }, 5000);
+                    }, 1000);
+                }, 2000);
+            }
+            
+            // Function to filter products
+            function filterProducts(filter) {
+                productRows.forEach(row => {
+                    const trendType = row.querySelector('.trend-value').classList.contains('trend-hot') ? 'hot' :
+                                    row.querySelector('.trend-value').classList.contains('trend-rising') ? 'trending' : 'steady';
+                    
+                    if (filter === 'all') {
+                        row.style.display = 'flex';
+                    } else if (filter === 'trending' && (trendType === 'hot' || trendType === 'trending')) {
+                        row.style.display = 'flex';
+                    } else if (filter === 'profitable' && parseFloat(row.querySelector('.profit-value').textContent.substring(1)) > 15) {
+                        row.style.display = 'flex';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Add event listeners
+            refreshBtn.addEventListener('click', refreshData);
+            
+            filterOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove active class from all options
+                    filterOptions.forEach(opt => opt.classList.remove('active'));
+                    
+                    // Add active class to clicked option
+                    this.classList.add('active');
+                    
+                    // Filter products
+                    filterProducts(this.dataset.filter);
+                });
+            });
+            
+            // Make action buttons interactive
+            const actionBtns = document.querySelectorAll('.action-btn');
+            actionBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.textContent = 'Importing...';
+                    this.style.backgroundColor = 'var(--weenify-purple)';
+                    this.style.color = 'white';
+                    
+                    setTimeout(() => {
+                        this.textContent = 'Imported';
+                        this.style.backgroundColor = 'var(--weenify-green)';
+                        
+                        setTimeout(() => {
+                            this.textContent = 'Import';
+                            this.style.backgroundColor = '#F3F4F6';
+                            this.style.color = '#4B5563';
+                        }, 2000);
+                    }, 1000);
+                });
+            });
+            
+            // Auto refresh on load
+            setTimeout(refreshData, 1500);
+            
+            // Setup periodic background refreshes
+            setInterval(() => {
+                // Only auto-refresh if the chart overlay is not active
+                if (!chartOverlay.classList.contains('active')) {
+                    // 50% chance of triggering a notification
+                    if (Math.random() > 0.5) {
+                        refreshData();
+                    }
+                }
+            }, 15000); // Every 15 seconds
+        });
+    </script>
+</body>
+</html>

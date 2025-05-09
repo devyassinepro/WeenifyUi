@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Research Database</title>
+    <style>
+        /* Base styles matching the Weenify theme */
+        :root {
+            --weenify-purple: #8B5CF6;
+            --weenify-purple-light: #D6BCFA;
+            --weenify-purple-dark: #6E59A5;
+            --weenify-blue: #1EAEDB;
+            --weenify-blue-light: #33C3F0;
+            --weenify-green: #10B981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.5;
+        }
+
+        /* Database Section */
+        .database-section {
+            padding: 4rem 1rem;
+            background-color: #f9fafb;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .database-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .database-wrapper {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+
+        .database-content {
+            flex: 1;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .database-content {
+                text-align: left;
+            }
+        }
+
+        .database-badge {
+            display: inline-block;
+            background-color: rgba(139, 92, 246, 0.1);
+            color: var(--weenify-purple);
+            font-weight: 600;
+            font-size: 0.875rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            margin-bottom: 1rem;
+        }
+
+        .database-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1F2937;
+        }
+
+        .database-title span {
+            background-image: linear-gradient(to right, var(--weenify-purple), var(--weenify-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .database-description {
+            color: #6B7280;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            background-color: rgba(139, 92, 246, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .feature-icon svg {
+            width: 14px;
+            height: 14px;
+            color: var(--weenify-purple);
+        }
+
+        .feature-text {
+            color: #4B5563;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-image: linear-gradient(to right, var(--weenify-purple), var(--weenify-blue));
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(139, 92, 246, 0.2), 0 2px 4px -1px rgba(139, 92, 246, 0.1);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 10px 15px -3px rgba(139, 92, 246, 0.3), 0 4px 6px -2px rgba(139, 92, 246, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* Database Visual Interface */
+        .database-visual {
+            flex: 1;
+            position: relative;
+            max-width: 600px;
+            aspect-ratio: 4 / 3;
+            margin: 0 auto;
+        }
+
+        .database-interface {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .database-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background-color: #F3F4F6;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .database-title-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .database-logo {
+            width: 24px;
+            height: 24px;
+            background-image: linear-gradient(135deg, var(--weenify-purple), var(--weenify-blue));
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .database-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .search-container {
+            padding: 1rem;
+            border-bottom: 1px solid #E5E7EB;
+            background-color: #F9FAFB;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            padding: 0.5rem 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-icon {
+            color: #9CA3AF;
+            margin-right: 0.5rem;
+        }
+
+        .search-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 0.875rem;
+            color: #4B5563;
+            background: transparent;
+        }
+
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .filter-item {
+            position: relative;
+            min-width: 120px;
+        }
+
+        .filter-label {
+            font-size: 0.75rem;
+            color: #6B7280;
+            margin-bottom: 0.25rem;
+            display: block;
+        }
+
+        .filter-select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #E5E7EB;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: #4B5563;
+            background-color: white;
+            cursor: default;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #E5E7EB;
+            background-color: white;
+        }
+
+        .results-count {
+            font-size: 0.875rem;
+            color: #4B5563;
+            font-weight: 500;
+        }
+
+        .results-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .results-button {
+            padding: 0.375rem 0.5rem;
+            font-size: 0.75rem;
+            border-radius: 6px;
+            background-color: #F3F4F6;
+            color: #4B5563;
+            border: 1px solid #E5E7EB;
+            cursor: default;
+        }
+
+        .results-button.active {
+            background-color: white;
+            color: var(--weenify-purple);
+            border-color: var(--weenify-purple-light);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .product-card {
+            background-color: white;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transform: translateY(-2px);
+        }
+
+        .product-image-container {
+            height: 120px;
+            background-color: #F9FAFB;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            position: relative;
+        }
+
+        .product-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .product-tag {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            font-size: 0.625rem;
+            font-weight: 600;
+            padding: 0.25rem 0.375rem;
+            border-radius: 4px;
+            z-index: 1;
+        }
+
+        .product-tag.trending {
+            background-color: #FEF3C7;
+            color: #D97706;
+        }
+
+        .product-tag.hot {
+            background-color: #FEE2E2;
+            color: #DC2626;
+        }
+
+        .product-tag.verified {
+            background-color: #ECFDF5;
+            color: #065F46;
+        }
+
+        .product-info {
+            padding: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            flex: 1;
+        }
+
+        .product-name {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #1F2937;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 2.625rem;
+        }
+
+        .product-category {
+            font-size: 0.75rem;
+            color: #6B7280;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .product-pricing {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.5rem;
+        }
+
+        .product-price {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--weenify-purple);
+        }
+
+        .product-profit {
+            font-size: 0.75rem;
+            color: var(--weenify-green);
+            background-color: rgba(16, 185, 129, 0.1);
+            padding: 0.125rem 0.375rem;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .product-stats {
+            margin-top: 0.5rem;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.375rem;
+            font-size: 0.75rem;
+        }
+
+        .product-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: #6B7280;
+        }
+
+        .product-buttons {
+            display: flex;
+            margin-top: 0.5rem;
+            gap: 0.5rem;
+        }
+
+        .product-button {
+            flex: 1;
+            padding: 0.375rem;
+            font-size: 0.75rem;
+            border-radius: 6px;
+            text-align: center;
+            cursor: default;
+        }
+
+        .product-button.primary {
+            background-color: var(--weenify-purple);
+            color: white;
+        }
+
+        .product-button.secondary {
+            background-color: white;
+            color: var(--weenify-purple);
+            border: 1px solid var(--weenify-purple-light);
+        }
+
+        .database-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-top: 1px solid #E5E7EB;
+            background-color: white;
+        }
+
+        .pagination {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .page-button {
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            color: #4B5563;
+            cursor: default;
+        }
+
+        .page-button.active {
+            background-color: var(--weenify-purple);
+            color: white;
+        }
+
+        .page-button.nav {
+            background-color: #F3F4F6;
+            color: #4B5563;
+        }
+
+        .page-info {
+            font-size: 0.75rem;
+            color: #6B7280;
+        }
+
+        /* Database statistics callout */
+        .db-stats-callout {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            background-color: white;
+            border-radius: 8px;
+            padding: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            max-width: 200px;
+            z-index: 20;
+            border: 1px solid var(--weenify-purple-light);
+        }
+
+        .db-stats-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--weenify-purple);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .db-stats-icon {
+            width: 20px;
+            height: 20px;
+            background-color: rgba(139, 92, 246, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .db-stats-icon svg {
+            width: 12px;
+            height: 12px;
+            color: var(--weenify-purple);
+        }
+
+        .db-stat-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #4B5563;
+        }
+
+        .db-stat-value {
+            font-weight: 600;
+            color: #1F2937;
+        }
+
+        /* Product detail popup */
+        .product-detail {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            width: 300px;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            z-index: 30;
+            border: 1px solid var(--weenify-purple-light);
+        }
+
+        .detail-header {
+            padding: 1rem;
+            background-color: #F9FAFB;
+            border-bottom: 1px solid #E5E7EB;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .detail-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            background-color: white;
+            padding: 0.25rem;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            object-fit: contain;
+        }
+
+        .detail-title {
+            flex: 1;
+        }
+
+        .detail-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1F2937;
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-category {
+            font-size: 0.75rem;
+            color: #6B7280;
+        }
+
+        .detail-body {
+            padding: 1rem;
+        }
+
+        .detail-section {
+            margin-bottom: 1rem;
+        }
+
+        .detail-section-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #4B5563;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .detail-section-icon {
+            width: 18px;
+            height: 18px;
+            background-color: rgba(139, 92, 246, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .detail-section-icon svg {
+            width: 10px;
+            height: 10px;
+            color: var(--weenify-purple);
+        }
+
+        .detail-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .detail-stat {
+            background-color: #F9FAFB;
+            border-radius: 6px;
+            padding: 0.5rem;
+            text-align: center;
+        }
+
+        .detail-stat-value {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--weenify-purple);
+            margin-bottom: 0.125rem;
+        }
+
+        .detail-stat-label {
+            font-size: 0.675rem;
+            color: #6B7280;
+        }
+
+        .detail-chart {
+            height: 120px;
+            background-color: #F9FAFB;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .chart-placeholder {
+            height: 100%;
+            width: 100%;
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"%3E%3Cpath d="M0 100 L10 80 L20 85 L30 70 L40 75 L50 60 L60 65 L70 40 L80 45 L90 30 L100 35 L100 100 Z" fill="%23EDE9FE" /%3E%3Cpath d="M0 100 L10 80 L20 85 L30 70 L40 75 L50 60 L60 65 L70 40 L80 45 L90 30 L100 35" fill="none" stroke="%238B5CF6" stroke-width="2" /%3E%3C/svg%3E');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .detail-supplier {
+            display: flex;
+            align-items: center;
+            background-color: #F9FAFB;
+            border-radius: 6px;
+            padding: 0.5rem;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .supplier-logo {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #4B5563;
+            border: 1px solid #E5E7EB;
+        }
+
+        .supplier-info {
+            flex: 1;
+            font-size: 0.75rem;
+        }
+
+        .supplier-name {
+            font-weight: 600;
+            color: #4B5563;
+        }
+
+        .supplier-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: #6B7280;
+            font-size: 0.675rem;
+        }
+
+        .rating-stars {
+            color: #F59E0B;
+        }
+
+        .detail-audience {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .audience-item {
+            flex: 1;
+            background-color: #F9FAFB;
+            border-radius: 6px;
+            padding: 0.5rem;
+            text-align: center;
+            font-size: 0.75rem;
+        }
+
+        .audience-value {
+            font-weight: 600;
+            color: #4B5563;
+        }
+
+        .audience-label {
+            font-size: 0.675rem;
+            color: #6B7280;
+        }
+
+        .detail-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .detail-button {
+            flex: 1;
+            padding: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 6px;
+            text-align: center;
+            cursor: default;
+        }
+
+        .detail-button.primary {
+            background-color: var(--weenify-purple);
+            color: white;
+        }
+
+        .detail-button.secondary {
+            background-color: white;
+            color: var(--weenify-purple);
+            border: 1px solid var(--weenify-purple-light);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .database-title {
+                font-size: 1.75rem;
+            }
+
+            .filter-row {
+                overflow-x: auto;
+                padding-bottom: 0.5rem;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+
+            .filter-row::-webkit-scrollbar {
+                display: none;
+            }
+
+            .filter-item {
+                min-width: 120px;
+                flex-shrink: 0;
+            }
+
+            .results-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .product-detail {
+                width: 70%;
+                max-width: 280px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .database-title {
+                font-size: 1.5rem;
+            }
+
+            .database-badge {
+                font-size: 0.75rem;
+            }
+
+            .results-grid {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            }
+
+            .product-detail {
+                width: 90%;
+                right: 5%;
+            }
+        }
+
+        /* Decoration elements */
+        .bg-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.2;
+            z-index: 1;
+        }
+
+        .blob-1 {
+            width: 300px;
+            height: 300px;
+            background-color: var(--weenify-purple-light);
+            top: -100px;
+            left: -100px;
+        }
+
+        .blob-2 {
+            width: 250px;
+            height: 250px;
+            background-color: var(--weenify-blue-light);
+            bottom: -80px;
+            right: -80px;
+        }
+    </style>
+</head>
+<body>
+    <section class="database-section">
+        <!-- Background blobs for decoration -->
+        <div class="bg-blob blob-1"></div>
+        <div class="bg-blob blob-2"></div>
+        
+        <div class="container">
+            <div class="database-wrapper">
+                <div class="database-content">
+                    <div class="database-badge">Extensive Catalog</div>
+                    <h2 class="database-title"><span>Product Research</span> Database</h2>
+                    <p class="database-description">
+                        Access our database of over 1 million products with detailed performance metrics. Find winning products with comprehensive analytics to make informed decisions.
+                    </p>
+                    
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                            <span class="feature-text">Sales history and trend analytics</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                            <span class="feature-text">Profit margins and supplier information</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                            <span class="feature-text">Audience demographics and targeting data</span>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary">Explore Database</button>
+                </div>
+                
+                <div class="database-visual">
+                    <div class="database-interface">
+                        <div class="database-header">
+                            <div class="database-title-bar">
+                                <div class="database-logo">W</div>
+                                <span>Weenify - Product Database</span>
+                            </div>
+                        </div>
+                        
+                        <div class="database-main">
+                            <!-- Search & Filter Area -->
+                            <div class="search-container">
+                                <div class="search-box">
+                                    <div class="search-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                        </svg>
+                                    </div>
+                                    <input type="text" class="search-input" readonly value="wireless earbuds" placeholder="Search products..." style="cursor: default;">
+                                </div>
+                                
+                                <div class="filter-row">
+                                    <div class="filter-item">
+                                        <label class="filter-label">Category</label>
+                                        <select class="filter-select" readonly style="cursor: default;">
+                                            <option>Electronics</option>
+                                        </select>
+                                    </div>
+                                    <div class="filter-item">
+                                        <label class="filter-label">Price Range</label>
+
+                                        <select class="filter-select" readonly style="cursor: default;">
+                                            <option>$10 - $50</option>
+                                        </select>
+                                    </div>
+                                    <div class="filter-item">
+                                        <label class="filter-label">Currency</label>
+                                        <select class="filter-select" readonly style="cursor: default;">
+                                            <option>USD ($)</option>
+                                        </select>
+                                    </div>
+                                    <div class="filter-item">
+                                        <label class="filter-label">Profit Margin</label>
+                                        <select class="filter-select" readonly style="cursor: default;">
+                                            <option>> 50%</option>
+                                        </select>
+                                    </div>
+                                    <div class="filter-item">
+                                        <label class="filter-label">Sort By</label>
+                                        <select class="filter-select" readonly style="cursor: default;">
+                                            <option>Sales Volume</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Results Header -->
+                            <div class="results-header">
+                                <div class="results-count">
+                                    <strong>168</strong> products found
+                                </div>
+                                <div class="results-actions">
+                                    <button class="results-button active">Grid</button>
+                                    <button class="results-button">List</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Results Grid -->
+                            <div class="results-grid">
+                                <!-- Product Card 1 -->
+                                <div class="product-card">
+                                    <div class="product-image-container">
+                                        <img src="/api/placeholder/100/100" alt="Wireless Earbuds" class="product-image">
+                                        <div class="product-tag hot">Hot Product</div>
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="product-name">True Wireless Earbuds with Noise Cancellation</div>
+                                        <div class="product-category">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                                            </svg>
+                                            Electronics
+                                        </div>
+                                        <div class="product-pricing">
+                                            <div class="product-price">$34.99</div>
+                                            <div class="product-profit">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                                </svg>
+                                                73% profit
+                                            </div>
+                                        </div>
+                                        <div class="product-stats">
+                                            <div class="product-stat">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                                                </svg>
+                                                2,845 sales
+                                            </div>
+                                            <div class="product-stat">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                                </svg>
+                                                Trending ↑
+                                            </div>
+                                            <div class="product-stat">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+                                                </svg>
+                                                Cost: $9.45
+                                            </div>
+                                            <div class="product-stat">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+                                                5 suppliers
+                                            </div>
+                                        </div>
+                                        <div class="product-buttons">
+                                            <button class="product-button primary" style="cursor: default;">Import</button>
+                                            <button class="product-button secondary" style="cursor: default;">Details</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Product Card 2 -->
+                                <div class="product-card">
+                                    <div class="product-image-container">
+                                        <img src="/api/placeholder/100/100" alt="Mini Earbuds" class="product-image">
+                                        <div class="product-tag trending">Trending</div>
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="product-name">Mini Bluetooth Earbuds With Charging Case</div>
+                                        <div class="product-category">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                                            </svg>
+                                            Electronics
+                                        </div>
+                                        <div class="product-pricing">
+                                            <div class="product-price">$29.95</div>
+                                            <div class="product-profit">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                                </svg>
+                                                68% profit
+                                            </div>
+                                        </div>
+                                        <div class="product-stats">
+                                            <div class="product-stat">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                                                </svg>
+                                                1,970 sales
+                                            </div>
+                                            <div class="product-stat">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                                </svg>
+                                                Trending ↑
+                                            </div>
+                                            <div class="product-stat">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+                                                </svg>
+                                                Cost: $9.60
+                                            </div>
+                                            <div class="product-stat">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+                                                3 suppliers
+                                            </div>
+                                        </div>
+                                        <div class="product-buttons">
+                                            <button class="product-button primary" style="cursor: default;">Import</button>
+                                            <button class="product-button secondary" style="cursor: default;">Details</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Product Card 3 -->
+                                <div class="product-card">
+                                    <div class="product-image-container">
+                                        <img src="/api/placeholder/100/100" alt="Sport Earbuds" class="product-image">
+                                        <div class="product-tag verified">Verified</div>
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="product-name">Sport Wireless Earbuds with Ear Hooks</div>
+                                        <div class="product-category">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                                            </svg>
+                                            Electronics
+                                        </div>
+                                        <div class="product-pricing">
+                                            <div class="product-price">$24.99</div>
+                                            <div class="product-profit">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                                </svg>
+                                                72% profit
+                                            </div>
+                                        </div>
+                                        <div class="product-stats">
+                                            <div class="product-stat">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                                                </svg>
+                                                1,430 sales
+                                            </div>
+                                            <div class="product-stat">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                                </svg>
+                                                Stable
+                                            </div>
+                                            <div class="product-stat">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+                                                </svg>
+                                                Cost: $7.00
+                                            </div>
+                                            <div class="product-stat">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+                                                6 suppliers
+                                            </div>
+                                        </div>
+                                        <div class="product-buttons">
+                                            <button class="product-button primary" style="cursor: default;">Import</button>
+                                            <button class="product-button secondary" style="cursor: default;">Details</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Product Card 4 (only visible on wider screens) -->
+                                <div class="product-card">
+                                    <div class="product-image-container">
+                                        <img src="/api/placeholder/100/100" alt="Wireless Headphones" class="product-image">
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="product-name">Over-Ear Wireless Headphones with Mic</div>
+                                        <div class="product-category">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                                            </svg>
+                                            Electronics
+                                        </div>
+                                        <div class="product-pricing">
+                                            <div class="product-price">$42.99</div>
+                                            <div class="product-profit">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                                </svg>
+                                                66% profit
+                                            </div>
+                                        </div>
+                                        <div class="product-stats">
+                                            <div class="product-stat">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                                                </svg>
+                                                1,280 sales
+                                            </div>
+                                            <div class="product-stat">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                                </svg>
+                                                Growing ↗
+                                            </div>
+                                            <div class="product-stat">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+                                                </svg>
+                                                Cost: $14.60
+                                            </div>
+                                            <div class="product-stat">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+                                                4 suppliers
+                                            </div>
+                                        </div>
+                                        <div class="product-buttons">
+                                            <button class="product-button primary" style="cursor: default;">Import</button>
+                                            <button class="product-button secondary" style="cursor: default;">Details</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Pagination Footer -->
+                        <div class="database-footer">
+                            <div class="pagination">
+                                <div class="page-button nav">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                    </svg>
+                                </div>
+                                <div class="page-button active">1</div>
+                                <div class="page-button">2</div>
+                                <div class="page-button">3</div>
+                                <div class="page-button nav">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="page-info">
+                                Showing 1-12 of 168 products
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Database statistics callout -->
+                    <div class="db-stats-callout">
+                        <div class="db-stats-title">
+                            <div class="db-stats-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            Database Stats
+                        </div>
+                        <div class="db-stat-item">
+                            <span>Total Products:</span>
+                            <span class="db-stat-value">1,035,782</span>
+                        </div>
+                        <div class="db-stat-item">
+                            <span>Categories:</span>
+                            <span class="db-stat-value">48</span>
+                        </div>
+                        <div class="db-stat-item">
+                            <span>Verified Suppliers:</span>
+                            <span class="db-stat-value">1,240</span>
+                        </div>
+                        <div class="db-stat-item">
+                            <span>Daily Updates:</span>
+                            <span class="db-stat-value">5,000+</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Product detail popup -->
+                    <div class="product-detail">
+                        <div class="detail-header">
+                            <img src="/api/placeholder/60/60" alt="True Wireless Earbuds" class="detail-image">
+                            <div class="detail-title">
+                                <div class="detail-name">True Wireless Earbuds with Noise Cancellation</div>
+                                <div class="detail-category">Electronics > Audio > Earbuds</div>
+                            </div>
+                        </div>
+                        <div class="detail-body">
+                            <div class="detail-section">
+                                <div class="detail-section-title">
+                                    <div class="detail-section-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                        </svg>
+                                    </div>
+                                    Sales Performance
+                                </div>
+                                <div class="detail-stats">
+                                    <div class="detail-stat">
+                                        <div class="detail-stat-value">2,845</div>
+                                        <div class="detail-stat-label">Monthly Sales</div>
+                                    </div>
+                                    <div class="detail-stat">
+                                        <div class="detail-stat-value">$99,575</div>
+                                        <div class="detail-stat-label">Monthly Revenue</div>
+                                    </div>
+                                    <div class="detail-stat">
+                                        <div class="detail-stat-value">+18.7%</div>
+                                        <div class="detail-stat-label">Growth Rate</div>
+                                    </div>
+                                    <div class="detail-stat">
+                                        <div class="detail-stat-value">73%</div>
+                                        <div class="detail-stat-label">Profit Margin</div>
+                                    </div>
+                                </div>
+                                <div class="detail-chart">
+                                    <div class="chart-placeholder"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="detail-section">
+                                <div class="detail-section-title">
+                                    <div class="detail-section-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                                        </svg>
+                                    </div>
+                                    Supplier Information
+                                </div>
+                                <div class="detail-supplier">
+                                    <div class="supplier-logo">A</div>
+                                    <div class="supplier-info">
+                                        <div class="supplier-name">AliExpress</div>
+                                        <div class="supplier-rating">
+                                            <span class="rating-stars">★★★★★</span>
+                                            <span>4.8/5.0 (Verified)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="detail-stats">
+                                    <div class="detail-stat">
+                                        <div class="detail-stat-value">$9.45</div>
+                                        <div class="detail-stat-label">Cost Price</div>
+                                    </div>
+                                    <div class="detail-stat">
+                                        <div class="detail-stat-value">4-12</div>
+                                        <div class="detail-stat-label">Days Shipping</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="detail-section">
+                                <div class="detail-section-title">
+                                    <div class="detail-section-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                        </svg>
+                                    </div>
+                                    Audience Demographics
+                                </div>
+                                <div class="detail-audience">
+                                    <div class="audience-item">
+                                        <div class="audience-value">18-34</div>
+                                        <div class="audience-label">Age Range</div>
+                                    </div>
+                                    <div class="audience-item">
+                                        <div class="audience-value">62%</div>
+                                        <div class="audience-label">Male</div>
+                                    </div>
+                                    <div class="audience-item">
+                                        <div class="audience-value">38%</div>
+                                        <div class="audience-label">Female</div>
+                                    </div>
+                                </div>
+                                <div class="detail-audience">
+                                    <div class="audience-item">
+                                        <div class="audience-value">USA</div>
+                                        <div class="audience-label">Top Market</div>
+                                    </div>
+                                    <div class="audience-item">
+                                        <div class="audience-value">Facebook</div>
+                                        <div class="audience-label">Best Ad Platform</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="detail-buttons">
+                                <button class="detail-button primary" style="cursor: default;">Import Product</button>
+                                <button class="detail-button secondary" style="cursor: default;">Save to List</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // This is just a visual demo with no interactive functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show product details for demonstration purposes
+            const productDetail = document.querySelector('.product-detail');
+            productDetail.style.transform = 'translateY(-50%) scale(1)';
+            productDetail.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>

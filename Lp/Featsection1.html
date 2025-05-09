@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Spy Feature</title>
+    <style>
+        /* Base styles matching the Weenify theme */
+        :root {
+            --weenify-purple: #8B5CF6;
+            --weenify-purple-light: #D6BCFA;
+            --weenify-purple-dark: #6E59A5;
+            --weenify-blue: #1EAEDB;
+            --weenify-blue-light: #33C3F0;
+            --weenify-green: #10B981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.5;
+        }
+
+        /* Product Spy Section */
+        .spy-section {
+            padding: 4rem 1rem;
+            background-color: #f9fafb;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .spy-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .spy-wrapper {
+                flex-direction: row-reverse; /* Reversed compared to import section */
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+
+        .spy-content {
+            flex: 1;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .spy-content {
+                text-align: left;
+            }
+        }
+
+        .spy-badge {
+            display: inline-block;
+            background-color: rgba(139, 92, 246, 0.1);
+            color: var(--weenify-purple);
+            font-weight: 600;
+            font-size: 0.875rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            margin-bottom: 1rem;
+        }
+
+        .spy-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1F2937;
+        }
+
+        .spy-title span {
+            background-image: linear-gradient(to right, var(--weenify-purple), var(--weenify-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .spy-description {
+            color: #6B7280;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            background-color: rgba(139, 92, 246, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .feature-icon svg {
+            width: 14px;
+            height: 14px;
+            color: var(--weenify-purple);
+        }
+
+        .feature-text {
+            color: #4B5563;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-image: linear-gradient(to right, var(--weenify-purple), var(--weenify-blue));
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(139, 92, 246, 0.2), 0 2px 4px -1px rgba(139, 92, 246, 0.1);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 10px 15px -3px rgba(139, 92, 246, 0.3), 0 4px 6px -2px rgba(139, 92, 246, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* Visual spy interface */
+        .spy-visual {
+            flex: 1;
+            position: relative;
+            max-width: 600px;
+            aspect-ratio: 5 / 3;
+            margin: 0 auto;
+        }
+
+        .spy-interface {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .spy-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background-color: #F3F4F6;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .spy-title-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .spy-logo {
+            width: 24px;
+            height: 24px;
+            background-image: linear-gradient(135deg, var(--weenify-purple), var(--weenify-blue));
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .spy-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .spy-control {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .spy-control.minimize {
+            background-color: #FCD34D;
+        }
+
+        .spy-control.maximize {
+            background-color: #10B981;
+        }
+
+        .spy-control.close {
+            background-color: #EF4444;
+        }
+
+        .spy-search {
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .spy-search-icon {
+            color: #9CA3AF;
+        }
+
+        .spy-search-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 0.5rem;
+            background-color: #F9FAFB;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            color: #4B5563;
+        }
+
+        .spy-search-button {
+            background-color: var(--weenify-purple);
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 500;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .spy-search-button:hover {
+            background-color: var(--weenify-purple-dark);
+        }
+
+        .spy-content-area {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .spy-sidebar {
+            width: 180px;
+            background-color: #F9FAFB;
+            border-right: 1px solid #E5E7EB;
+            padding: 1rem 0.75rem;
+            font-size: 0.875rem;
+        }
+
+        .spy-sidebar-title {
+            color: #6B7280;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+        }
+
+        .spy-sidebar-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .spy-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .spy-menu-item.active {
+            background-color: rgba(139, 92, 246, 0.1);
+            color: var(--weenify-purple);
+        }
+
+        .spy-menu-item:hover:not(.active) {
+            background-color: #F3F4F6;
+        }
+
+        .spy-menu-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .spy-main {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .spy-section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: #1F2937;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .spy-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .spy-stat-card {
+            background-color: white;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            padding: 0.75rem;
+            text-align: center;
+        }
+
+        .spy-stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--weenify-purple);
+            margin-bottom: 0.25rem;
+        }
+
+        .spy-stat-label {
+            font-size: 0.75rem;
+            color: #6B7280;
+        }
+
+        .spy-products {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .spy-product {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            background-color: white;
+            transition: all 0.2s ease;
+        }
+
+        .spy-product:hover {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transform: translateY(-2px);
+            border-color: var(--weenify-purple-light);
+        }
+
+        .spy-product-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 6px;
+            background-color: #F9FAFB;
+            padding: 0.25rem;
+            margin-right: 0.75rem;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .spy-product-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .spy-product-name {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #1F2937;
+            margin-bottom: 0.25rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .spy-product-price {
+            font-size: 0.875rem;
+            color: var(--weenify-purple);
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .spy-product-stats {
+            display: flex;
+            gap: 0.75rem;
+            font-size: 0.75rem;
+            color: #6B7280;
+        }
+
+        .spy-product-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .spy-product-stat-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .spy-dot-green {
+            background-color: var(--weenify-green);
+        }
+
+        .spy-dot-amber {
+            background-color: #F59E0B;
+        }
+
+        .spy-dot-blue {
+            background-color: var(--weenify-blue);
+        }
+
+        .spy-product-action {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-left: 0.75rem;
+        }
+
+        .spy-product-button {
+            background-color: var(--weenify-purple);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.375rem 0.5rem;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .spy-product-button.outline {
+            background-color: white;
+            color: var(--weenify-purple);
+            border: 1px solid var(--weenify-purple-light);
+        }
+
+        .spy-product-button:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .spy-loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .spy-loading.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .spy-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(139, 92, 246, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--weenify-purple);
+            animation: spinner 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        .spy-loading-text {
+            font-size: 0.875rem;
+            color: #4B5563;
+            font-weight: 500;
+        }
+
+        @keyframes spinner {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Notification */
+        .spy-notification {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            background-color: #ECFDF5;
+            color: #065F46;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transform: translateY(calc(100% + 1rem));
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 30;
+            max-width: 300px;
+        }
+
+        .spy-notification.active {
+            transform: translateY(0);
+        }
+
+        .spy-notification-icon {
+            width: 24px;
+            height: 24px;
+            background-color: rgba(16, 185, 129, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .spy-notification-content {
+            flex: 1;
+            font-size: 0.875rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .spy-title {
+                font-size: 1.75rem;
+            }
+
+            .spy-description {
+                font-size: 1rem;
+            }
+
+            .spy-sidebar {
+                width: 60px;
+            }
+
+            .spy-sidebar-menu span {
+                display: none;
+            }
+
+            .spy-menu-item {
+                justify-content: center;
+            }
+
+            .spy-stat-value {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .spy-title {
+                font-size: 1.5rem;
+            }
+
+            .spy-badge {
+                font-size: 0.75rem;
+            }
+
+            .spy-stats {
+                grid-template-columns: repeat(1, 1fr);
+            }
+
+            .spy-product-image {
+                width: 40px;
+                height: 40px;
+            }
+
+            .spy-product-stats {
+                flex-wrap: wrap;
+            }
+        }
+
+        /* Decoration elements */
+        .bg-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.2;
+            z-index: 1;
+        }
+
+        .blob-1 {
+            width: 300px;
+            height: 300px;
+            background-color: var(--weenify-purple-light);
+            top: -100px;
+            right: -100px;
+        }
+
+        .blob-2 {
+            width: 250px;
+            height: 250px;
+            background-color: var(--weenify-blue-light);
+            bottom: -80px;
+            left: -80px;
+        }
+    </style>
+</head>
+<body>
+    <section class="spy-section">
+        <!-- Background blobs for decoration -->
+        <div class="bg-blob blob-1"></div>
+        <div class="bg-blob blob-2"></div>
+        
+        <div class="container">
+            <div class="spy-wrapper">
+                <div class="spy-content">
+                    <div class="spy-badge">Competitive Edge</div>
+                    <h2 class="spy-title"><span>Product Spy</span> Competitor Tracker</h2>
+                    <p class="spy-description">
+                        Gain valuable insights into your competitors' strategies by entering any Shopify store URL. Reveal best-selling products, pricing strategies, and sales volumes.
+                    </p>
+                    
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                            <span class="feature-text">Identify top-selling products from competitors</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                            <span class="feature-text">Analyze pricing strategies and profit margins</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                            <span class="feature-text">Estimate sales volumes and marketing tactics</span>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary">Start Tracking Now</button>
+                </div>
+                
+                <div class="spy-visual">
+                    <div class="spy-interface">
+                        <div class="spy-header">
+                            <div class="spy-title-bar">
+                                <div class="spy-logo">W</div>
+                                <span>Weenify - Product Spy</span>
+                            </div>
+                            <div class="spy-controls">
+                                <div class="spy-control minimize">-</div>
+                                <div class="spy-control maximize">+</div>
+                                <div class="spy-control close">×</div>
+                            </div>
+                        </div>
+                        
+                        <div class="spy-search">
+                            <div class="spy-search-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </div>
+                            <input type="text" class="spy-search-input" id="spy-input" value="mystorecompetitor.myshopify.com" placeholder="Enter competitor's Shopify URL" readonly style="cursor: default;">
+                            <button class="spy-search-button" id="spy-search-btn" style="cursor: default;">Analyze</button>
+                        </div>
+                        
+                        <div class="spy-content-area">
+                            <div class="spy-sidebar">
+                                <div class="spy-sidebar-title">Insights</div>
+                                <div class="spy-sidebar-menu">
+                                    <div class="spy-menu-item active">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="spy-menu-icon">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                        <span>Dashboard</span>
+                                    </div>
+                                    <div class="spy-menu-item">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="spy-menu-icon">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                                        </svg>
+                                        <span>Products</span>
+                                    </div>
+                                    <div class="spy-menu-item">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="spy-menu-icon">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        <span>Pricing</span>
+                                    </div>
+                                    <div class="spy-menu-item">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="spy-menu-icon">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                        </svg>
+                                        <span>Analytics</span>
+                                    </div>
+                                    <div class="spy-menu-item">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="spy-menu-icon">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                        </svg>
+                                        <span>Reports</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="spy-main">
+                                <div class="spy-section-title">
+                                    Store Analytics
+                                    <span style="font-size: 0.75rem; color: #10B981; font-weight: normal;">Updated 5 min ago</span>
+                                </div>
+                                
+                                <div class="spy-stats">
+                                    <div class="spy-stat-card">
+                                        <div class="spy-stat-value">$48,750</div>
+                                        <div class="spy-stat-label">Monthly Revenue</div>
+                                    </div>
+                                    <div class="spy-stat-card">
+                                        <div class="spy-stat-value">1,425</div>
+                                        <div class="spy-stat-label">Total Sales</div>
+                                    </div>
+                                    <div class="spy-stat-card">
+                                        <div class="spy-stat-value">127</div>
+                                        <div class="spy-stat-label">Total Products</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="spy-stats" style="margin-bottom: 1.5rem;">
+                                    <div class="spy-stat-card">
+                                        <div class="spy-stat-value">$34.99</div>
+                                        <div class="spy-stat-label">Avg. Price</div>
+                                    </div>
+                                    <div class="spy-stat-card">
+                                        <div class="spy-stat-value">68%</div>
+                                        <div class="spy-stat-label">Avg. Margin</div>
+                                    </div>
+                                    <div class="spy-stat-card">
+                                        <div class="spy-stat-value">+15.7%</div>
+                                        <div class="spy-stat-label">Monthly Growth</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="spy-section-title">
+                                    Top-Selling Products
+                                    <span style="font-size: 0.75rem; color: #6B7280; font-weight: normal;">Last 30 Days</span>
+                                </div>
+                                
+                                <div class="spy-products">
+                                    <div class="spy-product">
+                                        <img src="/api/placeholder/50/50" alt="Smart Watch" class="spy-product-image">
+                                        <div class="spy-product-details">
+                                            <div class="spy-product-name">Smart Watch Pro 6 - Fitness Tracker</div>
+                                            <div class="spy-product-price">$59.99</div>
+                                            <div class="spy-product-stats">
+                                                <div class="spy-product-stat">
+                                                    <div class="spy-product-stat-dot spy-dot-green"></div>
+                                                    <span>485 sales</span>
+                                                </div>
+                                                <div class="spy-product-stat">
+                                                    <div class="spy-product-stat-dot spy-dot-amber"></div>
+                                                    <span>76% margin</span>
+                                                </div>
+                                                <div class="spy-product-stat">
+                                                    <div class="spy-product-stat-dot spy-dot-blue"></div>
+                                                    <span>$29,095 revenue</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="spy-product-action">
+                                            <button class="spy-product-button" style="cursor: default;">Import</button>
+                                            <button class="spy-product-button outline" style="cursor: default;">Details</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="spy-product">
+                                        <img src="/api/placeholder/50/50" alt="Portable Blender" class="spy-product-image">
+                                        <div class="spy-product-details">
+                                            <div class="spy-product-name">Portable Blender - USB Rechargeable</div>
+                                            <div class="spy-product-price">$37.49</div>
+                                            <div class="spy-product-stats">
+                                                <div class="spy-product-stat">
+                                                    <div class="spy-product-stat-dot spy-dot-green"></div>
+                                                    <span>367 sales</span>
+                                                </div>
+                                                <div class="spy-product-stat">
+                                                    <div class="spy-product-stat-dot spy-dot-blue"></div>
+                                                    <span>71% margin</span>
+                                                </div>
+                                                <div class="spy-product-stat">
+                                                    <div class="spy-product-stat-dot spy-dot-amber"></div>
+                                                    <span>$13,759 revenue</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="spy-product-action">
+                                            <button class="spy-product-button" style="cursor: default;">Import</button>
+                                            <button class="spy-product-button outline" style="cursor: default;">Details</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="spy-product">
+                                        <img src="/api/placeholder/50/50" alt="Dog Training Collar" class="spy-product-image">
+                                        <div class="spy-product-details">
+                                            <div class="spy-product-name">Dog Training Collar - Waterproof</div>
+                                            <div class="spy-product-price">$42.95</div>
+                                            <div class="spy-product-stats">
+                                                <div class="spy-product-stat">
+                                                    <div class="spy-product-stat-dot spy-dot-green"></div>
+                                                    <span>329 sales</span>
+                                                </div>
+                                                <div class="spy-product-stat">
+                                                    <div class="spy-product-stat-dot spy-dot-amber"></div>
+                                                    <span>↑ trending</span>
+                                                </div>
+                                                <div class="spy-product-stat">
+                                                    <div class="spy-product-stat-dot spy-dot-blue"></div>
+                                                    <span>$14,131 revenue</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="spy-product-action">
+                                            <button class="spy-product-button" style="cursor: default;">Import</button>
+                                            <button class="spy-product-button outline" style="cursor: default;">Details</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Loading overlay - not active since this is just a visual demo -->
+                        <div class="spy-loading" id="spy-loading" style="display: none;">
+                            <div class="spy-spinner"></div>
+                            <div class="spy-loading-text">Analyzing competitor store...</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Success notification -->
+                    <div class="spy-notification" id="spy-notification">
+                        <div class="spy-notification-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                        <div class="spy-notification-content">
+                            <strong>Analysis Complete!</strong><br>
+                            Found 127 products with $48,750 monthly revenue
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // This is just a visual demo with no interactive functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Display the notification for demonstration purposes only
+            const spyNotification = document.getElementById('spy-notification');
+            setTimeout(() => {
+                spyNotification.classList.add('active');
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
+</html>
