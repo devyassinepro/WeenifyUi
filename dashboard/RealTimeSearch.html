@@ -12,487 +12,1488 @@
     <!-- Icon library (using FontAwesome) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Chart.js for data visualization -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+    <style>
+        /* Stripe-inspired Design System */
+        :root {
+            --stripe-purple: #635bff;
+            --stripe-purple-light: #7a73ff;
+            --stripe-purple-dark: #5851df;
+            --stripe-green: #00d924;
+            --stripe-red: #df1b41;
+            --stripe-orange: #ff5722;
+            --stripe-gray-50: #fafbfc;
+            --stripe-gray-100: #f7fafc;
+            --stripe-gray-200: #e3e8ee;
+            --stripe-gray-300: #cbd2d9;
+            --stripe-gray-400: #8898aa;
+            --stripe-gray-500: #6b7c93;
+            --stripe-gray-600: #525f7f;
+            --stripe-gray-700: #424770;
+            --stripe-gray-800: #32325d;
+            --stripe-gray-900: #1a1f36;
+            
+            --border-radius: 8px;
+            --border-radius-large: 12px;
+            --shadow-sm: 0 1px 3px rgba(50, 50, 93, 0.15), 0 1px 0 rgba(0, 0, 0, 0.02);
+            --shadow-md: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+            --transition: all 0.15s ease;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        .dark {
+            --stripe-gray-50: #1a1f36;
+            --stripe-gray-100: #32325d;
+            --stripe-gray-200: #424770;
+            --stripe-gray-300: #525f7f;
+            --stripe-gray-400: #6b7c93;
+            --stripe-gray-500: #8898aa;
+            --stripe-gray-600: #cbd2d9;
+            --stripe-gray-700: #e3e8ee;
+            --stripe-gray-800: #f7fafc;
+            --stripe-gray-900: #fafbfc;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--stripe-gray-50);
+            color: var(--stripe-gray-800);
+            line-height: 1.5;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: white;
+            border-bottom: 1px solid var(--stripe-gray-200);
+            padding: 2rem 0;
+            margin: -1.5rem -1.5rem 2rem -1.5rem;
+        }
+
+        .dark .page-header {
+            background: var(--stripe-gray-100);
+            border-bottom-color: var(--stripe-gray-200);
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--stripe-gray-900);
+            margin: 0 0 0.5rem 0;
+            letter-spacing: -0.025em;
+        }
+
+        .page-subtitle {
+            font-size: 1.125rem;
+            color: var(--stripe-gray-600);
+            margin: 0;
+            font-weight: 400;
+        }
+
+        /* Cards */
+        .stripe-card {
+            background: white;
+            border: 1px solid var(--stripe-gray-200);
+            border-radius: var(--border-radius-large);
+            box-shadow: var(--shadow-sm);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .stripe-card:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .dark .stripe-card {
+            background: var(--stripe-gray-100);
+            border-color: var(--stripe-gray-200);
+        }
+
+        /* Search Section */
+        .search-container {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.875rem 1rem 0.875rem 3rem;
+            border: 1px solid var(--stripe-gray-300);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            color: var(--stripe-gray-800);
+            background: white;
+            transition: var(--transition);
+            box-shadow: 0 1px 3px rgba(50, 50, 93, 0.15);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--stripe-purple);
+            box-shadow: 0 1px 3px rgba(50, 50, 93, 0.15), 0 0 0 3px rgba(99, 91, 255, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--stripe-gray-500);
+        }
+
+        .search-button {
+            position: absolute;
+            right: 0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--stripe-purple);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 0.5rem 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .search-button:hover {
+            background: var(--stripe-purple-light);
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--stripe-gray-700);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--stripe-gray-300);
+            border-radius: var(--border-radius);
+            font-size: 0.875rem;
+            color: var(--stripe-gray-800);
+            background: white;
+            transition: var(--transition);
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--stripe-purple);
+            box-shadow: 0 0 0 3px rgba(99, 91, 255, 0.1);
+        }
+
+        /* Filter Grid */
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.75rem 1rem;
+            border-radius: var(--border-radius);
+            font-size: 0.875rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--stripe-purple);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--stripe-purple-light);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--stripe-gray-700);
+            border: 1px solid var(--stripe-gray-300);
+        }
+
+        .btn-secondary:hover {
+            background: var(--stripe-gray-50);
+            border-color: var(--stripe-gray-400);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--stripe-gray-600);
+            border: 1px solid var(--stripe-gray-300);
+        }
+
+        .btn-outline:hover {
+            color: var(--stripe-gray-700);
+            border-color: var(--stripe-gray-400);
+        }
+
+        .btn-sm {
+            padding: 0.5rem 0.75rem;
+            font-size: 0.8125rem;
+        }
+
+        /* Toggle Switches */
+        .toggle-group {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .toggle-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            background: var(--stripe-gray-300);
+            border-radius: 12px;
+            transition: var(--transition);
+        }
+
+        .toggle-switch.active {
+            background: var(--stripe-purple);
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: var(--transition);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-switch.active::after {
+            transform: translateX(20px);
+        }
+
+        /* Results Header */
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem 0;
+        }
+
+        .results-count {
+            font-size: 0.875rem;
+            color: var(--stripe-gray-600);
+        }
+
+        .view-toggle {
+            display: flex;
+            border: 1px solid var(--stripe-gray-300);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .view-btn {
+            padding: 0.5rem 0.75rem;
+            background: white;
+            border: none;
+            color: var(--stripe-gray-600);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .view-btn.active {
+            background: var(--stripe-purple);
+            color: white;
+        }
+
+        .view-btn:not(.active):hover {
+            background: var(--stripe-gray-50);
+        }
+
+        /* Product Cards */
+        .product-card {
+            background: white;
+            border: 1px solid var(--stripe-gray-200);
+            border-radius: var(--border-radius-large);
+            overflow: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .dark .product-card {
+            background: var(--stripe-gray-100);
+            border-color: var(--stripe-gray-200);
+        }
+
+        .product-image {
+            height: 200px;
+            background: var(--stripe-gray-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background: var(--stripe-green);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: var(--border-radius);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .product-content {
+            padding: 1.25rem;
+        }
+
+        .product-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--stripe-gray-900);
+            margin: 0 0 0.5rem 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-store {
+            font-size: 0.875rem;
+            color: var(--stripe-gray-600);
+            margin: 0 0 0.75rem 0;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--stripe-gray-900);
+            margin: 0 0 1rem 0;
+        }
+
+        .price-original {
+            font-size: 0.875rem;
+            color: var(--stripe-gray-500);
+            text-decoration: line-through;
+            margin-left: 0.5rem;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Loading */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .loading-content {
+            text-align: center;
+            color: var(--stripe-gray-700);
+        }
+
+        .spinner {
+            width: 2rem;
+            height: 2rem;
+            border: 2px solid var(--stripe-gray-300);
+            border-top-color: var(--stripe-purple);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(26, 31, 54, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            padding: 1rem;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--border-radius-large);
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--stripe-gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--stripe-gray-900);
+            margin: 0;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--stripe-gray-500);
+            cursor: pointer;
+            padding: 0;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            color: var(--stripe-gray-700);
+            background: var(--stripe-gray-100);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .pagination-btn {
+            padding: 0.5rem 0.75rem;
+            border: 1px solid var(--stripe-gray-300);
+            background: white;
+            color: var(--stripe-gray-700);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.875rem;
+        }
+
+        .pagination-btn:hover {
+            border-color: var(--stripe-gray-400);
+        }
+
+        .pagination-btn.active {
+            background: var(--stripe-purple);
+            color: white;
+            border-color: var(--stripe-purple);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-row {
+                grid-template-columns: 1fr;
+            }
+
+            .results-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .toggle-group {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .product-actions {
+                flex-direction: column;
+            }
+        }
+
+        /* Section Headers */
+        .section-header {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--stripe-gray-900);
+            margin: 0 0 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--stripe-gray-200);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--stripe-gray-600);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            color: var(--stripe-gray-400);
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--stripe-gray-700);
+            margin: 0 0 0.5rem 0;
+        }
+    </style>
 </head>
 <body>
     <div class="app-container">
-     <!-- Overlay for mobile sidebar -->
-     <div class="overlay"></div>
+        <!-- Header -->
+        <header class="header">
+            <button class="btn btn-icon mobile-menu-button hidden-desktop">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="header-brand hidden-mobile">
+                <i class="fas fa-chart-line header-logo"></i>
+                <span>WEENIFY</span>
+            </div>
+            
+            <div class="header-search hidden-mobile">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search..." />
+            </div>
+            
+            <div class="header-actions">
+                <button class="btn btn-icon notification-button">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge"></span>
+                </button>
+                
+                <label class="theme-toggle">
+                    <input type="checkbox" id="theme-toggle">
+                    <span class="theme-toggle-track"></span>
+                </label>
+                
+                <div class="dropdown">
+                    <button class="btn btn-ghost dropdown-trigger flex gap-2 items-center">
+                        <div class="avatar">
+                            <div class="avatar-fallback">JS</div>
+                        </div>
+                        <div class="hidden md:block text-left">
+                            <div class="text-sm font-medium">John Smith</div>
+                            <div class="text-xs text-muted">john@example.com</div>
+                        </div>
+                        <i class="fas fa-chevron-down text-sm hidden md:block"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <div class="dropdown-header">My Account</div>
+                        <div class="dropdown-divider"></div>
+                        <a href="Profile.html" class="dropdown-item">
+                            <i class="fas fa-user"></i> Profile
+                        </a>
+                        <a href="Settings.html" class="dropdown-item">
+                            <i class="fas fa-cog"></i> Settings
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-sign-out-alt"></i> Log out
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
 
-     <!-- Header -->
-     <header class="header">
-       <!-- Mobile menu button -->
-       <button class="btn btn-icon mobile-menu-button hidden-desktop">
-         <i class="fas fa-bars"></i>
-       </button>
-       
-       <!-- Brand logo and name (visible on desktop) -->
-       <div class="header-brand hidden-mobile">
-         <i class="fas fa-chart-line header-logo"></i>
-         <span>WEENIFY</span>
-       </div>
-       
-       <!-- Search box -->
-       <div class="header-search hidden-mobile">
-         <i class="fas fa-search"></i>
-         <input type="text" placeholder="Search..." />
-       </div>
-       
-       <!-- Header actions -->
-       <div class="header-actions">
-         <!-- Notifications -->
-         <button class="btn btn-icon notification-button">
-           <i class="fas fa-bell"></i>
-           <span class="notification-badge"></span>
-         </button>
-         
-         <!-- Theme toggle -->
-         <label class="theme-toggle">
-           <input type="checkbox" id="theme-toggle">
-           <span class="theme-toggle-track"></span>
-         </label>
-         
-         <!-- User menu -->
-         <div class="dropdown">
-           <button class="btn btn-ghost dropdown-trigger flex gap-2 items-center">
-               <div class="avatar">
-                   <div class="avatar-fallback">JS</div>
-               </div>
-               <div class="hidden md:block text-left">
-                   <div class="text-sm font-medium">John Smith</div>
-                   <div class="text-xs text-muted">john@example.com</div>
-               </div>
-               <i class="fas fa-chevron-down text-sm hidden md:block"></i>
-           </button>
-           <div class="dropdown-content">
-               <div class="dropdown-header">My Account</div>
-               <div class="dropdown-divider"></div>
-               <a href="Profile.html" class="dropdown-item">
-                   <i class="fas fa-user"></i> Profile
-               </a>
-               <a href="Settings.html" class="dropdown-item">
-                   <i class="fas fa-cog"></i> Settings
-               </a>
-               <a href="Billing.html" class="dropdown-item">
-                   <i class="fas fa-credit-card"></i> Billing
-               </a>
-               <div class="dropdown-divider"></div>
-               <a href="#" class="dropdown-item">
-                   <i class="fas fa-sign-out-alt"></i> Log out
-               </a>
-           </div>
-       </div>
-       </div>
-     </header>
- 
-     <div class="main-container">
-       <!-- Sidebar -->
-       <aside class="sidebar">
- 
-         <div class="sidebar-content">
-           <div class="sidebar-section">
-             <div class="sidebar-section-title">Overview</div>
-             <ul class="sidebar-nav">
-               <li class="sidebar-nav-item">
-                 <a href="index.html" class="sidebar-nav-link active">
-                   <i class="fas fa-home"></i>
-                   <span>Dashboard</span>
-                 </a>
-               </li>
-             </ul>
-           </div>
- 
-           <div class="sidebar-section">
-             <div class="sidebar-section-title">Analysis</div>
-             <ul class="sidebar-nav">
-               <li class="sidebar-nav-item">
-                 <a href="salestracker.html" class="sidebar-nav-link">
-                   <i class="fas fa-chart-bar"></i>
-                   <span>Sales Tracker</span>
-                 </a>
-               </li>
-               <li class="sidebar-nav-item">
-                 <a href="trending.html" class="sidebar-nav-link">
-                   <i class="fas fa-chart-line"></i>
-                   <span>Trending</span>
-                 </a>
-               </li>
-               <li class="sidebar-nav-item">
-                 <a href="research.html" class="sidebar-nav-link">
-                   <i class="fas fa-search"></i>
-                   <span>Product Research</span>
-                 </a>
-               </li>
-               <li class="sidebar-nav-item">
-                 <a href="realtimesearch.html" class="sidebar-nav-link">
-                   <i class="fas fa-bolt"></i>
-                   <span>Real-Time Search</span>
-                 </a>
-               </li>
-               <li class="sidebar-nav-item">
-                 <a href="shopifyimporter.html" class="sidebar-nav-link">
-                   <i class="fas fa-shopping-cart"></i>
-                   <span>Shopify Importer</span>
-                 </a>
-               </li>
-             </ul>
-           </div>
- 
-           <div class="sidebar-section">
-             <div class="sidebar-section-title">Support</div>
-             <ul class="sidebar-nav">
-               <li class="sidebar-nav-item">
-                 <a href="tutorials.html" class="sidebar-nav-link">
-                   <i class="fas fa-video"></i>
-                   <span>Tutorials</span>
-                 </a>
-               </li>
-               <li class="sidebar-nav-item">
-                 <a href="supporttickets.html" class="sidebar-nav-link">
-                   <i class="fas fa-ticket-alt"></i>
-                   <span>Support Tickets</span>
-                 </a>
-               </li>
-             </ul>
-           </div>
- 
-           <div class="sidebar-section">
-             <div class="sidebar-section-title">Account</div>
-             <ul class="sidebar-nav">
-               <li class="sidebar-nav-item">
-                 <a href="profile.html" class="sidebar-nav-link">
-                   <i class="fas fa-user"></i>
-                   <span>Profile</span>
-                 </a>
-               </li>
-               <li class="sidebar-nav-item">
-                 <a href="billing.html" class="sidebar-nav-link">
-                   <i class="fas fa-credit-card"></i>
-                   <span>Billing</span>
-                 </a>
-               </li>
-               <li class="sidebar-nav-item">
-                 <a href="settings.html" class="sidebar-nav-link">
-                   <i class="fas fa-cog"></i>
-                   <span>Settings</span>
-                 </a>
-               </li>
-             </ul>
-           </div>
-         </div>
- 
-         <!-- Sidebar footer -->
-         <div class="sidebar-footer">
-           <div class="user-status">
-             <span class="user-status-dot"></span>
-             <span class="pro-badge">Pro Plan</span>
-           </div>
-           
-           <label class="theme-toggle">
-             <input type="checkbox" id="sidebar-theme-toggle">
-             <span class="theme-toggle-track"></span>
-           </label>
-         </div>
-       </aside>
- 
-        <!-- Mobile sidebar overlay -->
-        <div class="overlay"></div>
-        
+        <div class="main-container">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-content">
+                    <div class="sidebar-section">
+                        <div class="sidebar-section-title">Overview</div>
+                        <ul class="sidebar-nav">
+                            <li class="sidebar-nav-item">
+                                <a href="index.html" class="sidebar-nav-link">
+                                    <i class="fas fa-home"></i>
+                                    <span>Dashboard</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <div class="sidebar-section-title">Analysis</div>
+                        <ul class="sidebar-nav">
+                            <li class="sidebar-nav-item">
+                                <a href="salestracker.html" class="sidebar-nav-link">
+                                    <i class="fas fa-chart-bar"></i>
+                                    <span>Sales Tracker</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-nav-item">
+                                <a href="trending.html" class="sidebar-nav-link">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>Trending</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-nav-item">
+                                <a href="research.html" class="sidebar-nav-link">
+                                    <i class="fas fa-search"></i>
+                                    <span>Product Research</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-nav-item">
+                                <a href="realtimesearch.html" class="sidebar-nav-link active">
+                                    <i class="fas fa-bolt"></i>
+                                    <span>Real-Time Search</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="sidebar-footer">
+                    <div class="user-status">
+                        <span class="user-status-dot"></span>
+                        <span class="pro-badge">Pro Plan</span>
+                    </div>
+                    
+                    <label class="theme-toggle">
+                        <input type="checkbox" id="sidebar-theme-toggle">
+                        <span class="theme-toggle-track"></span>
+                    </label>
+                </div>
+            </aside>
+
             <!-- Main content -->
             <main class="main-content">
-                <div class="space-y-6">
-                    <div class="flex items-center justify-between">
-                        <h1 class="text-3xl font-bold">Real-Time Search</h1>
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div style="padding: 0 1.5rem;">
+                        <h1 class="page-title">Real-Time Search</h1>
+                        <p class="page-subtitle">Search for products across marketplaces with advanced filtering</p>
                     </div>
+                </div>
+                
+                <!-- Search & Filters -->
+                <!-- Search & Filters -->
+                <div class="stripe-card">
+                    <h3 class="section-header">Search & Filters</h3>
                     
-                    <div class="card search-card">
-                        <div class="card-header">
-                            <h2 class="card-title">Search Products</h2>
-                            <p class="card-description">Find products across marketplaces in real-time</p>
-                        </div>
-                        <div class="card-content">
-                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                                <div class="col-span-1 md:col-span-2">
-                                    <label class="form-label">Keyword</label>
-                                    <div class="flex">
-                                        <div class="search-container w-full">
-                                            <i class="fas fa-search"></i>
-                                            <input type="text" class="form-input search-input" placeholder="Enter product keyword...">
-                                        </div>
-                                        <button class="btn btn-primary ml-2">
-                                            <i class="fas fa-search mr-2"></i>
-                                            Search
-                                        </button>
-                                    </div>
-                                </div>
-                                
-                                <div>
-                                    <label class="form-label">Country</label>
-                                    <select class="form-select">
-                                        <option value="us">United States</option>
-                                        <option value="uk">United Kingdom</option>
-                                        <option value="ca">Canada</option>
-                                        <option value="au">Australia</option>
-                                    </select>
-                                </div>
-                                
-                                <div>
-                                    <label class="form-label">Language</label>
-                                    <select class="form-select">
-                                        <option value="en">English</option>
-                                        <option value="fr">French</option>
-                                        <option value="es">Spanish</option>
-                                        <option value="de">German</option>
-                                    </select>
-                                </div>
-                            </div>
-                            
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                                <div>
-                                    <label class="form-label">Sort By</label>
-                                    <select class="form-select">
-                                        <option value="best">Best Match</option>
-                                        <option value="price-low">Price: Low to High</option>
-                                        <option value="price-high">Price: High to Low</option>
-                                        <option value="newest">Newest</option>
-                                    </select>
-                                </div>
-                                
-                                <div class="range-slider">
-                                    <label class="form-label">Price Range</label>
-                                    <div class="range-label">
-                                        <span class="range-min">$0</span>
-                                        <span class="range-value">$0 - $1000</span>
-                                        <span class="range-max">$1000</span>
-                                    </div>
-                                    <input type="range" min="0" max="1000" value="500" class="form-input">
-                                </div>
-                                
-                                <div class="range-slider">
-                                    <label class="form-label">Min Rating</label>
-                                    <div class="range-label">
-                                        <span class="range-min">1★</span>
-                                        <span class="range-value">3★</span>
-                                        <span class="range-max">5★</span>
-                                    </div>
-                                    <input type="range" min="1" max="5" step="0.5" value="3" class="form-input">
-                                </div>
-                                
-                                <div>
-                                    <label class="form-label">Condition</label>
-                                    <select class="form-select">
-                                        <option value="any">Any</option>
-                                        <option value="new">New</option>
-                                        <option value="used">Used</option>
-                                        <option value="refurbished">Refurbished</option>
-                                    </select>
-                                </div>
-                            </div>
+                    <!-- Search Bar -->
+                    <div class="form-group">
+                        <label class="form-label">Search Products</label>
+                        <div style="position: relative;">
+                            <i class="fas fa-search search-icon"></i>
+                            <input 
+                                type="text" 
+                                id="search-query" 
+                                class="search-input" 
+                                placeholder="Search for products..."
+                                style="padding-right: 1rem;"
+                            >
                         </div>
                     </div>
                     
-                    <div class="grid grid-cols-1 gap-6">
-                        <!-- Product Card 1 -->
-                        <div class="product-card">
-                            <div class="product-image">
-                                <i class="fas fa-image" style="font-size: 3rem; color: var(--muted-foreground);"></i>
-                            </div>
-                            
-                            <div class="product-content">
-                                <h3 class="product-title">Product 1 Title</h3>
-                                <p class="product-description">
-                                    This is a detailed product description that explains what the product is,
-                                    its key features, and why it might be appealing to consumers.
-                                </p>
-                                
-                                <div class="product-tags">
-                                    <span class="tag">Category: Electronics</span>
-                                    <span class="tag">Size: Medium</span>
-                                    <span class="tag">Color: White</span>
-                                </div>
-                                
-                                <div class="product-stats">
-                                    <div>
-                                        <div class="product-price">$59.99</div>
-                                        <div class="product-shipping">Free Shipping</div>
-                                    </div>
-                                    
-                                    <div class="flex items-center gap-2">
-                                        <div class="flex">
-                                            <i class="fas fa-star text-yellow-500"></i>
-                                            <i class="fas fa-star text-yellow-500"></i>
-                                            <i class="fas fa-star text-yellow-500"></i>
-                                            <i class="fas fa-star text-yellow-500"></i>
-                                            <i class="far fa-star text-muted-foreground"></i>
-                                        </div>
-                                        <span class="text-sm">4.0 (120 reviews)</span>
-                                    </div>
-                                    
-                                    <button class="btn btn-primary ml-auto">
-                                        <i class="fas fa-shopping-cart mr-2"></i>
-                                        Import to Shopify
-                                    </button>
-                                </div>
-                            </div>
+                    <!-- Location & Language -->
+                    <div class="filter-row">
+                        <div class="form-group">
+                            <label class="form-label">Country</label>
+                            <select id="country-code" class="form-select">
+                                <option value="US">United States</option>
+                                <option value="FR">France</option>
+                                <option value="UK">United Kingdom</option>
+                                <option value="CA">Canada</option>
+                                <option value="AU">Australia</option>
+                                <option value="DE">Germany</option>
+                                <option value="IT">Italy</option>
+                                <option value="ES">Spain</option>
+                            </select>
                         </div>
                         
-                        <!-- Product Card 2 -->
-                        <div class="product-card">
-                            <div class="product-image">
-                                <i class="fas fa-image" style="font-size: 3rem; color: var(--muted-foreground);"></i>
-                            </div>
-                            
-                            <div class="product-content">
-                                <h3 class="product-title">Product 2 Title</h3>
-                                <p class="product-description">
-                                    This is a detailed product description that explains what the product is,
-                                    its key features, and why it might be appealing to consumers.
-                                </p>
-                                
-                                <div class="product-tags">
-                                    <span class="tag">Category: Home Goods</span>
-                                    <span class="tag">Material: Cotton</span>
-                                    <span class="tag">Color: Blue</span>
-                                </div>
-                                
-                                <div class="product-stats">
-                                    <div>
-                                        <div class="product-price">$29.99</div>
-                                        <div class="product-shipping">$4.99 Shipping</div>
-                                    </div>
-                                    
-                                    <div class="flex items-center gap-2">
-                                        <div class="flex">
-                                            <i class="fas fa-star text-yellow-500"></i>
-                                            <i class="fas fa-star text-yellow-500"></i>
-                                            <i class="fas fa-star text-yellow-500"></i>
-                                            <i class="fas fa-star-half-alt text-yellow-500"></i>
-                                            <i class="far fa-star text-muted-foreground"></i>
-                                        </div>
-                                        <span class="text-sm">3.5 (85 reviews)</span>
-                                    </div>
-                                    
-                                    <button class="btn btn-primary ml-auto">
-                                        <i class="fas fa-shopping-cart mr-2"></i>
-                                        Import to Shopify
-                                    </button>
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label class="form-label">Language</label>
+                            <select id="language" class="form-select">
+                                <option value="en">English</option>
+                                <option value="fr">Français</option>
+                                <option value="es">Español</option>
+                                <option value="de">Deutsch</option>
+                                <option value="it">Italiano</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Price & Sorting -->
+                    <div class="filter-grid">
+                        <div class="form-group">
+                            <label class="form-label">Sort By</label>
+                            <select id="sort-by" class="form-select">
+                                <option value="best_match">Best Match</option>
+                                <option value="top_rated">Top Rated</option>
+                                <option value="lowest">Price: Low to High</option>
+                                <option value="highest">Price: High to Low</option>
+                            </select>
                         </div>
                         
-                        <!-- Product Card 3 -->
-                        <div class="product-card">
-                            <div class="product-image">
-                                <i class="fas fa-image" style="font-size: 3rem; color: var(--muted-foreground);"></i>
-                            </div>
-                            
-                            <div class="product-content">
-                                <h3 class="product-title">Product 3 Title</h3>
-                                <p class="product-description">
-                                    This is a detailed product description that explains what the product is,
-                                    its key features, and why it might be appealing to consumers.
-                                </p>
-                                
-                                <div class="product-tags">
-                                    <span class="tag">Category: Fitness</span>
-                                    <span class="tag">Type: Equipment</span>
-                                    <span class="tag">Weight: Light</span>
-                                </div>
-                                
-                                <div class="product-stats">
-                                    <div>
-                                        <div class="product-price">$79.99</div>
-                                        <div class="product-shipping">Free Shipping</div>
-                                    </div>
-                                    
-                                    <div class="flex items-center gap-2">
-                                        <div class="flex">
-                                            <i class="fas fa-star text-yellow-500"></i>
-                                            <i class="fas fa-star text-yellow-500"></i>
-                                            <i class="fas fa-star text-yellow-500"></i>
-                                            <i class="fas fa-star text-yellow-500"></i>
-                                            <i class="fas fa-star text-yellow-500"></i>
-                                        </div>
-                                        <span class="text-sm">5.0 (42 reviews)</span>
-                                    </div>
-                                    
-                                    <button class="btn btn-primary ml-auto">
-                                        <i class="fas fa-shopping-cart mr-2"></i>
-                                        Import to Shopify
-                                    </button>
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label class="form-label">Results per page</label>
+                            <select id="limit" class="form-select">
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100" selected>100</option>
+                                <option value="200">200</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Min Price</label>
+                            <input type="number" id="min-price" class="form-input" placeholder="0.00">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Max Price</label>
+                            <input type="number" id="max-price" class="form-input" placeholder="1000.00">
                         </div>
                     </div>
-                    
-                    <div class="flex justify-center">
-                        <div class="flex items-center space-x-1">
-                            <button class="btn btn-outline btn-sm flex items-center">
-                                <i class="fas fa-chevron-left text-xs mr-1"></i>
-                                Previous
-                            </button>
-                            <button class="btn btn-primary btn-sm px-3">1</button>
-                            <button class="btn btn-outline btn-sm px-3">2</button>
-                            <button class="btn btn-outline btn-sm px-3">3</button>
-                            <span class="px-2 text-sm text-muted">...</span>
-                            <button class="btn btn-outline btn-sm px-3">10</button>
-                            <button class="btn btn-outline btn-sm flex items-center">
-                                Next
-                                <i class="fas fa-chevron-right text-xs ml-1"></i>
-                            </button>
+
+                    <!-- Product Condition -->
+                    <div class="form-group">
+                        <label class="form-label">Condition</label>
+                        <select id="product-condition" class="form-select">
+                            <option value="ANY">Any Condition</option>
+                            <option value="NEW">New</option>
+                            <option value="USED">Used</option>
+                            <option value="REFURBISHED">Refurbished</option>
+                        </select>
+                    </div>
+
+                    <!-- Options -->
+                    <div class="toggle-group">
+                        <div class="toggle-item" onclick="toggleOption('free-shipping')">
+                            <div class="toggle-switch" id="free-shipping-toggle"></div>
+                            <span>Free shipping only</span>
+                            <input type="checkbox" id="free-shipping" style="display: none;">
+                        </div>
+                        <div class="toggle-item" onclick="toggleOption('on-sale')">
+                            <div class="toggle-switch" id="on-sale-toggle"></div>
+                            <span>On sale items</span>
+                            <input type="checkbox" id="on-sale" style="display: none;">
                         </div>
                     </div>
+
+                    <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--stripe-gray-200); display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
+                        <button class="btn btn-outline" onclick="resetFilters()">
+                            <i class="fas fa-refresh"></i>
+                            Reset filters
+                        </button>
+                        <button class="btn btn-primary" onclick="performSearch()">
+                            <i class="fas fa-search"></i>
+                            Search Products
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Results -->
+                <div class="results-header">
+                    <div class="results-count" id="results-count">
+                        Ready to search
+                    </div>
+                    <div class="view-toggle">
+                        <button class="view-btn active" id="grid-view-btn" onclick="switchView('grid')">
+                            <i class="fas fa-th"></i>
+                        </button>
+                        <button class="view-btn" id="list-view-btn" onclick="switchView('list')">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="search-results">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="results-grid">
+                        <!-- Results will be populated here -->
+                    </div>
+                </div>
+                
+                <!-- Pagination -->
+                <div class="pagination" id="pagination-container" style="display: none;">
+                    <button class="pagination-btn" id="prev-page">
+                        <i class="fas fa-chevron-left"></i>
+                        Previous
+                    </button>
+                    <div id="page-numbers"></div>
+                    <button class="pagination-btn" id="next-page">
+                        Next
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
             </main>
         </div>
     </div>
-    
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p>Searching products...</p>
+        </div>
+    </div>
+
+    <!-- Product Details Modal -->
+    <div class="modal" id="product-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Product Details</h2>
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Product details will be populated here -->
+            </div>
+        </div>
+    </div>
+
     <!-- Base JS -->
     <script src="assets/js/reactjs.js"></script>
     
-    <!-- Page specific scripts -->
     <script>
+        let currentPage = 1;
+        let totalPages = 1;
+        let currentResults = [];
+        let currentView = 'grid';
+
+        // Sample data
+        const sampleProducts = [
+            {
+                id: 1,
+                title: "Nike Men's Dunk Low Retro",
+                description: "Based on one of the most iconic basketball shoes in the Nike pantheon, but this time it's set up for a lighter, more comfortable stride.",
+                price: 115.00,
+                originalPrice: 130.00,
+                image: "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRjiD91LAEMpRHwh_xwLQxYZ_DVmKxEuiacvGVtRqs55P6askCd3bqA8g2dBdE_Pi-xq5vrk654m0YPUoAxlW_y7shdKUfVHlGirrTcQ0wFLAb115gCNvKwqw",
+                rating: 4.5,
+                reviews: 10106,
+                store: "Nike",
+                condition: "NEW",
+                shipping: "Free",
+                onSale: true
+            },
+            {
+                id: 2,
+                title: "Apple iPhone 15 Pro",
+                description: "The most advanced iPhone with titanium design and A17 Pro chip for exceptional performance.",
+                price: 999.00,
+                image: "https://via.placeholder.com/300x300/007AFF/ffffff?text=iPhone+15",
+                rating: 4.8,
+                reviews: 2547,
+                store: "Apple Store",
+                condition: "NEW",
+                shipping: "Free",
+                onSale: false
+            },
+            {
+                id: 3,
+                title: "Samsung Galaxy Watch 6",
+                description: "Advanced smartwatch with health monitoring and fitness tracking capabilities.",
+                price: 299.99,
+                originalPrice: 349.99,
+                image: "https://via.placeholder.com/300x300/1976D2/ffffff?text=Galaxy+Watch",
+                rating: 4.3,
+                reviews: 1823,
+                store: "Samsung",
+                condition: "NEW",
+                shipping: "$5.99",
+                onSale: true
+            },
+            {
+                id: 4,
+                title: "Sony WH-1000XM5 Headphones",
+                description: "Industry-leading noise cancellation with exceptional sound quality and 30-hour battery.",
+                price: 349.99,
+                originalPrice: 399.99,
+                image: "https://via.placeholder.com/300x300/000000/ffffff?text=Sony+WH-1000XM5",
+                rating: 4.7,
+                reviews: 5892,
+                store: "Sony",
+                condition: "NEW",
+                shipping: "Free",
+                onSale: true
+            },
+            {
+                id: 5,
+                title: "MacBook Air M2",
+                description: "Supercharged by M2 chip with incredible performance and all-day battery life.",
+                price: 1299.00,
+                image: "https://via.placeholder.com/300x300/F5F5F7/000000?text=MacBook+Air",
+                rating: 4.6,
+                reviews: 3421,
+                store: "Apple Store",
+                condition: "NEW",
+                shipping: "Free",
+                onSale: false
+            },
+            {
+                id: 6,
+                title: "Adidas Ultraboost 23",
+                description: "Revolutionary running shoe with adaptive knit upper and responsive BOOST midsole.",
+                price: 189.99,
+                originalPrice: 220.00,
+                image: "https://via.placeholder.com/300x300/000000/ffffff?text=Ultraboost",
+                rating: 4.4,
+                reviews: 2156,
+                store: "Adidas",
+                condition: "NEW",
+                shipping: "Free",
+                onSale: true
+            }
+        ];
+
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize dropdowns
-            initializeDropdowns();
+            initializeEventListeners();
             
-            // Handle theme toggle sync
-            const themeToggle = document.getElementById('theme-toggle');
-            const themeToggleSidebar = document.getElementById('theme-toggle-sidebar');
+            // Show sample products initially
+            displayProducts(sampleProducts);
+            updateResultsCount(sampleProducts.length, 15420);
+        });
+
+        function initializeEventListeners() {
+            // Search functionality
+            document.getElementById('search-query').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+
+            // Pagination
+            document.getElementById('prev-page').addEventListener('click', function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    performSearch();
+                }
+            });
+
+            document.getElementById('next-page').addEventListener('click', function() {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    performSearch();
+                }
+            });
+        }
+
+        function toggleOption(optionId) {
+            const checkbox = document.getElementById(optionId);
+            const toggle = document.getElementById(optionId + '-toggle');
             
-            if (themeToggle && themeToggleSidebar) {
-                themeToggle.addEventListener('change', function() {
-                    themeToggleSidebar.checked = this.checked;
-                });
+            checkbox.checked = !checkbox.checked;
+            toggle.classList.toggle('active');
+        }
+
+        function switchView(viewType) {
+            currentView = viewType;
+            const gridBtn = document.getElementById('grid-view-btn');
+            const listBtn = document.getElementById('list-view-btn');
+            const resultsGrid = document.getElementById('results-grid');
+            
+            if (viewType === 'grid') {
+                gridBtn.classList.add('active');
+                listBtn.classList.remove('active');
+                resultsGrid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6';
+            } else {
+                listBtn.classList.add('active');
+                gridBtn.classList.remove('active');
+                resultsGrid.className = 'space-y-4';
+            }
+            
+            displayProducts(currentResults.length > 0 ? currentResults : sampleProducts);
+        }
+
+        function performSearch() {
+            const searchParams = gatherSearchParams();
+            
+            showLoading();
+            
+            // Simulate API call
+            setTimeout(() => {
+                const query = searchParams.search_query.toLowerCase();
+                let results = [...sampleProducts];
                 
-                themeToggleSidebar.addEventListener('change', function() {
-                    themeToggle.checked = this.checked;
-                });
+                if (query) {
+                    results = sampleProducts.filter(product => 
+                        product.title.toLowerCase().includes(query) ||
+                        product.description.toLowerCase().includes(query)
+                    );
+                }
+
+                // Apply filters
+                if (searchParams.product_condition !== 'ANY') {
+                    results = results.filter(product => product.condition === searchParams.product_condition);
+                }
+
+                if (searchParams.free_shipping) {
+                    results = results.filter(product => product.shipping === 'Free');
+                }
+
+                if (searchParams.on_sale) {
+                    results = results.filter(product => product.onSale);
+                }
+
+                if (searchParams.min_price) {
+                    results = results.filter(product => product.price >= searchParams.min_price);
+                }
+
+                if (searchParams.max_price) {
+                    results = results.filter(product => product.price <= searchParams.max_price);
+                }
+
+                // Sort results
+                results = sortResults(results, searchParams.sort_by);
+
+                currentResults = results;
+                displayProducts(results);
+                updateResultsCount(results.length, results.length * 6);
+                updatePagination();
+                hideLoading();
+            }, 1200);
+        }
+
+        function gatherSearchParams() {
+            return {
+                search_query: document.getElementById('search-query').value || '',
+                country_code: document.getElementById('country-code').value,
+                language: document.getElementById('language').value,
+                page: currentPage,
+                limit: parseInt(document.getElementById('limit').value),
+                sort_by: document.getElementById('sort-by').value,
+                min_price: parseFloat(document.getElementById('min-price').value) || null,
+                max_price: parseFloat(document.getElementById('max-price').value) || null,
+                product_condition: document.getElementById('product-condition').value,
+                free_shipping: document.getElementById('free-shipping').checked,
+                on_sale: document.getElementById('on-sale').checked
+            };
+        }
+
+        function sortResults(results, sortBy) {
+            switch (sortBy) {
+                case 'lowest':
+                    return results.sort((a, b) => a.price - b.price);
+                case 'highest':
+                    return results.sort((a, b) => b.price - a.price);
+                case 'top_rated':
+                    return results.sort((a, b) => b.rating - a.rating);
+                default:
+                    return results;
+            }
+        }
+
+        function displayProducts(products) {
+            const grid = document.getElementById('results-grid');
+            
+            if (products.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <i class="fas fa-search"></i>
+                        <h3>No products found</h3>
+                        <p>Try adjusting your search filters</p>
+                    </div>
+                `;
+                return;
+            }
+
+            if (currentView === 'grid') {
+                grid.innerHTML = products.map(product => `
+                    <div class="product-card" onclick="showProductDetails(${product.id})">
+                        <div class="product-image">
+                            <img src="${product.image}" alt="${product.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\\"fas fa-image\\" style=\\"font-size: 3rem; color: var(--stripe-gray-400);\\"></i>'">
+                            ${product.onSale ? '<span class="product-badge">Sale</span>' : ''}
+                        </div>
+                        <div class="product-content">
+                            <h3 class="product-title">${product.title}</h3>
+                            <p class="product-store">${product.store}</p>
+                            <div class="product-rating">
+                                ${generateStars(product.rating)}
+                                <span style="font-size: 0.875rem; color: var(--stripe-gray-500);">(${product.reviews.toLocaleString()})</span>
+                            </div>
+                            <div class="product-price">
+                                ${product.price.toFixed(2)}
+                                ${product.originalPrice ? `<span class="price-original">${product.originalPrice.toFixed(2)}</span>` : ''}
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); importToShopify(${product.id})">
+                                    <i class="fas fa-plus"></i>
+                                    Import
+                                </button>
+                                <button class="btn btn-secondary" onclick="event.stopPropagation(); addToWishlist(${product.id})">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                // List view
+                grid.innerHTML = products.map(product => `
+                    <div class="product-card" style="display: flex; cursor: pointer;" onclick="showProductDetails(${product.id})">
+                        <div class="product-image" style="width: 150px; height: 120px; flex-shrink: 0;">
+                            <img src="${product.image}" alt="${product.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\\"fas fa-image\\" style=\\"font-size: 2rem; color: var(--stripe-gray-400);\\"></i>'">
+                            ${product.onSale ? '<span class="product-badge">Sale</span>' : ''}
+                        </div>
+                        <div class="product-content" style="flex: 1; display: flex; justify-content: space-between;">
+                            <div style="flex: 1;">
+                                <h3 class="product-title">${product.title}</h3>
+                                <p class="product-store">${product.store}</p>
+                                <div class="product-rating">
+                                    ${generateStars(product.rating)}
+                                    <span style="font-size: 0.875rem; color: var(--stripe-gray-500);">(${product.reviews.toLocaleString()})</span>
+                                </div>
+                                <p style="color: var(--stripe-gray-600); margin: 0.5rem 0 0 0; font-size: 0.875rem;">${product.description.substring(0, 100)}...</p>
+                            </div>
+                            <div style="display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; min-width: 200px; margin-left: 1rem;">
+                                <div class="product-price" style="text-align: right;">
+                                    ${product.price.toFixed(2)}
+                                    ${product.originalPrice ? `<br><span class="price-original">${product.originalPrice.toFixed(2)}</span>` : ''}
+                                </div>
+                                <div class="product-actions" style="width: 100%;">
+                                    <button class="btn btn-primary btn-sm" style="flex: 1;" onclick="event.stopPropagation(); importToShopify(${product.id})">
+                                        <i class="fas fa-plus"></i>
+                                        Import
+                                    </button>
+                                    <button class="btn btn-secondary btn-sm" onclick="event.stopPropagation(); addToWishlist(${product.id})">
+                                        <i class="fas fa-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function generateStars(rating) {
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+            const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+            
+            let stars = '';
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star" style="color: #fbbf24;"></i>';
+            }
+            if (hasHalfStar) {
+                stars += '<i class="fas fa-star-half-alt" style="color: #fbbf24;"></i>';
+            }
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '<i class="far fa-star" style="color: var(--stripe-gray-400);"></i>';
+            }
+            return stars;
+        }
+
+        function showProductDetails(productId) {
+            const product = sampleProducts.find(p => p.id === productId);
+            if (!product) return;
+
+            const modalBody = document.getElementById('modal-body');
+            modalBody.innerHTML = `
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                    <div>
+                        <div style="height: 300px; background: var(--stripe-gray-100); border-radius: var(--border-radius-large); overflow: hidden; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center;">
+                            <img src="${product.image}" alt="${product.title}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\\"fas fa-image\\" style=\\"font-size: 4rem; color: var(--stripe-gray-400);\\"></i>'">
+                        </div>
+                        <div style="display: flex; gap: 0.75rem;">
+                            <button class="btn btn-primary" style="flex: 1;" onclick="importToShopify(${product.id})">
+                                <i class="fas fa-plus"></i>
+                                Import to Shopify
+                            </button>
+                            <button class="btn btn-secondary" onclick="addToWishlist(${product.id})">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div>
+                        <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 1rem 0; color: var(--stripe-gray-900);">${product.title}</h2>
+                        <p style="color: var(--stripe-gray-600); margin: 0 0 1.5rem 0; line-height: 1.6;">${product.description}</p>
+                        
+                        <div style="margin-bottom: 1.5rem;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                                ${generateStars(product.rating)}
+                                <span style="font-weight: 600; margin-left: 0.5rem;">${product.rating}/5</span>
+                                <span style="color: var(--stripe-gray-500); font-size: 0.875rem;">(${product.reviews.toLocaleString()} reviews)</span>
+                            </div>
+                            <div style="margin-bottom: 1rem;">
+                                <span style="font-size: 2rem; font-weight: 800; color: var(--stripe-gray-900);">${product.price.toFixed(2)}</span>
+                                ${product.originalPrice ? `<span style="color: var(--stripe-gray-500); text-decoration: line-through; font-size: 1.125rem; margin-left: 0.5rem;">${product.originalPrice.toFixed(2)}</span>` : ''}
+                            </div>
+                            ${product.onSale ? '<span style="background: var(--stripe-green); color: white; padding: 0.25rem 0.5rem; border-radius: var(--border-radius); font-size: 0.75rem; font-weight: 600;">ON SALE</span>' : ''}
+                        </div>
+
+                        <div style="background: var(--stripe-gray-50); border-radius: var(--border-radius-large); padding: 1.5rem;">
+                            <h3 style="font-weight: 600; margin: 0 0 1rem 0; color: var(--stripe-gray-900);">Product Details</h3>
+                            <div style="display: grid; gap: 0.75rem;">
+                                <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--stripe-gray-200);">
+                                    <span style="font-weight: 500; color: var(--stripe-gray-700);">Store:</span>
+                                    <span style="color: var(--stripe-gray-900);">${product.store}</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--stripe-gray-200);">
+                                    <span style="font-weight: 500; color: var(--stripe-gray-700);">Condition:</span>
+                                    <span style="color: var(--stripe-gray-900);">${product.condition}</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--stripe-gray-200);">
+                                    <span style="font-weight: 500; color: var(--stripe-gray-700);">Shipping:</span>
+                                    <span style="color: ${product.shipping === 'Free' ? 'var(--stripe-green)' : 'var(--stripe-gray-900)'}; font-weight: 600;">${product.shipping === 'Free' ? 'Free Shipping' : product.shipping + ' Shipping'}</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding: 0.5rem 0;">
+                                    <span style="font-weight: 500; color: var(--stripe-gray-700);">Reviews:</span>
+                                    <span style="color: var(--stripe-gray-900);">${product.reviews.toLocaleString()} customer reviews</span>
+                                </div>
+                                ${product.originalPrice ? `
+                                <div style="display: flex; justify-content: space-between; padding: 0.75rem; background: rgba(0, 217, 36, 0.1); margin: 0.5rem -0.75rem 0; border-radius: var(--border-radius);">
+                                    <span style="font-weight: 500; color: var(--stripe-gray-700);">You Save:</span>
+                                    <span style="color: var(--stripe-green); font-weight: 700;">${(product.originalPrice - product.price).toFixed(2)} (${Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% off)</span>
+                                </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('product-modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('product-modal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function updateResultsCount(displayed, total) {
+            document.getElementById('results-count').textContent = `Showing ${displayed.toLocaleString()} of ${total.toLocaleString()} products`;
+        }
+
+        function updatePagination() {
+            const paginationContainer = document.getElementById('pagination-container');
+            const pageNumbers = document.getElementById('page-numbers');
+            
+            if (currentResults.length > 0) {
+                paginationContainer.style.display = 'flex';
+                
+                let pagesHtml = '';
+                for (let i = 1; i <= Math.min(5, 10); i++) {
+                    pagesHtml += `
+                        <button class="pagination-btn ${currentPage === i ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>
+                    `;
+                }
+                pageNumbers.innerHTML = pagesHtml;
+            } else {
+                paginationContainer.style.display = 'none';
+            }
+        }
+
+        function goToPage(page) {
+            currentPage = page;
+            performSearch();
+        }
+
+        function showLoading() {
+            document.getElementById('loading-overlay').classList.add('active');
+        }
+
+        function hideLoading() {
+            document.getElementById('loading-overlay').classList.remove('active');
+        }
+
+        function resetFilters() {
+            document.getElementById('search-query').value = '';
+            document.getElementById('country-code').value = 'US';
+            document.getElementById('language').value = 'en';
+            document.getElementById('sort-by').value = 'best_match';
+            document.getElementById('min-price').value = '';
+            document.getElementById('max-price').value = '';
+            document.getElementById('product-condition').value = 'ANY';
+            document.getElementById('limit').value = '100';
+            
+            // Reset toggles
+            const freeShippingToggle = document.getElementById('free-shipping-toggle');
+            const onSaleToggle = document.getElementById('on-sale-toggle');
+            
+            document.getElementById('free-shipping').checked = false;
+            document.getElementById('on-sale').checked = false;
+            freeShippingToggle.classList.remove('active');
+            onSaleToggle.classList.remove('active');
+            
+            currentPage = 1;
+            currentResults = [];
+            displayProducts(sampleProducts);
+            updateResultsCount(sampleProducts.length, 15420);
+        }
+
+        function importToShopify(productId) {
+            const product = sampleProducts.find(p => p.id === productId);
+            showNotification(`"${product.title}" has been imported to your Shopify store!`, 'success');
+        }
+
+        function addToWishlist(productId) {
+            const product = sampleProducts.find(p => p.id === productId);
+            showNotification(`"${product.title}" has been added to your wishlist!`, 'info');
+        }
+
+        function showNotification(message, type = 'info') {
+            // Create a simple notification
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 1rem;
+                right: 1rem;
+                background: ${type === 'success' ? 'var(--stripe-green)' : 'var(--stripe-purple)'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: var(--border-radius);
+                box-shadow: var(--shadow-lg);
+                z-index: 10001;
+                font-weight: 500;
+                max-width: 400px;
+                animation: slideIn 0.3s ease;
+            `;
+            
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            // Add animation styles
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+            `;
+            if (!document.head.querySelector('style[data-notification]')) {
+                style.setAttribute('data-notification', 'true');
+                document.head.appendChild(style);
             }
             
-            // Handle range sliders
-            const priceRangeSlider = document.querySelector('input[type="range"][max="1000"]');
-            const priceRangeValue = document.querySelector('.range-value');
-            
-            if (priceRangeSlider && priceRangeValue) {
-                priceRangeSlider.addEventListener('input', function() {
-                    const value = this.value;
-                    priceRangeValue.textContent = `$0 - ${value}`;
-                });
-            }
-            
-            const ratingSlider = document.querySelector('input[type="range"][max="5"]');
-            const ratingValue = document.querySelectorAll('.range-value')[1];
-            
-            if (ratingSlider && ratingValue) {
-                ratingSlider.addEventListener('input', function() {
-                    const value = this.value;
-                    ratingValue.textContent = `${value}★`;
-                });
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideIn 0.3s ease reverse';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('product-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
             }
         });
+
+        // Close modal with ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Handle theme toggle sync
+        const themeToggle = document.getElementById('theme-toggle');
+        const sidebarThemeToggle = document.getElementById('sidebar-theme-toggle');
+        
+        if (themeToggle && sidebarThemeToggle) {
+            themeToggle.addEventListener('change', function() {
+                sidebarThemeToggle.checked = this.checked;
+            });
+            
+            sidebarThemeToggle.addEventListener('change', function() {
+                themeToggle.checked = this.checked;
+                const event = new Event('change');
+                themeToggle.dispatchEvent(event);
+            });
+        }
     </script>
 </body>
 </html>

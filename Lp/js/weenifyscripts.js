@@ -77,104 +77,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Form validation (basic example)
-    const forms = document.querySelectorAll('form');
-    
-    forms.forEach(form => {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            let isValid = true;
-            const requiredFields = form.querySelectorAll('input[required]');
-            
-            requiredFields.forEach(field => {
-                if (!field.value.trim()) {
-                    isValid = false;
-                    field.classList.add('border-red-500');
-                    
-                    // Add error message if it doesn't exist
-                    let errorMsg = field.parentNode.querySelector('.error-message');
-                    if (!errorMsg) {
-                        errorMsg = document.createElement('p');
-                        errorMsg.className = 'error-message text-red-500 text-sm mt-1';
-                        errorMsg.textContent = 'This field is required';
-                        field.parentNode.appendChild(errorMsg);
-                    }
-                } else {
-                    field.classList.remove('border-red-500');
-                    
-                    // Remove error message if it exists
-                    const errorMsg = field.parentNode.querySelector('.error-message');
-                    if (errorMsg) {
-                        errorMsg.remove();
-                    }
-                }
-            });
-            
-            // If email field exists, validate email format
-            const emailField = form.querySelector('input[type="email"]');
-            if (emailField && emailField.value.trim()) {
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(emailField.value.trim())) {
-                    isValid = false;
-                    emailField.classList.add('border-red-500');
-                    
-                    // Add error message if it doesn't exist
-                    let errorMsg = emailField.parentNode.querySelector('.error-message');
-                    if (!errorMsg) {
-                        errorMsg = document.createElement('p');
-                        errorMsg.className = 'error-message text-red-500 text-sm mt-1';
-                        errorMsg.textContent = 'Please enter a valid email address';
-                        emailField.parentNode.appendChild(errorMsg);
-                    } else {
-                        errorMsg.textContent = 'Please enter a valid email address';
-                    }
-                }
-            }
-            
-            // If password confirmation field exists, validate it matches
-            const passwordField = form.querySelector('input[id="password"]');
-            const confirmPasswordField = form.querySelector('input[id="confirm-password"]');
-            
-            if (passwordField && confirmPasswordField && 
-                passwordField.value.trim() && confirmPasswordField.value.trim()) {
-                if (passwordField.value !== confirmPasswordField.value) {
-                    isValid = false;
-                    confirmPasswordField.classList.add('border-red-500');
-                    
-                    // Add error message if it doesn't exist
-                    let errorMsg = confirmPasswordField.parentNode.querySelector('.error-message');
-                    if (!errorMsg) {
-                        errorMsg = document.createElement('p');
-                        errorMsg.className = 'error-message text-red-500 text-sm mt-1';
-                        errorMsg.textContent = 'Passwords do not match';
-                        confirmPasswordField.parentNode.appendChild(errorMsg);
-                    } else {
-                        errorMsg.textContent = 'Passwords do not match';
-                    }
-                }
-            }
-            
-            if (isValid) {
-                // Form is valid, you could submit it here
-                console.log('Form is valid, would submit...');
-                // form.submit(); // Uncomment to actually submit the form
-                
-                // Show success message (example)
-                const successMsg = document.createElement('div');
-                successMsg.className = 'bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mt-4';
-                successMsg.innerHTML = '<strong class="font-bold">Success!</strong> <span class="block sm:inline">Your form has been submitted.</span>';
-                form.appendChild(successMsg);
-                
-                // Reset form after success
-                setTimeout(() => {
-                    form.reset();
-                    successMsg.remove();
-                }, 3000);
-            }
-        });
-    });
-
 // Mobile menu functionality
 const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
 const mobileMenu = document.getElementById('mobile-menu');
@@ -272,13 +174,13 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
     initProductRadar();
         // Initialize Product Spy Section
-    initProductSpy();
+    // initProductSpy();
 
     // Initialize One-Click Import Section
-    initOneClickImport();
+    // initOneClickImport();
     
     // Initialize Product Research Database
-    initProductDatabase();
+    // initProductDatabase();
     
     // Initialize Market Research Dashboard
     initMarketDashboard();
